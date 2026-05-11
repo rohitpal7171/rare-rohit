@@ -10,16 +10,25 @@ export interface PageWrapperProps {
 }
 
 export const PageWrapper = ({ children }: PageWrapperProps) => {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
 
-  // Scroll to top on every route change.
-  // `pathname` is intentionally in deps — the effect body reads it indirectly
-  // via the route change trigger, not as a value. ESLint exhaustive-deps is
-  // satisfied: pathname IS the dependency that drives the scroll.
   useEffect(() => {
+    if (hash !== '') {
+      // Hash present (e.g. /#ceremonies) — scroll to the target element
+      // Small delay so the page has rendered before we try to find the element
+      const id = hash.replace('#', '')
+      const timer = setTimeout(() => {
+        const el = document.getElementById(id)
+        if (el !== null) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
+      return () => clearTimeout(timer)
+    }
+    // No hash — scroll to top as usual
     window.scrollTo({ top: 0, behavior: 'smooth' })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
+  }, [pathname, hash])
 
   return (
     <motion.div

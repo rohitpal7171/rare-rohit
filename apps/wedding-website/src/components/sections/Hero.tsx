@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, MapPin } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Countdown } from '@shared/ui'
@@ -7,7 +7,6 @@ import { fadeInUp, staggerContainer } from '@shared/utils'
 
 import { weddingConfig } from '@app/config/wedding.config'
 
-// Petal positions are static — defined outside component to avoid re-creation
 const PETAL_POSITIONS = [
   { x: '8%',  delay: 0 },
   { x: '22%', delay: 1.5 },
@@ -26,42 +25,32 @@ const FloatingPetal = ({ x, delay }: FloatingPetalProps) => (
   <div
     aria-hidden="true"
     className="pointer-events-none absolute text-2xl opacity-60 animate-petal-fall"
-    style={{
-      left: x,
-      top: '-20px',
-      animationDelay: `${delay}s`,
-      animationDuration: `${8 + delay}s`,
-    }}
+    style={{ left: x, top: '-20px', animationDelay: `${delay}s`, animationDuration: `${8 + delay}s` }}
   >
     🌸
   </div>
 )
 
 export const Hero = () => {
-  const { t } = useTranslation('home')
+  const { t, i18n } = useTranslation('home')
   const { bride, groom, wedding } = weddingConfig
+  const isHindi = i18n.language.startsWith('hi')
 
   return (
     <section
       id="home"
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden mandala-bg"
     >
-      {/* Floating petals — CSS animation only, no Framer Motion conflict */}
+      {/* Floating petals */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
         {PETAL_POSITIONS.map(({ x, delay }) => (
           <FloatingPetal key={x} x={x} delay={delay} />
         ))}
       </div>
 
-      {/* Mandala ring decoration */}
-      <div
-        aria-hidden="true"
-        className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10 opacity-30"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10 opacity-20"
-      />
+      {/* Mandala rings */}
+      <div aria-hidden="true" className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10 opacity-30" />
+      <div aria-hidden="true" className="absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10 opacity-20" />
 
       {/* Content */}
       <motion.div
@@ -70,7 +59,21 @@ export const Hero = () => {
         animate="visible"
         className="relative z-10 flex flex-col items-center gap-6 px-4 text-center"
       >
-        <motion.div variants={fadeInUp} className="diya-glow text-4xl" aria-hidden="true">
+        {/*
+          ॐ symbol — explicit inline color + text-shadow glow.
+          NOT using font-hindi class (its !important overrides color in some browsers).
+          NOT using diya-glow (drop-shadow filter doesn't colorise the text itself).
+          Using inline style for guaranteed saffron color + orange glow.
+        */}
+        <motion.div
+          variants={fadeInUp}
+          aria-hidden="true"
+          className="text-6xl"
+          style={{
+            color: '#FF6B00',
+            textShadow: '0 0 12px rgba(255,107,0,0.9), 0 0 30px rgba(255,107,0,0.5), 0 0 60px rgba(255,107,0,0.2)',
+          }}
+        >
           ॐ
         </motion.div>
 
@@ -92,19 +95,24 @@ export const Hero = () => {
 
         <motion.div variants={fadeInUp} className="gold-divider w-32" aria-hidden="true" />
 
+        {/* Countdown */}
         <motion.div variants={fadeInUp}>
           <Countdown targetDate={wedding.date} />
         </motion.div>
 
-        <motion.div variants={fadeInUp} className="space-y-1 text-center">
+        {/* Date + Location below countdown */}
+        <motion.div variants={fadeInUp} className="space-y-2 text-center">
           <p className="font-body text-sm uppercase tracking-widest text-gold/60">
             {new Date(wedding.date).toLocaleDateString('en-IN', {
               day: 'numeric', month: 'long', year: 'numeric',
             })}
           </p>
-          <p className="font-body text-sm text-ivory/50">
-            {wedding.venue.name}, {wedding.venue.city}
-          </p>
+          <div className="flex items-center justify-center gap-2">
+            <MapPin size={14} className="shrink-0 text-gold/50" aria-hidden="true" />
+            <p className={`text-sm text-ivory/60 ${isHindi ? 'font-hindi' : 'font-body'}`}>
+              {isHindi ? wedding.venue.nameHindi : wedding.venue.name}
+            </p>
+          </div>
         </motion.div>
       </motion.div>
 

@@ -2,7 +2,9 @@
   "title": "Schedule",
   "subtitle": "Every moment planned with love",
   "day1": "Day 1 — Pre-Wedding",
-  "day2": "Day 2 — Sangeet Night",
-  "day3": "Day 3 — Wedding Day",
-  "day4": "Day 4 — Reception"
+  "day2": "Day 2 — Lagun",
+  "day3": "Day 3 — Baraat",
+  "day4": "Day 4 — Wedding Day",
+  "lagun": "Lagun Ceremony",
+  "lagunLocation": "Gwalior, Madhya Pradesh"
 }

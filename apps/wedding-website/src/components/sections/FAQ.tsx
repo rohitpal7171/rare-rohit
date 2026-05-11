@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { AnimatedSection } from '@shared/ui'
 import { fadeInUp } from '@shared/utils'
 
-const FAQ_KEYS = ['dresscode', 'kids', 'parking', 'photos', 'gifts', 'rsvp', 'food'] as const
+// 'rsvp' removed — no RSVP on this website
+const FAQ_KEYS = ['dresscode', 'kids', 'parking', 'photos', 'gifts', 'food'] as const
 
 export const FAQ = () => {
   const { t } = useTranslation('faq')
@@ -18,7 +19,7 @@ export const FAQ = () => {
         <AnimatedSection className="mb-12 text-center" stagger>
           <motion.h2 variants={fadeInUp} className="section-title text-gold">{t('title')}</motion.h2>
           <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-ivory/60">{t('subtitle')}</motion.p>
-          <motion.div variants={fadeInUp} className="gold-divider mt-4" />
+          <motion.div variants={fadeInUp} className="gold-divider mt-4" aria-hidden="true" />
         </AnimatedSection>
 
         <div className="space-y-3">
@@ -43,6 +44,7 @@ export const FAQ = () => {
                   animate={{ rotate: openIndex === index ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
                   className="shrink-0 text-gold"
+                  aria-hidden="true"
                 >
                   <ChevronDown size={20} />
                 </motion.span>

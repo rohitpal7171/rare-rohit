@@ -1,20 +1,16 @@
 import type { WeddingConfig } from './types'
 
 // ============================================================
-// WEDDING CONFIG — Real Details
+// WEDDING CONFIG — Confirmed Details
 // ============================================================
 // Groom  : Rohit Singh Pal  (रोहित सिंह पाल)
 // Bride  : Priti Pal         (प्रीति पाल)
 // Lagun  : 24 Nov 2026 — Gwalior
-// Baraat : 25 Nov 2026 — Kokapur (near Udi Moad)
+// Baraat : 25 Nov 2026, 4:00 PM — Kokapur, Udi Modh, Uttar Pradesh
+// Pheras : 26 Nov 2026, 9:00 AM — Kokapur, Udi Modh, Uttar Pradesh
+// Vidaai : 26 Nov 2026 — Kokapur
 // ============================================================
 // No reception | No RSVP | No Travel section | Veg food only
-// ============================================================
-// Still needed:
-//   - Exact ceremony times
-//   - Haldi / Mehendi / Sangeet dates (22nd or 23rd Nov?)
-//   - Full addresses + Google Maps pins
-//   - Groom's residence city
 // ============================================================
 
 export const weddingConfig: WeddingConfig = {
@@ -35,28 +31,28 @@ export const weddingConfig: WeddingConfig = {
     bioHindi: 'उसने उसकी मुस्कान में अपनी दुनिया पाई।',
   },
   wedding: {
-    // Pheras day — 25 Nov 2026, Kokapur (near Udi Moad)
-    date: '2026-11-25T10:00:00+05:30',
+    // Main wedding — countdown targets Pheras day (26 Nov 2026)
+    date: '2026-11-26T09:00:00+05:30',
     venue: {
-      name: 'Kokapur, Near Udi Moad',
-      nameHindi: 'कोकापुर, उड़ी मोड़ के पास',
-      address: 'Kokapur, Near Udi Moad',         // TODO: full address
-      addressHindi: 'कोकापुर, उड़ी मोड़ के पास', // TODO: full Hindi address
+      name: 'Kokapur, Udi Modh, Uttar Pradesh',
+      nameHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',
+      address: 'Kokapur, Udi Modh, Uttar Pradesh',
+      addressHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',
       city: 'Kokapur',
       cityHindi: 'कोकापुर',
-      mapUrl: 'https://maps.google.com/?q=Kokapur+Madhya+Pradesh', // TODO: exact pin
+      mapUrl: 'https://maps.google.com/?q=Kokapur+Udi+Modh+Uttar+Pradesh',
     },
   },
   ceremonies: {
     haldi: {
       slug: 'haldi',
-      date: '2026-11-23T10:00:00+05:30',         // TODO: confirm date & time
-      time: '10:00 AM',                           // TODO: confirm
+      date: '2026-11-23T10:00:00+05:30',        // TODO: confirm date & time
+      time: '10:00 AM',
       timeHindi: 'प्रातः १० बजे',
       venue: {
         name: "Bride's Residence, Gwalior",
         nameHindi: 'वधू का निवास, ग्वालियर',
-        address: 'Gwalior, Madhya Pradesh',        // TODO: full address
+        address: 'Gwalior, Madhya Pradesh',       // TODO: full address
         addressHindi: 'ग्वालियर, मध्य प्रदेश',
         city: 'Gwalior',
         cityHindi: 'ग्वालियर',
@@ -67,13 +63,13 @@ export const weddingConfig: WeddingConfig = {
     },
     mehendi: {
       slug: 'mehendi',
-      date: '2026-11-23T18:00:00+05:30',         // TODO: confirm date & time
-      time: '6:00 PM',                            // TODO: confirm
+      date: '2026-11-23T18:00:00+05:30',        // TODO: confirm date & time
+      time: '6:00 PM',
       timeHindi: 'सायं ६ बजे',
       venue: {
         name: "Bride's Residence, Gwalior",
         nameHindi: 'वधू का निवास, ग्वालियर',
-        address: 'Gwalior, Madhya Pradesh',        // TODO: full address
+        address: 'Gwalior, Madhya Pradesh',       // TODO: full address
         addressHindi: 'ग्वालियर, मध्य प्रदेश',
         city: 'Gwalior',
         cityHindi: 'ग्वालियर',
@@ -84,13 +80,13 @@ export const weddingConfig: WeddingConfig = {
     },
     sangeet: {
       slug: 'sangeet',
-      date: '2026-11-23T19:00:00+05:30',         // TODO: confirm date & time
-      time: '7:00 PM',                            // TODO: confirm
+      date: '2026-11-23T19:00:00+05:30',        // TODO: confirm date & time
+      time: '7:00 PM',
       timeHindi: 'सायं ७ बजे',
       venue: {
-        name: 'Venue, Gwalior',                   // TODO: venue name
+        name: 'Venue, Gwalior',                  // TODO: venue name
         nameHindi: 'स्थान, ग्वालियर',
-        address: 'Gwalior, Madhya Pradesh',        // TODO: full address
+        address: 'Gwalior, Madhya Pradesh',       // TODO: full address
         addressHindi: 'ग्वालियर, मध्य प्रदेश',
         city: 'Gwalior',
         cityHindi: 'ग्वालियर',
@@ -101,51 +97,51 @@ export const weddingConfig: WeddingConfig = {
     },
     baraat: {
       slug: 'baraat',
-      date: '2026-11-25T08:00:00+05:30',         // TODO: confirm departure time
-      time: '8:00 AM',                            // TODO: confirm
-      timeHindi: 'प्रातः ८ बजे',
+      date: '2026-11-25T16:00:00+05:30',        // ✅ Confirmed: 25 Nov, 4:00 PM
+      time: '4:00 PM',
+      timeHindi: 'सायं ४ बजे',
       venue: {
-        name: "Groom's Residence → Kokapur, Near Udi Moad",
-        nameHindi: 'वर के घर से → कोकापुर, उड़ी मोड़',
-        address: 'Kokapur, Near Udi Moad',         // TODO: full address
-        addressHindi: 'कोकापुर, उड़ी मोड़ के पास',
+        name: 'Kokapur, Udi Modh, Uttar Pradesh',
+        nameHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',
+        address: 'Kokapur, Udi Modh, Uttar Pradesh',
+        addressHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',
         city: 'Kokapur',
         cityHindi: 'कोकापुर',
-        mapUrl: 'https://maps.google.com/?q=Kokapur+Madhya+Pradesh',
+        mapUrl: 'https://maps.google.com/?q=Kokapur+Udi+Modh+Uttar+Pradesh',
       },
       color: 'maroon',
       icon: '🐎',
     },
     pheras: {
       slug: 'pheras',
-      date: '2026-11-25T11:00:00+05:30',         // TODO: confirm muhurat time
-      time: '11:00 AM',                           // TODO: confirm
-      timeHindi: 'प्रातः ११ बजे',
+      date: '2026-11-26T09:00:00+05:30',        // ✅ Confirmed: 26 Nov, 9:00 AM
+      time: '9:00 AM',
+      timeHindi: 'प्रातः ९ बजे',
       venue: {
-        name: 'Kokapur, Near Udi Moad',
-        nameHindi: 'कोकापुर, उड़ी मोड़ के पास',
-        address: 'Kokapur, Near Udi Moad',         // TODO: full address
-        addressHindi: 'कोकापुर, उड़ी मोड़ के पास',
+        name: 'Kokapur, Udi Modh, Uttar Pradesh',
+        nameHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',
+        address: 'Kokapur, Udi Modh, Uttar Pradesh',
+        addressHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',
         city: 'Kokapur',
         cityHindi: 'कोकापुर',
-        mapUrl: 'https://maps.google.com/?q=Kokapur+Madhya+Pradesh',
+        mapUrl: 'https://maps.google.com/?q=Kokapur+Udi+Modh+Uttar+Pradesh',
       },
       color: 'divine',
       icon: '🔥',
     },
     vidaai: {
       slug: 'vidaai',
-      date: '2026-11-25T16:00:00+05:30',         // TODO: confirm time
-      time: '4:00 PM',                            // TODO: confirm
-      timeHindi: 'अपराह्न ४ बजे',
+      date: '2026-11-26T14:00:00+05:30',        // ✅ Confirmed: 26 Nov (time TODO)
+      time: '2:00 PM',                           // TODO: confirm exact time
+      timeHindi: 'अपराह्न २ बजे',
       venue: {
-        name: 'Kokapur, Near Udi Moad',
-        nameHindi: 'कोकापुर, उड़ी मोड़ के पास',
-        address: 'Kokapur, Near Udi Moad',         // TODO: full address
-        addressHindi: 'कोकापुर, उड़ी मोड़ के पास',
+        name: 'Kokapur, Udi Modh, Uttar Pradesh',
+        nameHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',
+        address: 'Kokapur, Udi Modh, Uttar Pradesh',
+        addressHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',
         city: 'Kokapur',
         cityHindi: 'कोकापुर',
-        mapUrl: 'https://maps.google.com/?q=Kokapur+Madhya+Pradesh',
+        mapUrl: 'https://maps.google.com/?q=Kokapur+Udi+Modh+Uttar+Pradesh',
       },
       color: 'maroon',
       icon: '🌸',

@@ -4,7 +4,7 @@
   "questions": {
     "dresscode": {
       "q": "What is the dress code?",
-      "a": "Traditional Indian attire is preferred and encouraged. For ceremonies — sarees, lehengas, sherwanis and kurtas are perfect. For the reception, feel free to wear semi-formal or formal Indian wear."
+      "a": "Traditional Indian attire is preferred and encouraged. For all ceremonies — sarees, lehengas, sherwanis and kurtas are perfect. Feel free to wear your best traditional wear throughout the celebrations."
     },
     "kids": {
       "q": "Are children welcome?",
@@ -12,7 +12,7 @@
     },
     "parking": {
       "q": "Is parking available?",
-      "a": "Yes, complimentary parking is available at the main venue. Please coordinate with family members for directions on the day."
+      "a": "Yes, parking is available at the venue. Please coordinate with family members for directions on the day."
     },
     "photos": {
       "q": "Can I take photos?",
@@ -22,13 +22,9 @@
       "q": "Is there a gift registry?",
       "a": "Your blessings and presence are the greatest gifts. If you wish to give, cash gifts are greatly appreciated."
     },
-    "rsvp": {
-      "q": "When should I RSVP by?",
-      "a": "Please RSVP by 1st November 2026 so we can ensure the best experience for all our guests."
-    },
     "food": {
-      "q": "Will there be vegetarian food?",
-      "a": "Yes! All ceremonies will have a full vegetarian menu. Non-vegetarian options will also be available at the reception."
+      "q": "What food will be served?",
+      "a": "All ceremonies will have a delicious full vegetarian menu. We take great care to ensure everyone is well fed and happy!"
     }
   }
 }
