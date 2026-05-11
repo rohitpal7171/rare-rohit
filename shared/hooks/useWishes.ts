@@ -5,7 +5,7 @@ export interface Wish {
   name: string
   message: string
   language: 'en' | 'hi'
-  createdAt: string  // ISO timestamp
+  createdAt: string
 }
 
 export interface UseWishesReturn {
@@ -17,15 +17,15 @@ export interface UseWishesReturn {
   refresh: () => void
 }
 
-// ── JSONBin configuration ─────────────────────────────────────────────────
-// Set VITE_JSONBIN_BIN_ID and VITE_JSONBIN_API_KEY in .env
-// Free tier at jsonbin.io — stores a JSON array, appended on each wish
-const BIN_URL = () =>
-  `https://api.jsonbin.io/v3/b/${import.meta.env['VITE_JSONBIN_BIN_ID'] ?? ''}`
-const API_KEY = () => import.meta.env['VITE_JSONBIN_API_KEY'] ?? ''
+// Vite injects import.meta.env — typed via /// <reference types="vite/client" />
+// which is included in tsconfig via "types": ["vite/client"] in tsconfig.json
+const getBinUrl = () =>
+  `https://api.jsonbin.io/v3/b/${(import.meta.env['VITE_JSONBIN_BIN_ID'] as string | undefined) ?? ''}`
+const getApiKey = () =>
+  (import.meta.env['VITE_JSONBIN_API_KEY'] as string | undefined) ?? ''
 
 const CACHE_KEY = 'wishes_cache'
-const CACHE_TTL_MS = 60_000 // 1 minute — re-fetch at most once per minute
+const CACHE_TTL_MS = 60_000
 
 export const useWishes = (): UseWishesReturn => {
   const [wishes, setWishes] = useState<Wish[]>([])
@@ -37,19 +37,19 @@ export const useWishes = (): UseWishesReturn => {
   const fetchWishes = useCallback(async (force = false) => {
     const now = Date.now()
 
-    // Return cached data if still fresh
     if (!force && now - lastFetchRef.current < CACHE_TTL_MS) {
       const cached = sessionStorage.getItem(CACHE_KEY)
       if (cached !== null) {
         try {
           setWishes(JSON.parse(cached) as Wish[])
           return
-        } catch { /* ignore parse error, re-fetch */ }
+        } catch { /* ignore, re-fetch */ }
       }
     }
 
-    if (API_KEY() === '' || import.meta.env['VITE_JSONBIN_BIN_ID'] === undefined) {
-      // Dev mode: show mock wishes if no API key configured
+    const apiKey = getApiKey()
+    const binId = (import.meta.env['VITE_JSONBIN_BIN_ID'] as string | undefined)
+    if (apiKey === '' || binId === undefined || binId === '') {
       setWishes(MOCK_WISHES)
       return
     }
@@ -58,15 +58,13 @@ export const useWishes = (): UseWishesReturn => {
     setError(null)
 
     try {
-      const res = await fetch(`${BIN_URL()}/latest`, {
+      const res = await fetch(`${getBinUrl()}/latest`, {
         headers: {
-          'X-Master-Key': API_KEY(),
-          'X-Access-Key': API_KEY(),
+          'X-Master-Key': apiKey,
+          'X-Access-Key': apiKey,
         },
       })
-
       if (!res.ok) throw new Error(`Fetch failed: ${res.status}`)
-
       const data = await res.json() as { record: Wish[] }
       const fetched = Array.isArray(data.record) ? data.record : []
       setWishes(fetched)
@@ -90,35 +88,32 @@ export const useWishes = (): UseWishesReturn => {
       createdAt: new Date().toISOString(),
     }
 
-    // Optimistic update
     const updated = [newWish, ...wishes]
     setWishes(updated)
     sessionStorage.setItem(CACHE_KEY, JSON.stringify(updated))
 
-    if (API_KEY() === '' || import.meta.env['VITE_JSONBIN_BIN_ID'] === undefined) {
-      // Dev mode: just show optimistic update
+    const apiKey = getApiKey()
+    const binId = (import.meta.env['VITE_JSONBIN_BIN_ID'] as string | undefined)
+    if (apiKey === '' || binId === undefined || binId === '') {
       setIsSubmitting(false)
       return true
     }
 
     try {
-      const res = await fetch(BIN_URL(), {
+      const res = await fetch(getBinUrl(), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'X-Master-Key': API_KEY(),
+          'X-Master-Key': apiKey,
           'X-Bin-Versioning': 'false',
         },
         body: JSON.stringify(updated),
       })
-
       if (!res.ok) throw new Error(`Submit failed: ${res.status}`)
-
       lastFetchRef.current = Date.now()
       return true
     } catch (err) {
       console.error('useWishes submit error:', err)
-      // Revert optimistic update on error
       setWishes(wishes)
       sessionStorage.setItem(CACHE_KEY, JSON.stringify(wishes))
       setError('Could not save wish. Please try again.')
@@ -132,17 +127,9 @@ export const useWishes = (): UseWishesReturn => {
     void fetchWishes()
   }, [fetchWishes])
 
-  return {
-    wishes,
-    isLoading,
-    isSubmitting,
-    error,
-    submitWish,
-    refresh: () => void fetchWishes(true),
-  }
+  return { wishes, isLoading, isSubmitting, error, submitWish, refresh: () => void fetchWishes(true) }
 }
 
-// ── Mock data for dev (no API key required) ───────────────────────────────
 const MOCK_WISHES: Wish[] = [
   {
     id: '1',
@@ -154,7 +141,7 @@ const MOCK_WISHES: Wish[] = [
   {
     id: '2',
     name: 'Priya Didi',
-    message: 'Wishing you both a lifetime of happiness. You make such a beautiful couple! Can\'t wait to celebrate with you. 💛',
+    message: "Wishing you both a lifetime of happiness. You make such a beautiful couple! Can't wait to celebrate with you. 💛",
     language: 'en',
     createdAt: new Date(Date.now() - 43200000).toISOString(),
   },

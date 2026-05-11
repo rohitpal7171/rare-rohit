@@ -9,19 +9,18 @@ import { Baraat } from '@app/components/ceremonies/Baraat'
 import { Haldi } from '@app/components/ceremonies/Haldi'
 import { Mehendi } from '@app/components/ceremonies/Mehendi'
 import { Pheras } from '@app/components/ceremonies/Pheras'
-import { Reception } from '@app/components/ceremonies/Reception'
 import { Sangeet } from '@app/components/ceremonies/Sangeet'
 import { Vidaai } from '@app/components/ceremonies/Vidaai'
 import type { CeremonySlug } from '@shared/utils'
 
+// Reception removed — no reception in this wedding
 const ceremonyMap: Record<CeremonySlug, FC> = {
-  haldi:     Haldi,
-  mehendi:   Mehendi,
-  sangeet:   Sangeet,
-  baraat:    Baraat,
-  pheras:    Pheras,
-  vidaai:    Vidaai,
-  reception: Reception,
+  haldi:   Haldi,
+  mehendi: Mehendi,
+  sangeet: Sangeet,
+  baraat:  Baraat,
+  pheras:  Pheras,
+  vidaai:  Vidaai,
 }
 
 const VALID_SLUGS = new Set<string>(Object.keys(ceremonyMap))

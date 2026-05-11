@@ -8,8 +8,6 @@ import { z } from 'zod'
 import { AnimatedSection, Button } from '@shared/ui'
 import { CEREMONY_SLUGS, cn, fadeInUp } from '@shared/utils'
 
-import { weddingConfig } from '@app/config/wedding.config'
-
 const rsvpSchema = z.object({
   fullName:   z.string().min(2),
   email:      z.string().email(),
@@ -23,7 +21,6 @@ const rsvpSchema = z.object({
 
 type RsvpFormValues = z.infer<typeof rsvpSchema>
 
-// Explicit key map avoids unsafe template literal — type-safe + no ESLint warning
 const MEAL_KEY_MAP = {
   veg:    'form.mealVeg',
   nonVeg: 'form.mealNonVeg',
@@ -45,7 +42,6 @@ export const RSVP = () => {
   })
 
   const onSubmit = (_data: RsvpFormValues) => {
-    // TODO: Wire up to Netlify Forms / EmailJS when ready
     setSubmitted(true)
   }
 
@@ -55,19 +51,11 @@ export const RSVP = () => {
         <AnimatedSection className="mb-12 text-center" stagger>
           <motion.h2 variants={fadeInUp} className="section-title text-maroon">{t('title')}</motion.h2>
           <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-maroon/60">{t('subtitle')}</motion.p>
-          <motion.p variants={fadeInUp} className="mt-1 font-body text-sm text-maroon/40">
-            {t('deadline')}: {weddingConfig.rsvpDeadline}
-          </motion.p>
           <motion.div variants={fadeInUp} className="gold-divider mt-4" />
         </AnimatedSection>
 
         {submitted ? (
-          <motion.div
-            variants={fadeInUp}
-            initial="hidden"
-            animate="visible"
-            className="card-divine space-y-4 text-center"
-          >
+          <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="card-divine space-y-4 text-center">
             <div className="text-5xl">💌</div>
             <h3 className="font-display text-2xl text-gold">{t('success.title')}</h3>
             <p className="font-body text-maroon/60">{t('success.message')}</p>
@@ -81,7 +69,6 @@ export const RSVP = () => {
             onSubmit={(e) => { void handleSubmit(onSubmit)(e) }}
             className="space-y-6"
           >
-            {/* Full Name */}
             <div>
               <label className="font-body text-sm font-medium text-maroon">{t('form.fullName')}</label>
               <input
@@ -98,7 +85,6 @@ export const RSVP = () => {
               )}
             </div>
 
-            {/* Email */}
             <div>
               <label className="font-body text-sm font-medium text-maroon">{t('form.email')}</label>
               <input
@@ -113,7 +99,6 @@ export const RSVP = () => {
               />
             </div>
 
-            {/* Attendance */}
             <div>
               <label className="font-body text-sm font-medium text-maroon">{t('form.attendance')}</label>
               <div className="mt-2 flex gap-4">
@@ -126,7 +111,6 @@ export const RSVP = () => {
               </div>
             </div>
 
-            {/* Ceremonies */}
             <div>
               <label className="font-body text-sm font-medium text-maroon">{t('form.ceremonies')}</label>
               <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -141,22 +125,18 @@ export const RSVP = () => {
               </div>
             </div>
 
-            {/* Meal preference */}
             <div>
               <label className="font-body text-sm font-medium text-maroon">{t('form.meal')}</label>
               <div className="mt-2 flex gap-4">
                 {(['veg', 'nonVeg', 'jain'] as const).map((val) => (
                   <label key={val} className="flex cursor-pointer items-center gap-2">
                     <input type="radio" value={val} {...register('meal')} className="accent-gold" />
-                    <span className="font-body text-sm text-maroon">
-                      {t(MEAL_KEY_MAP[val])}
-                    </span>
+                    <span className="font-body text-sm text-maroon">{t(MEAL_KEY_MAP[val])}</span>
                   </label>
                 ))}
               </div>
             </div>
 
-            {/* Message */}
             <div>
               <label className="font-body text-sm font-medium text-maroon">{t('form.message')}</label>
               <textarea

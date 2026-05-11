@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "types": ["vite/client"],
     "paths": {
       "@shared/ui": ["../../shared/ui/index.ts"],
       "@shared/ui/*": ["../../shared/ui/*"],

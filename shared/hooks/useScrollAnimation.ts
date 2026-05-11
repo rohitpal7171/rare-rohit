@@ -16,7 +16,10 @@ export const useScrollAnimation = (options: UseScrollAnimationOptions = {}) => {
     if (element === null) return
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
+      (entries) => {
+        // entries[0] is always present when the callback fires
+        const entry = entries[0]
+        if (entry === undefined) return
         if (entry.isIntersecting) {
           setInView(true)
           if (once) observer.unobserve(element)

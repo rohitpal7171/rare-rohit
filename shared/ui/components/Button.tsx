@@ -1,16 +1,21 @@
+import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import type { HTMLMotionProps } from 'framer-motion'
 
 import { cn } from '../../utils/cn'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'gold'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
-export interface ButtonProps extends HTMLMotionProps<'button'> {
+export interface ButtonProps {
   variant?: ButtonVariant
   size?: ButtonSize
   isLoading?: boolean
   className?: string
+  children?: ReactNode
+  disabled?: boolean
+  type?: 'button' | 'submit' | 'reset'
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
+  'aria-label'?: string
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
@@ -37,14 +42,19 @@ export const Button = ({
   className,
   children,
   disabled,
-  ...props
+  type = 'button',
+  onClick,
+  'aria-label': ariaLabel,
 }: ButtonProps) => {
   return (
     <motion.button
+      type={type}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
       transition={{ type: 'spring', stiffness: 400, damping: 20 }}
       disabled={disabled ?? isLoading}
+      onClick={onClick}
+      aria-label={ariaLabel}
       className={cn(
         'relative inline-flex items-center justify-center rounded-full font-body font-semibold',
         'transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2',
@@ -53,7 +63,6 @@ export const Button = ({
         sizeClasses[size],
         className
       )}
-      {...props}
     >
       {isLoading ? (
         <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
