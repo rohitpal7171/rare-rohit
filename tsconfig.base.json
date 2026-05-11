@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    /* Build */
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+
+    /* Strict — all flags explicitly on */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true,
+
+    /* Path Aliases — resolved by each app's tsconfig */
+    "baseUrl": ".",
+    "paths": {
+      "@shared/ui": ["shared/ui/index.ts"],
+      "@shared/ui/*": ["shared/ui/*"],
+      "@shared/hooks": ["shared/hooks/index.ts"],
+      "@shared/hooks/*": ["shared/hooks/*"],
+      "@shared/utils": ["shared/utils/index.ts"],
+      "@shared/utils/*": ["shared/utils/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "**/*.js"]
+}

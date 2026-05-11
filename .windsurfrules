@@ -1,0 +1,25 @@
+# Windsurf Rules — rare-rohit Monorepo
+# Same rules as .cursorrules — kept in sync
+
+## Stack
+TypeScript 5 strict | React 18 | Vite 5 SWC | Tailwind v3 | Framer Motion v11
+i18next bilingual (EN dev / HI prod) | React Router v6 | react-hook-form + zod
+
+## Zero tolerance
+- No .js/.jsx files — TypeScript only
+- No `any` type — use `unknown` + guards
+- No inline styles — Tailwind only (except motion transforms)
+- No hardcoded strings — all via t() from react-i18next
+- No hardcoded colors — Tailwind tokens only
+- No default exports except App.tsx and page components
+
+## Key conventions
+- Aliases: @shared/ui | @shared/hooks | @shared/utils | @app/*
+- Animation variants: always from @shared/utils/animations — never inline
+- Cards dark bg: .card-divine | Cards light bg: .card-light
+- Section layout: .section-padding + .section-container
+- i18n: update en/ AND hi/ simultaneously
+- Imports ordered: react → external → @shared/* → @app/* → relative
+
+## Quality gate
+npm run check → typecheck + lint + format:check — must pass before commit

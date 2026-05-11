@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "home": "Home",
+    "ourStory": "Our Story",
+    "ceremonies": "Ceremonies",
+    "schedule": "Schedule",
+    "gallery": "Gallery",
+    "weddingParty": "Wedding Party",
+    "wishes": "Blessings",
+    "faq": "FAQ"
+  },
+  "language": { "toggle": "Toggle Language", "en": "English", "hi": "हिंदी" },
+  "footer": {
+    "madeWith": "Made with", "and": "and", "love": "love",
+    "blessings": "May Lord Ganesha bless this union forever.",
+    "hashtag": "Share your moments"
+  },
+  "buttons": {
+    "viewDetails": "View Details",
+    "backHome": "Back to Home",
+    "getDirections": "Get Directions",
+    "backToCeremonies": "Back to Ceremonies",
+    "close": "Close"
+  },
+  "ceremony": {
+    "date": "Date", "time": "Time", "venue": "Venue",
+    "about": "About this Ceremony", "significance": "Significance",
+    "didYouKnow": "Did You Know?",
+    "tapToReveal": "Tap each card to reveal the answer"
+  },
+  "errors": {
+    "notFound": "Page not found",
+    "notFoundDesc": "The page you are looking for does not exist."
+  }
+}

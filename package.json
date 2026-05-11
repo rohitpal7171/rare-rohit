@@ -1,0 +1,30 @@
+{
+  "name": "rare-rohit",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:wedding":      "npm -w apps/wedding-website run dev",
+    "build:wedding":    "npm -w apps/wedding-website run build",
+    "preview:wedding":  "npm -w apps/wedding-website run preview",
+    "typecheck:wedding":"npm -w apps/wedding-website run typecheck",
+    "lint:wedding":     "npm -w apps/wedding-website run lint",
+    "lint:fix:wedding": "npm -w apps/wedding-website run lint:fix",
+    "format":           "prettier --write \"**/*.{ts,tsx,json,css,md}\" --ignore-path .gitignore",
+    "format:check":     "prettier --check \"**/*.{ts,tsx,json,css,md}\" --ignore-path .gitignore",
+    "typecheck:all":    "npm run typecheck:wedding",
+    "lint:all":         "npm run lint:wedding",
+    "build:all":        "npm run build:wedding",
+    "check":            "npm run typecheck:all && npm run lint:all && npm run format:check"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "home": "होम",
+    "ourStory": "हमारी कहानी",
+    "ceremonies": "रस्में",
+    "schedule": "कार्यक्रम",
+    "gallery": "गैलरी",
+    "weddingParty": "वेडिंग पार्टी",
+    "wishes": "आशीर्वाद",
+    "faq": "सवाल-जवाब"
+  },
+  "language": { "toggle": "भाषा बदलें", "en": "English", "hi": "हिंदी" },
+  "footer": {
+    "madeWith": "बनाया गया", "and": "और", "love": "प्यार",
+    "blessings": "भगवान गणेश इस मिलन को सदा आशीर्वाद दें।",
+    "hashtag": "अपने पल साझा करें"
+  },
+  "buttons": {
+    "viewDetails": "विवरण देखें",
+    "backHome": "होम पर वापस जाएं",
+    "getDirections": "रास्ता देखें",
+    "backToCeremonies": "रस्मों पर वापस जाएं",
+    "close": "बंद करें"
+  },
+  "ceremony": {
+    "date": "तारीख", "time": "समय", "venue": "स्थान",
+    "about": "इस रस्म के बारे में", "significance": "महत्व",
+    "didYouKnow": "क्या आप जानते हैं?",
+    "tapToReveal": "उत्तर जानने के लिए कार्ड पर टैप करें"
+  },
+  "errors": {
+    "notFound": "पृष्ठ नहीं मिला",
+    "notFoundDesc": "जो पृष्ठ आप ढूंढ रहे हैं वह मौजूद नहीं है।"
+  }
+}

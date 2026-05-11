@@ -1,0 +1,34 @@
+{
+  "title": "FAQ",
+  "subtitle": "Everything you need to know",
+  "questions": {
+    "dresscode": {
+      "q": "What is the dress code?",
+      "a": "Traditional Indian attire is preferred and encouraged. For ceremonies — sarees, lehengas, sherwanis and kurtas are perfect. For the reception, feel free to wear semi-formal or formal Indian wear."
+    },
+    "kids": {
+      "q": "Are children welcome?",
+      "a": "Absolutely! Children are a cherished part of Indian wedding celebrations. We welcome little ones with open arms."
+    },
+    "parking": {
+      "q": "Is parking available?",
+      "a": "Yes, complimentary parking is available at the main venue. Please coordinate with family members for directions on the day."
+    },
+    "photos": {
+      "q": "Can I take photos?",
+      "a": "Yes, please do! We encourage everyone to capture the memories. We do ask that during the Pheras, you remain seated and allow our photographer to work."
+    },
+    "gifts": {
+      "q": "Is there a gift registry?",
+      "a": "Your blessings and presence are the greatest gifts. If you wish to give, cash gifts are greatly appreciated."
+    },
+    "rsvp": {
+      "q": "When should I RSVP by?",
+      "a": "Please RSVP by 1st November 2026 so we can ensure the best experience for all our guests."
+    },
+    "food": {
+      "q": "Will there be vegetarian food?",
+      "a": "Yes! All ceremonies will have a full vegetarian menu. Non-vegetarian options will also be available at the reception."
+    }
+  }
+}

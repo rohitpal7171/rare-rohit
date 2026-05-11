@@ -1,0 +1,29 @@
+{
+  "hero": {
+    "title": "Together Forever",
+    "subtitle": "We invite you to celebrate our wedding",
+    "weddingDay": "Today is our Wedding Day! 🎊",
+    "countdown": {
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
+    "scrollDown": "Scroll to explore"
+  },
+  "blessings": {
+    "title": "Divine Blessings",
+    "titleHindi": "दिव्य आशीर्वाद",
+    "ganesh": {
+      "name": "Lord Ganesha",
+      "shloka": "वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ। निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥",
+      "meaning": "O Lord Ganesha of curved trunk and mighty form, whose brilliance equals a million suns — remove all obstacles from my path, always and in everything."
+    },
+    "lakshmi": {
+      "name": "Goddess Lakshmi",
+      "shloka": "सर्वमङ्गलमाङ्गल्ये शिवे सर्वार्थसाधिके। शरण्ये त्र्यम्बके गौरि नारायणि नमोऽस्तु ते॥",
+      "meaning": "O Goddess, the most auspicious of all that is auspicious, fulfiller of all desires, refuge of all — O Gauri, we bow to you."
+    },
+    "subtitle": "We begin this sacred journey under the divine blessings of Lord Ganesha and Goddess Lakshmi"
+  }
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="32" fill="#2D1B4E"/>
+  <!-- Inner ring -->
+  <circle cx="32" cy="32" r="28" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity="0.6"/>
+  <!-- Stylised diya flame — path-based, no font dependency -->
+  <!-- Flame outer -->
+  <path d="M32 12 C28 20 22 24 22 32 C22 40 26 46 32 48 C38 46 42 40 42 32 C42 24 36 20 32 12Z"
+        fill="#C9A84C" opacity="0.9"/>
+  <!-- Flame inner highlight -->
+  <path d="M32 18 C30 24 27 27 27 32 C27 37 29 41 32 43 C35 41 37 37 37 32 C37 27 34 24 32 18Z"
+        fill="#FF6B00" opacity="0.8"/>
+  <!-- Flame core -->
+  <path d="M32 24 C31 27 30 29 30 32 C30 35 31 37 32 38 C33 37 34 35 34 32 C34 29 33 27 32 24Z"
+        fill="#FDF6EC" opacity="0.9"/>
+  <!-- Diya base -->
+  <ellipse cx="32" cy="49" rx="10" ry="3.5" fill="#A07830"/>
+  <ellipse cx="32" cy="49" rx="10" ry="3.5" fill="none" stroke="#C9A84C" stroke-width="1"/>
+</svg>

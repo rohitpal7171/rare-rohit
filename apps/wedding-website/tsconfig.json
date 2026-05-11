@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@shared/ui": ["../../shared/ui/index.ts"],
+      "@shared/ui/*": ["../../shared/ui/*"],
+      "@shared/hooks": ["../../shared/hooks/index.ts"],
+      "@shared/hooks/*": ["../../shared/hooks/*"],
+      "@shared/utils": ["../../shared/utils/index.ts"],
+      "@shared/utils/*": ["../../shared/utils/*"],
+      "@app/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "../../shared"],
+  "exclude": ["node_modules", "dist"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

@@ -1,0 +1,40 @@
+# Cursor Rules — apps/wedding-website
+
+## Context
+Indian wedding website. React 18 + TypeScript strict + Vite SWC + Tailwind v3 + Framer Motion v11.
+Bilingual: English (dev default) and Hindi (prod default) via react-i18next.
+Fixed theme: saffron + maroon + gold + ivory. Ganesh & Lakshmi divine motif.
+
+## Imports
+- Shared components: `import { Button } from '@shared/ui'`
+- Shared hooks: `import { useCountdown } from '@shared/hooks'`
+- Shared utils: `import { cn, fadeInUp } from '@shared/utils'`
+- App internals: `import { WeddingConfig } from '@app/config/types'`
+
+## i18n
+- Every user-facing string must use `const { t } = useTranslation('namespace')`
+- Never hardcode English or Hindi text in JSX
+- Add new keys to BOTH `src/i18n/locales/en/` and `src/i18n/locales/hi/` simultaneously
+- Namespace per section: common, home, story, ceremonies, schedule, gallery, party, travel, rsvp, faq
+
+## Component Structure
+- Layout components in `src/components/layout/`
+- Home page sections in `src/components/sections/`
+- Ceremony detail pages in `src/components/ceremonies/`
+- Page-level components in `src/pages/`
+- Router config in `src/router/index.tsx`
+
+## Animation Rules
+- All Framer Motion variants from `@shared/utils` — never define inline variants
+- Use `AnimatedSection` from `@shared/ui` for scroll reveals
+- Ceremony pages use `pageTransition` variant from `@shared/utils`
+
+## Theme
+- Colors: saffron, maroon, gold, ivory, marigold, divine (from tailwind.config.ts)
+- Fonts: font-display (Playfair), font-body (Poppins), font-hindi (Noto Devanagari), font-script (Dancing Script)
+- Never use raw hex colors — always Tailwind tokens
+
+## Config
+- All personal wedding details in `src/config/wedding.config.ts`
+- Types for config in `src/config/types.ts`
+- Never hardcode bride/groom names, dates, venues in components

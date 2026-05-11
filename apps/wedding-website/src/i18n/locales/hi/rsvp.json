@@ -1,0 +1,36 @@
+{
+  "title": "आरएसवीपी",
+  "subtitle": "हमें बताएं कि आप आ रहे हैं",
+  "deadline": "कृपया इस तारीख तक जवाब दें",
+  "form": {
+    "fullName": "पूरा नाम",
+    "fullNamePlaceholder": "अपना पूरा नाम लिखें",
+    "email": "ईमेल पता",
+    "emailPlaceholder": "your@email.com",
+    "phone": "फोन नंबर",
+    "phonePlaceholder": "+९१ XXXXX XXXXX",
+    "attendance": "क्या आप आएंगे?",
+    "attending": "खुशी से आ रहे हैं",
+    "notAttending": "खेद के साथ नहीं आ सकते",
+    "guestCount": "मेहमानों की संख्या",
+    "ceremonies": "आप किन रस्मों में आएंगे?",
+    "meal": "भोजन की पसंद",
+    "mealVeg": "शाकाहारी",
+    "mealNonVeg": "मांसाहारी",
+    "mealJain": "जैन",
+    "message": "दंपत्ति के लिए संदेश (वैकल्पिक)",
+    "messagePlaceholder": "यहाँ अपनी शुभकामनाएं लिखें...",
+    "submit": "RSVP भेजें",
+    "submitting": "भेजा जा रहा है..."
+  },
+  "success": {
+    "title": "धन्यवाद!",
+    "message": "आपका RSVP प्राप्त हो गया। हम आपके साथ जश्न मनाने का इंतजार नहीं कर सकते!"
+  },
+  "validation": {
+    "nameRequired": "नाम आवश्यक है",
+    "emailRequired": "ईमेल आवश्यक है",
+    "emailInvalid": "कृपया एक मान्य ईमेल दर्ज करें",
+    "attendanceRequired": "कृपया अपनी उपस्थिति चुनें"
+  }
+}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rohitwedspriti.netlify.app/sitemap.xml

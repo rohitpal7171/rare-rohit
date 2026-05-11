@@ -1,0 +1,31 @@
+{
+  "title": "Our Story",
+  "subtitle": "A union destined by families, blessed by God",
+  "timeline": {
+    "met": {
+      "year": "Jan 2026",
+      "title": "First Meeting",
+      "description": "Two families came together and introduced Rohit and Priti for the first time. What began as a formal meeting quickly felt like a familiar warmth — two hearts recognised each other instantly."
+    },
+    "friendship": {
+      "year": "Jan 2026",
+      "title": "Roka Ceremony",
+      "description": "Just ten days later, on 30th January 2026, both families celebrated the Roka — the joyful first step of officially sealing this beautiful union with blessings and sweets."
+    },
+    "love": {
+      "year": "2026",
+      "title": "Getting to Know Each Other",
+      "description": "In the months that followed, Rohit and Priti shared conversations, laughter, dreams and the quiet understanding that they were meant to walk this path together."
+    },
+    "proposal": {
+      "year": "Nov 2026",
+      "title": "Lagun — The Sacred Promise",
+      "description": "On 24th November 2026 in Gwalior, the Lagun ceremony marked the divine confirmation of this union — sacred rituals, family blessings, and a promise written for eternity."
+    },
+    "wedding": {
+      "year": "Nov 2026",
+      "title": "The Wedding",
+      "description": "On 25th November 2026, Rohit arrives as a groom in Kokapur, and together they take the seven sacred pheras — beginning their forever with God, family, and love as their witness."
+    }
+  }
+}

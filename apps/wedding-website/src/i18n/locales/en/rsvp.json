@@ -1,0 +1,36 @@
+{
+  "title": "RSVP",
+  "subtitle": "Let us know you are coming",
+  "deadline": "Please respond by",
+  "form": {
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "email": "Email Address",
+    "emailPlaceholder": "your@email.com",
+    "phone": "Phone Number",
+    "phonePlaceholder": "+91 XXXXX XXXXX",
+    "attendance": "Will you be attending?",
+    "attending": "Joyfully Attending",
+    "notAttending": "Regretfully Declining",
+    "guestCount": "Number of Guests",
+    "ceremonies": "Which ceremonies will you attend?",
+    "meal": "Meal Preference",
+    "mealVeg": "Vegetarian",
+    "mealNonVeg": "Non-Vegetarian",
+    "mealJain": "Jain",
+    "message": "Message for the Couple (Optional)",
+    "messagePlaceholder": "Write your warm wishes here...",
+    "submit": "Send RSVP",
+    "submitting": "Sending..."
+  },
+  "success": {
+    "title": "Thank You!",
+    "message": "Your RSVP has been received. We can't wait to celebrate with you!"
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email",
+    "attendanceRequired": "Please select your attendance"
+  }
+}
