@@ -12,7 +12,7 @@
     "jsx": "react-jsx",
     "skipLibCheck": true,
 
-    /* Strict — all flags explicitly on */
+    /* Strict */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -25,7 +25,7 @@
     "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": true,
 
-    /* Path Aliases — resolved by each app's tsconfig */
+    /* Path Aliases */
     "baseUrl": ".",
     "paths": {
       "@shared/ui": ["shared/ui/index.ts"],
