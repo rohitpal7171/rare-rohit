@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+
 import { useTranslation } from 'react-i18next'
 
 import { AnimatedSection } from '@shared/ui'
@@ -10,8 +11,12 @@ export const WeddingParty = () => {
     <section id="wedding-party" className="section-padding bg-ivory">
       <div className="section-container">
         <AnimatedSection className="mb-12 text-center" stagger>
-          <motion.h2 variants={fadeInUp} className="section-title text-maroon">{t('title')}</motion.h2>
-          <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-maroon/60">{t('subtitle')}</motion.p>
+          <motion.h2 variants={fadeInUp} className="section-title text-maroon">
+            {t('title')}
+          </motion.h2>
+          <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-maroon/60">
+            {t('subtitle')}
+          </motion.p>
           <motion.div variants={fadeInUp} className="gold-divider mt-4" />
         </AnimatedSection>
         {/* TODO: Add wedding party member cards with photos and bios */}

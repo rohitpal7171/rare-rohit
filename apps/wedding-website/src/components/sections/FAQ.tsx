@@ -1,6 +1,8 @@
-import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
+
+import { AnimatePresence, motion } from 'framer-motion'
+
+import { ChevronDown } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { AnimatedSection } from '@shared/ui'
@@ -17,8 +19,12 @@ export const FAQ = () => {
     <section id="faq" className="section-padding mandala-bg">
       <div className="section-container max-w-3xl">
         <AnimatedSection className="mb-12 text-center" stagger>
-          <motion.h2 variants={fadeInUp} className="section-title text-gold">{t('title')}</motion.h2>
-          <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-ivory/60">{t('subtitle')}</motion.p>
+          <motion.h2 variants={fadeInUp} className="section-title text-gold">
+            {t('title')}
+          </motion.h2>
+          <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-ivory/60">
+            {t('subtitle')}
+          </motion.p>
           <motion.div variants={fadeInUp} className="gold-divider mt-4" aria-hidden="true" />
         </AnimatedSection>
 
@@ -33,7 +39,9 @@ export const FAQ = () => {
               className="card-divine overflow-hidden"
             >
               <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                onClick={() => {
+                  setOpenIndex(openIndex === index ? null : index)
+                }}
                 className="flex w-full items-center justify-between gap-4 text-left"
                 aria-expanded={openIndex === index}
               >

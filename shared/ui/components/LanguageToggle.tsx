@@ -28,11 +28,11 @@ export const LanguageToggle = ({ className }: LanguageToggleProps) => {
       )}
       aria-label="Toggle language"
     >
-      <span className={cn('transition-opacity', isHindi ? 'opacity-50' : 'opacity-100')}>
-        EN
-      </span>
+      <span className={cn('transition-opacity', isHindi ? 'opacity-50' : 'opacity-100')}>EN</span>
       <span className="text-gold/40">|</span>
-      <span className={cn('transition-opacity font-hindi', !isHindi ? 'opacity-50' : 'opacity-100')}>
+      <span
+        className={cn('font-hindi transition-opacity', !isHindi ? 'opacity-50' : 'opacity-100')}
+      >
         हिंदी
       </span>
     </motion.button>

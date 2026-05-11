@@ -1,15 +1,18 @@
 # CLAUDE.md — shared/
 
 ## Purpose
+
 Pure TypeScript source shared across all apps in this monorepo.
 No `package.json` here — accessed via Vite path aliases `@shared/*`.
 
 ## Structure
+
 - `ui/` — Reusable React components (Button, Modal, Countdown, etc.)
 - `hooks/` — Reusable custom hooks (useCountdown, useScrollAnimation, etc.)
 - `utils/` — Utilities, Framer Motion variants, constants, date helpers
 
 ## Rules
+
 - No `package.json` in any subfolder
 - No app-specific logic here — shared code must be generic
 - Every folder has an `index.ts` barrel export

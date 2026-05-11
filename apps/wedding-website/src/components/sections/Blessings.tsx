@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+
 import { useTranslation } from 'react-i18next'
 
 import { AnimatedSection } from '@shared/ui'
@@ -8,10 +9,12 @@ export const Blessings = () => {
   const { t } = useTranslation('home')
 
   return (
-    <section id="blessings" className="mandala-bg section-padding">
+    <section id="blessings" className="section-padding mandala-bg">
       <div className="section-container">
         <AnimatedSection className="mb-12 text-center" stagger>
-          <motion.div variants={fadeInUp} className="mb-4 text-5xl">🪔</motion.div>
+          <motion.div variants={fadeInUp} className="mb-4 text-5xl">
+            🪔
+          </motion.div>
           <motion.h2 variants={fadeInUp} className="section-title font-display text-gold">
             {t('blessings.titleHindi')}
           </motion.h2>

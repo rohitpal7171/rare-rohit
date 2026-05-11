@@ -13,7 +13,6 @@ import en_schedule from './locales/en/schedule.json'
 import en_story from './locales/en/story.json'
 import en_travel from './locales/en/travel.json'
 import en_wishes from './locales/en/wishes.json'
-
 import hi_ceremonies from './locales/hi/ceremonies.json'
 import hi_common from './locales/hi/common.json'
 import hi_faq from './locales/hi/faq.json'
@@ -28,14 +27,30 @@ import hi_wishes from './locales/hi/wishes.json'
 
 const resources = {
   en: {
-    common: en_common, home: en_home, story: en_story, ceremonies: en_ceremonies,
-    schedule: en_schedule, gallery: en_gallery, party: en_party, travel: en_travel,
-    rsvp: en_rsvp, faq: en_faq, wishes: en_wishes,
+    common: en_common,
+    home: en_home,
+    story: en_story,
+    ceremonies: en_ceremonies,
+    schedule: en_schedule,
+    gallery: en_gallery,
+    party: en_party,
+    travel: en_travel,
+    rsvp: en_rsvp,
+    faq: en_faq,
+    wishes: en_wishes,
   },
   hi: {
-    common: hi_common, home: hi_home, story: hi_story, ceremonies: hi_ceremonies,
-    schedule: hi_schedule, gallery: hi_gallery, party: hi_party, travel: hi_travel,
-    rsvp: hi_rsvp, faq: hi_faq, wishes: hi_wishes,
+    common: hi_common,
+    home: hi_home,
+    story: hi_story,
+    ceremonies: hi_ceremonies,
+    schedule: hi_schedule,
+    gallery: hi_gallery,
+    party: hi_party,
+    travel: hi_travel,
+    rsvp: hi_rsvp,
+    faq: hi_faq,
+    wishes: hi_wishes,
   },
 }
 

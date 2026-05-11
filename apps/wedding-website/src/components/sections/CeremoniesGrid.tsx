@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+
 import { ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -39,14 +40,20 @@ export const CeremoniesGrid = () => {
               <motion.div key={slug} variants={scaleIn}>
                 <Link to={`/ceremony/${slug}`} className="group block">
                   <div className="card-divine h-full space-y-3 transition-all duration-300 hover:border-gold/50 hover:shadow-gold">
-                    <div className="text-4xl" aria-hidden="true">{ceremony.icon}</div>
+                    <div className="text-4xl" aria-hidden="true">
+                      {ceremony.icon}
+                    </div>
                     <h3 className="font-display text-xl font-bold text-gold">
                       {t(`${slug}.name`)}
                     </h3>
                     <p className="font-script text-sm text-ivory/50">{t(`${slug}.tagline`)}</p>
                     <div className="gold-divider my-2" aria-hidden="true" />
                     <p className="font-body text-xs text-ivory/40">
-                      {formatDate(ceremony.date, locale, { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {formatDate(ceremony.date, locale, {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })}
                     </p>
                     <p className="font-body text-xs text-ivory/40">
                       {locale === 'hi' ? ceremony.timeHindi : ceremony.time}

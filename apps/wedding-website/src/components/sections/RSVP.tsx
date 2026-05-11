@@ -1,6 +1,8 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { motion } from 'framer-motion'
 import { useState } from 'react'
+
+import { motion } from 'framer-motion'
+
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
@@ -9,22 +11,22 @@ import { AnimatedSection, Button } from '@shared/ui'
 import { CEREMONY_SLUGS, cn, fadeInUp } from '@shared/utils'
 
 const rsvpSchema = z.object({
-  fullName:   z.string().min(2),
-  email:      z.string().email(),
-  phone:      z.string().optional(),
+  fullName: z.string().min(2),
+  email: z.string().email(),
+  phone: z.string().optional(),
   attendance: z.enum(['attending', 'notAttending']),
   guestCount: z.number().min(1).max(10),
   ceremonies: z.array(z.string()).optional(),
-  meal:       z.enum(['veg', 'nonVeg', 'jain']).optional(),
-  message:    z.string().optional(),
+  meal: z.enum(['veg', 'nonVeg', 'jain']).optional(),
+  message: z.string().optional(),
 })
 
 type RsvpFormValues = z.infer<typeof rsvpSchema>
 
 const MEAL_KEY_MAP = {
-  veg:    'form.mealVeg',
+  veg: 'form.mealVeg',
   nonVeg: 'form.mealNonVeg',
-  jain:   'form.mealJain',
+  jain: 'form.mealJain',
 } as const satisfies Record<string, `form.${string}`>
 
 export const RSVP = () => {
@@ -49,13 +51,22 @@ export const RSVP = () => {
     <section id="rsvp" className="section-padding bg-ivory">
       <div className="section-container max-w-2xl">
         <AnimatedSection className="mb-12 text-center" stagger>
-          <motion.h2 variants={fadeInUp} className="section-title text-maroon">{t('title')}</motion.h2>
-          <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-maroon/60">{t('subtitle')}</motion.p>
+          <motion.h2 variants={fadeInUp} className="section-title text-maroon">
+            {t('title')}
+          </motion.h2>
+          <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-maroon/60">
+            {t('subtitle')}
+          </motion.p>
           <motion.div variants={fadeInUp} className="gold-divider mt-4" />
         </AnimatedSection>
 
         {submitted ? (
-          <motion.div variants={fadeInUp} initial="hidden" animate="visible" className="card-divine space-y-4 text-center">
+          <motion.div
+            variants={fadeInUp}
+            initial="hidden"
+            animate="visible"
+            className="card-divine space-y-4 text-center"
+          >
             <div className="text-5xl">💌</div>
             <h3 className="font-display text-2xl text-gold">{t('success.title')}</h3>
             <p className="font-body text-maroon/60">{t('success.message')}</p>
@@ -66,11 +77,15 @@ export const RSVP = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            onSubmit={(e) => { void handleSubmit(onSubmit)(e) }}
+            onSubmit={(e) => {
+              void handleSubmit(onSubmit)(e)
+            }}
             className="space-y-6"
           >
             <div>
-              <label className="font-body text-sm font-medium text-maroon">{t('form.fullName')}</label>
+              <label className="font-body text-sm font-medium text-maroon">
+                {t('form.fullName')}
+              </label>
               <input
                 {...register('fullName')}
                 placeholder={t('form.fullNamePlaceholder')}
@@ -100,11 +115,18 @@ export const RSVP = () => {
             </div>
 
             <div>
-              <label className="font-body text-sm font-medium text-maroon">{t('form.attendance')}</label>
+              <label className="font-body text-sm font-medium text-maroon">
+                {t('form.attendance')}
+              </label>
               <div className="mt-2 flex gap-4">
                 {(['attending', 'notAttending'] as const).map((val) => (
                   <label key={val} className="flex cursor-pointer items-center gap-2">
-                    <input type="radio" value={val} {...register('attendance')} className="accent-gold" />
+                    <input
+                      type="radio"
+                      value={val}
+                      {...register('attendance')}
+                      className="accent-gold"
+                    />
                     <span className="font-body text-sm text-maroon">{t(`form.${val}`)}</span>
                   </label>
                 ))}
@@ -112,11 +134,18 @@ export const RSVP = () => {
             </div>
 
             <div>
-              <label className="font-body text-sm font-medium text-maroon">{t('form.ceremonies')}</label>
+              <label className="font-body text-sm font-medium text-maroon">
+                {t('form.ceremonies')}
+              </label>
               <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {CEREMONY_SLUGS.map((slug) => (
                   <label key={slug} className="flex cursor-pointer items-center gap-2">
-                    <input type="checkbox" value={slug} {...register('ceremonies')} className="accent-gold" />
+                    <input
+                      type="checkbox"
+                      value={slug}
+                      {...register('ceremonies')}
+                      className="accent-gold"
+                    />
                     <span className="font-body text-sm capitalize text-maroon">
                       {tCeremonies(`${slug}.name`)}
                     </span>
@@ -138,7 +167,9 @@ export const RSVP = () => {
             </div>
 
             <div>
-              <label className="font-body text-sm font-medium text-maroon">{t('form.message')}</label>
+              <label className="font-body text-sm font-medium text-maroon">
+                {t('form.message')}
+              </label>
               <textarea
                 {...register('message')}
                 rows={3}
@@ -147,7 +178,13 @@ export const RSVP = () => {
               />
             </div>
 
-            <Button type="submit" variant="gold" size="lg" className="w-full" isLoading={isSubmitting}>
+            <Button
+              type="submit"
+              variant="gold"
+              size="lg"
+              className="w-full"
+              isLoading={isSubmitting}
+            >
               {isSubmitting ? t('form.submitting') : t('form.submit')}
             </Button>
           </motion.form>

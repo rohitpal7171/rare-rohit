@@ -1,61 +1,80 @@
 # CLAUDE.md — rare-rohit Monorepo
 
+## ⚠️ BEFORE EVERY GIT PUSH — NON-NEGOTIABLE
+
+```bash
+npm run pre-push
+```
+
+If it fails → fix errors → run again → only push when PASS.
+Details: `context/PRE-PUSH-CHECKLIST.md`
+
 ## Before Starting Any Session
+
 1. Read `context/TODO.md` — open tasks, verified fixes, what's next
-2. Read `context/WEDDING_DETAILS.md` — real names, dates, venues (before touching any config)
+2. Read `context/WEDDING_DETAILS.md` — real names, dates, venues
 3. Read `context/PLAN.md` — overall phase status
 4. Read `context/DECISIONS.md` — before any architectural change
 5. Read relevant `claude-skills/` file for the domain you're working in
-6. After working — update `context/TODO.md` + `context/PLAN.md` + `context/sessions/YYYY-MM-DD.md`
+6. After working — update `context/TODO.md` + create `context/sessions/YYYY-MM-DD.md`
 
-## Real Wedding Details (quick reference — full details in context/WEDDING_DETAILS.md)
+## Real Wedding Details
+
 - **Groom:** Rohit Singh Pal (रोहित सिंह पाल)
 - **Bride:** Priti Pal (प्रीति पाल)
 - **Lagun:** 24 November 2026 — Gwalior, MP
-- **Baraat / Pheras:** 25 November 2026 — Kokapur, near Udi Moad
-- **Hashtag:** #RohitWedsPriti (confirm before launch)
+- **Baraat:** 25 November 2026, 4:00 PM — Kokapur, Udi Modh, UP
+- **Pheras:** 26 November 2026, 9:00 AM — Kokapur, Udi Modh, UP
+- **Hashtag:** #RohitWedsPriti
 
 ## Project Identity
-- **Repo:** rare-rohit (personal monorepo by Rohit)
+
+- **Repo:** rare-rohit — github.com/rohitpal7171/rare-rohit
+- **Live:** rohitwedspriti.netlify.app (auto-deploys on push to main)
 - **Structure:** `apps/*` · `shared/*` · `claude-skills/` · `context/` (gitignored)
 - **Stack:** TypeScript 5 strict · React 18 · Vite 5 SWC · Tailwind v3 · Framer Motion v11
 
 ## Claude Skills — Read Before Working
-| Domain | Skill file |
-|--------|-----------|
-| Building / editing components | `claude-skills/frontend-developer.md` + `claude-skills/frontend-designer.md` |
-| Architecture decisions | `claude-skills/frontend-architect.md` |
-| Testing | `claude-skills/frontend-tester.md` |
-| Any visual work | `claude-skills/frontend-designer.md` |
 
-## Context Files (gitignored — safe to delete entire folder)
+| Domain                   | File                                  |
+| ------------------------ | ------------------------------------- |
+| Components / logic       | `claude-skills/frontend-developer.md` |
+| Visual / CSS / animation | `claude-skills/frontend-designer.md`  |
+| Architecture decisions   | `claude-skills/frontend-architect.md` |
+| Testing / accessibility  | `claude-skills/frontend-tester.md`    |
+
+## Context Files (gitignored)
+
 ```
 context/
-├── README.md              ← explains the system
-├── TODO.md                ← open tasks + verified fixes (read every session)
-├── WEDDING_DETAILS.md     ← real names, dates, venues — source of truth
-├── PLAN.md                ← build phases + status
-├── DECISIONS.md           ← architectural decisions + reasoning
-└── sessions/              ← per-session notes (YYYY-MM-DD.md)
+├── TODO.md                ← open tasks + verified fixes
+├── WEDDING_DETAILS.md     ← confirmed real data
+├── PRE-PUSH-CHECKLIST.md  ← what to run before every push
+├── PLAN.md                ← build phases
+├── DECISIONS.md           ← architectural decisions
+└── sessions/              ← per-session notes
 ```
 
-## Monorepo Rules
-- `shared/` has NO `package.json` — pure TypeScript source via Vite path aliases
-- Aliases: `@shared/ui` · `@shared/hooks` · `@shared/utils` · `@app/*`
-- Never relative imports crossing package boundaries
+## Key Commands
 
-## TypeScript
-- `verbatimModuleSyntax: true` — always `import type` for type-only imports
-- `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes` — enabled
+```bash
+npm run pre-push         # ← run before EVERY push
+npm run dev:wedding      # → http://localhost:5173
+npm run build:wedding    # production build (same as Netlify)
+npm run check            # typecheck + lint + format
+```
+
+## TypeScript Rules
+
+- `verbatimModuleSyntax` — always `import type` for type-only imports
+- `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes` enabled
+- `noUnusedLocals` + `noUnusedParameters` — zero unused vars/types
 - ZERO `.js`/`.jsx` files
 
-## Quality Commands
-```bash
-npm run dev:wedding      # → http://localhost:5173
-npm run check            # typecheck + lint + format:check (run before commit)
-npm run build:wedding    # production build
-```
+## Common TS Errors to Watch
 
-## Git Commit Format
-`feat:` `fix:` `chore:` `docs:` `style:` `refactor:` `perf:`
-Always run `npm run check` before committing.
+- **TS7030** — useEffect not all paths return → add `return undefined`
+- **TS6133** — declared but never used → remove the variable/type
+- **TS2339** — property doesn't exist → check types.ts matches config
+- **TS7053** — implicit any on index → check slug matches CeremonySlug
+- **TS2375** — exactOptionalPropertyTypes → never pass `| undefined` to style

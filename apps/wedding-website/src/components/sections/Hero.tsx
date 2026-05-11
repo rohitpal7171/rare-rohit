@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion'
+
 import { ChevronDown, MapPin } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Countdown } from '@shared/ui'
-import { fadeInUp, staggerContainer } from '@shared/utils'
+import { cn, fadeInUp, staggerContainer } from '@shared/utils'
 
 import { weddingConfig } from '@app/config/wedding.config'
 
 const PETAL_POSITIONS = [
-  { x: '8%',  delay: 0 },
+  { x: '8%', delay: 0 },
   { x: '22%', delay: 1.5 },
   { x: '38%', delay: 0.8 },
   { x: '55%', delay: 2.2 },
@@ -24,8 +25,13 @@ interface FloatingPetalProps {
 const FloatingPetal = ({ x, delay }: FloatingPetalProps) => (
   <div
     aria-hidden="true"
-    className="pointer-events-none absolute text-2xl opacity-60 animate-petal-fall"
-    style={{ left: x, top: '-20px', animationDelay: `${delay}s`, animationDuration: `${8 + delay}s` }}
+    className="pointer-events-none absolute animate-petal-fall text-2xl opacity-60"
+    style={{
+      left: x,
+      top: '-20px',
+      animationDelay: `${delay}s`,
+      animationDuration: `${8 + delay}s`,
+    }}
   >
     🌸
   </div>
@@ -39,39 +45,38 @@ export const Hero = () => {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden mandala-bg"
+      className="mandala-bg relative flex min-h-screen flex-col items-center justify-center overflow-hidden"
     >
-      {/* Floating petals */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
         {PETAL_POSITIONS.map(({ x, delay }) => (
           <FloatingPetal key={x} x={x} delay={delay} />
         ))}
       </div>
 
-      {/* Mandala rings */}
-      <div aria-hidden="true" className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10 opacity-30" />
-      <div aria-hidden="true" className="absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10 opacity-20" />
+      <div
+        aria-hidden="true"
+        className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10 opacity-30"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10 opacity-20"
+      />
 
-      {/* Content */}
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
         className="relative z-10 flex flex-col items-center gap-6 px-4 text-center"
       >
-        {/*
-          ॐ symbol — explicit inline color + text-shadow glow.
-          NOT using font-hindi class (its !important overrides color in some browsers).
-          NOT using diya-glow (drop-shadow filter doesn't colorise the text itself).
-          Using inline style for guaranteed saffron color + orange glow.
-        */}
+        {/* ॐ — inline style used intentionally: font-hindi !important overrides color */}
         <motion.div
           variants={fadeInUp}
           aria-hidden="true"
           className="text-6xl"
           style={{
             color: '#FF6B00',
-            textShadow: '0 0 12px rgba(255,107,0,0.9), 0 0 30px rgba(255,107,0,0.5), 0 0 60px rgba(255,107,0,0.2)',
+            textShadow:
+              '0 0 12px rgba(255,107,0,0.9), 0 0 30px rgba(255,107,0,0.5), 0 0 60px rgba(255,107,0,0.2)',
           }}
         >
           ॐ
@@ -80,7 +85,9 @@ export const Hero = () => {
         <motion.div variants={fadeInUp} className="space-y-2">
           <h1 className="font-display text-5xl font-bold text-ivory sm:text-6xl lg:text-7xl">
             <span className="text-gold-shimmer">{groom.name}</span>
-            <span className="mx-4 font-script text-gold/60" aria-hidden="true">&amp;</span>
+            <span className="mx-4 font-script text-gold/60" aria-hidden="true">
+              &amp;
+            </span>
             <span className="sr-only"> and </span>
             <span className="text-gold-shimmer">{bride.name}</span>
           </h1>
@@ -95,28 +102,28 @@ export const Hero = () => {
 
         <motion.div variants={fadeInUp} className="gold-divider w-32" aria-hidden="true" />
 
-        {/* Countdown */}
         <motion.div variants={fadeInUp}>
           <Countdown targetDate={wedding.date} />
         </motion.div>
 
-        {/* Date + Location below countdown */}
         <motion.div variants={fadeInUp} className="space-y-2 text-center">
           <p className="font-body text-sm uppercase tracking-widest text-gold/60">
             {new Date(wedding.date).toLocaleDateString('en-IN', {
-              day: 'numeric', month: 'long', year: 'numeric',
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
             })}
           </p>
           <div className="flex items-center justify-center gap-2">
             <MapPin size={14} className="shrink-0 text-gold/50" aria-hidden="true" />
-            <p className={`text-sm text-ivory/60 ${isHindi ? 'font-hindi' : 'font-body'}`}>
+            {/* cn() used — avoids template literal string which violates strict-boolean-expressions */}
+            <p className={cn('text-sm text-ivory/60', isHindi ? 'font-hindi' : 'font-body')}>
               {isHindi ? wedding.venue.nameHindi : wedding.venue.name}
             </p>
           </div>
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}

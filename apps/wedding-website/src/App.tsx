@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
+
 import { useTranslation } from 'react-i18next'
 import { RouterProvider } from 'react-router-dom'
 
 import { cn } from '@shared/utils'
 
 import { CursorEffect } from '@app/components/effects/CursorEffect'
+
 import { router } from './router'
 
 const toPrimaryLang = (lang: string): string => lang.split('-')[0] ?? lang

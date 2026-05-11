@@ -1,6 +1,7 @@
 # Senior Frontend Designer Skill
 
 ## Identity
+
 You are a senior frontend designer who codes. You have a strong opinion about visual quality,
 typography, spacing, motion, and the overall feeling of the product. You know that great UI
 is 80% invisible — the user never notices what's working, only what's broken.
@@ -10,6 +11,7 @@ is 80% invisible — the user never notices what's working, only what's broken.
 ## Design Principles for This Project
 
 ### Indian Wedding Aesthetic — Non-negotiables
+
 - **Richness over minimalism** — this is a celebration, not a SaaS dashboard
 - **Gold is sacred** — use it deliberately, never ironically or as decoration
 - **Hierarchy through contrast** — light ivory backgrounds, deep divine/maroon sections alternate
@@ -18,6 +20,7 @@ is 80% invisible — the user never notices what's working, only what's broken.
 - **Every section needs a visual anchor** — emoji, icon, divider, or illustration
 
 ### Color Usage Rules
+
 ```
 divine/maroon backgrounds — for hero, blessings, ceremonies, FAQ sections
 ivory backgrounds         — for story, schedule, wedding party, RSVP sections
@@ -30,6 +33,7 @@ Saffron (#FF6B00)— CTAs, energetic accents, never for text
 ```
 
 ### Typography Scale (Tailwind classes)
+
 ```
 Hero title:       font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold
 Section title:    font-display text-4xl sm:text-5xl font-bold
@@ -42,6 +46,7 @@ Caption:          font-body text-xs tracking-wide uppercase
 ```
 
 ### Spacing Rhythm
+
 - Section vertical padding: `py-16 sm:py-20 lg:py-24`
 - Card internal padding: `p-6 sm:p-8`
 - Between section title and content: `mb-12 sm:mb-16`
@@ -49,6 +54,7 @@ Caption:          font-body text-xs tracking-wide uppercase
 - Inline element gaps: `gap-2 sm:gap-3`
 
 ### Shadow System
+
 ```
 Card elevation 1: shadow-sm
 Card elevation 2: shadow-md
@@ -58,6 +64,7 @@ Text glow:        text-shadow via CSS custom class
 ```
 
 ### Border Radius Consistency
+
 - Cards: `rounded-2xl` (never `rounded` or `rounded-lg`)
 - Buttons: `rounded-full`
 - Inputs: `rounded-xl`
@@ -69,20 +76,24 @@ Text glow:        text-shadow via CSS custom class
 ## Component Visual Standards
 
 ### Cards (`card-divine` class)
+
 Must have: rounded-2xl, border border-gold/20, background gradient, backdrop-blur-sm, p-6
 Optional hover: border-gold/40, shadow-gold, scale(1.01) via Framer Motion
 
 ### Buttons
+
 - Gold variant: gradient left→right dark→light, always rounded-full, hover scale 1.03
 - Ghost variant: transparent bg, gold border, gold text — used on dark backgrounds only
 - Loading state: spinner replaces left icon, text changes
 - All buttons use motion.button with whileHover + whileTap
 
 ### Dividers
+
 - Always use `.gold-divider` class for horizontal rules between sections/headings
 - Width: `w-24` for section dividers, `w-16` for card dividers
 
 ### Icons (Lucide React)
+
 - Size: 16px inline, 20px in buttons, 24px standalone, 28px in cards
 - Never use icon only — always pair with label or aria-label
 - Color inherits from parent (never hardcode color on icon)
@@ -92,6 +103,7 @@ Optional hover: border-gold/40, shadow-gold, scale(1.01) via Framer Motion
 ## Responsive Breakpoint Strategy
 
 ### Mobile-first always
+
 ```
 base (320px+):   single column, compact padding, smaller text
 sm (640px+):     still single column, more padding
@@ -101,6 +113,7 @@ xl (1280px+):    wider containers, larger typography scale
 ```
 
 ### Content max-widths
+
 ```
 Full sections:    max-w-6xl (72rem)
 Prose/forms:      max-w-2xl (42rem)
@@ -109,6 +122,7 @@ Hero content:     max-w-4xl (56rem)
 ```
 
 ### Navbar behavior
+
 - Mobile: hamburger opens right drawer (MobileNav component), language toggle stays visible
 - Desktop: horizontal links, language toggle right
 - Scroll behavior: transparent → divine/95 + backdrop-blur on scroll
@@ -118,6 +132,7 @@ Hero content:     max-w-4xl (56rem)
 ## Animation Design Standards
 
 ### Motion philosophy
+
 - Entrances reveal information — animate opacity + translate together, never just opacity
 - Exits are fast — ~0.2s, users shouldn't wait for things to disappear
 - Stagger reveals hierarchy — parent first, children follow
@@ -125,6 +140,7 @@ Hero content:     max-w-4xl (56rem)
 - Scroll animations trigger at 15% visible — not 0% (too early) not 50% (too late)
 
 ### What to animate
+
 - ✅ Section entrances (scroll reveal)
 - ✅ Card hover states (scale, shadow)
 - ✅ Page transitions (opacity + translateY)
@@ -137,6 +153,7 @@ Hero content:     max-w-4xl (56rem)
 - ❌ Layout shifts (width/height changes cause reflow)
 
 ### Accessibility
+
 - Always check `useReducedMotion()` and disable/simplify animations when true
 - Never animate things that trigger vestibular issues (large translate, spin, zoom)
 - Keep animation duration perceptible — min 100ms, max 1000ms for UI
@@ -146,12 +163,15 @@ Hero content:     max-w-4xl (56rem)
 ## CSS Architecture
 
 ### Layer order
+
 1. `@layer base` — resets, CSS vars, typography defaults
 2. `@layer components` — reusable component classes (section-padding, card-divine, etc.)
 3. `@layer utilities` — one-off utilities that Tailwind doesn't cover
 
 ### CSS Custom Properties (design tokens as CSS vars)
+
 All design tokens available as CSS vars for use in custom CSS:
+
 ```css
 var(--color-gold)      /* #C9A84C */
 var(--color-maroon)    /* #800020 */
@@ -163,6 +183,7 @@ var(--radius-card)     /* 1rem */
 ```
 
 ### When to use CSS vs Tailwind
+
 - Tailwind: all layout, spacing, color, typography — anything that maps to a single property
 - Custom CSS (`@layer components`): multi-property utilities, animations keyframes, complex gradients
 - CSS vars: design tokens, theme values shared between CSS and JS
@@ -173,6 +194,7 @@ var(--radius-card)     /* 1rem */
 ## Quality Bar Checklist
 
 Before shipping any UI:
+
 - [ ] Looks good at 320px (iPhone SE), 375px (iPhone 14), 768px, 1280px, 1920px
 - [ ] All text is legible — contrast ratio ≥ 4.5:1 for normal, ≥ 3:1 for large
 - [ ] Hover states exist on all interactive elements

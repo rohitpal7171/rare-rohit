@@ -16,11 +16,9 @@ export const useMediaQuery = (query: string): boolean => {
   return matches
 }
 
-export const useIsMobile = (): boolean =>
-  useMediaQuery(`(max-width: ${BREAKPOINTS.md - 1}px)`)
+export const useIsMobile = (): boolean => useMediaQuery(`(max-width: ${BREAKPOINTS.md - 1}px)`)
 
 export const useIsTablet = (): boolean =>
   useMediaQuery(`(min-width: ${BREAKPOINTS.md}px) and (max-width: ${BREAKPOINTS.lg - 1}px)`)
 
-export const useIsDesktop = (): boolean =>
-  useMediaQuery(`(min-width: ${BREAKPOINTS.lg}px)`)
+export const useIsDesktop = (): boolean => useMediaQuery(`(min-width: ${BREAKPOINTS.lg}px)`)

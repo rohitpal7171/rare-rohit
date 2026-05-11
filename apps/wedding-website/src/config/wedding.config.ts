@@ -46,13 +46,13 @@ export const weddingConfig: WeddingConfig = {
   ceremonies: {
     haldi: {
       slug: 'haldi',
-      date: '2026-11-23T10:00:00+05:30',        // TODO: confirm date & time
+      date: '2026-11-23T10:00:00+05:30', // TODO: confirm date & time
       time: '10:00 AM',
       timeHindi: 'प्रातः १० बजे',
       venue: {
         name: "Bride's Residence, Gwalior",
         nameHindi: 'वधू का निवास, ग्वालियर',
-        address: 'Gwalior, Madhya Pradesh',       // TODO: full address
+        address: 'Gwalior, Madhya Pradesh', // TODO: full address
         addressHindi: 'ग्वालियर, मध्य प्रदेश',
         city: 'Gwalior',
         cityHindi: 'ग्वालियर',
@@ -63,13 +63,13 @@ export const weddingConfig: WeddingConfig = {
     },
     mehendi: {
       slug: 'mehendi',
-      date: '2026-11-23T18:00:00+05:30',        // TODO: confirm date & time
+      date: '2026-11-23T18:00:00+05:30', // TODO: confirm date & time
       time: '6:00 PM',
       timeHindi: 'सायं ६ बजे',
       venue: {
         name: "Bride's Residence, Gwalior",
         nameHindi: 'वधू का निवास, ग्वालियर',
-        address: 'Gwalior, Madhya Pradesh',       // TODO: full address
+        address: 'Gwalior, Madhya Pradesh', // TODO: full address
         addressHindi: 'ग्वालियर, मध्य प्रदेश',
         city: 'Gwalior',
         cityHindi: 'ग्वालियर',
@@ -80,13 +80,13 @@ export const weddingConfig: WeddingConfig = {
     },
     sangeet: {
       slug: 'sangeet',
-      date: '2026-11-23T19:00:00+05:30',        // TODO: confirm date & time
+      date: '2026-11-23T19:00:00+05:30', // TODO: confirm date & time
       time: '7:00 PM',
       timeHindi: 'सायं ७ बजे',
       venue: {
-        name: 'Venue, Gwalior',                  // TODO: venue name
+        name: 'Venue, Gwalior', // TODO: venue name
         nameHindi: 'स्थान, ग्वालियर',
-        address: 'Gwalior, Madhya Pradesh',       // TODO: full address
+        address: 'Gwalior, Madhya Pradesh', // TODO: full address
         addressHindi: 'ग्वालियर, मध्य प्रदेश',
         city: 'Gwalior',
         cityHindi: 'ग्वालियर',
@@ -97,7 +97,7 @@ export const weddingConfig: WeddingConfig = {
     },
     baraat: {
       slug: 'baraat',
-      date: '2026-11-25T16:00:00+05:30',        // ✅ Confirmed: 25 Nov, 4:00 PM
+      date: '2026-11-25T16:00:00+05:30', // ✅ Confirmed: 25 Nov, 4:00 PM
       time: '4:00 PM',
       timeHindi: 'सायं ४ बजे',
       venue: {
@@ -114,7 +114,7 @@ export const weddingConfig: WeddingConfig = {
     },
     pheras: {
       slug: 'pheras',
-      date: '2026-11-26T09:00:00+05:30',        // ✅ Confirmed: 26 Nov, 9:00 AM
+      date: '2026-11-26T09:00:00+05:30', // ✅ Confirmed: 26 Nov, 9:00 AM
       time: '9:00 AM',
       timeHindi: 'प्रातः ९ बजे',
       venue: {
@@ -131,8 +131,8 @@ export const weddingConfig: WeddingConfig = {
     },
     vidaai: {
       slug: 'vidaai',
-      date: '2026-11-26T14:00:00+05:30',        // ✅ Confirmed: 26 Nov (time TODO)
-      time: '2:00 PM',                           // TODO: confirm exact time
+      date: '2026-11-26T14:00:00+05:30', // ✅ Confirmed: 26 Nov (time TODO)
+      time: '2:00 PM', // TODO: confirm exact time
       timeHindi: 'अपराह्न २ बजे',
       venue: {
         name: 'Kokapur, Udi Modh, Uttar Pradesh',
@@ -150,6 +150,6 @@ export const weddingConfig: WeddingConfig = {
   hashtag: '#RohitWedsPriti',
   socialLinks: {
     instagram: 'https://instagram.com', // TODO: real profile
-    facebook: 'https://facebook.com',   // TODO: real profile
+    facebook: 'https://facebook.com', // TODO: real profile
   },
 }

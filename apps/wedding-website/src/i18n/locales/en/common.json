@@ -11,7 +11,9 @@
   },
   "language": { "toggle": "Toggle Language", "en": "English", "hi": "हिंदी" },
   "footer": {
-    "madeWith": "Made with", "and": "and", "love": "love",
+    "madeWith": "Made with",
+    "and": "and",
+    "love": "love",
     "blessings": "May Lord Ganesha bless this union forever.",
     "hashtag": "Share your moments"
   },
@@ -23,8 +25,11 @@
     "close": "Close"
   },
   "ceremony": {
-    "date": "Date", "time": "Time", "venue": "Venue",
-    "about": "About this Ceremony", "significance": "Significance",
+    "date": "Date",
+    "time": "Time",
+    "venue": "Venue",
+    "about": "About this Ceremony",
+    "significance": "Significance",
     "didYouKnow": "Did You Know?",
     "tapToReveal": "Tap each card to reveal the answer"
   },

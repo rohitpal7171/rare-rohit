@@ -1,5 +1,7 @@
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { useRef } from 'react'
+
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
+
 import { useTranslation } from 'react-i18next'
 
 import { cn, fadeInLeft, fadeInRight, fadeInUp } from '@shared/utils'
@@ -8,25 +10,25 @@ import { cn, fadeInLeft, fadeInRight, fadeInUp } from '@shared/utils'
 const TIMELINE_KEYS = ['met', 'friendship', 'love', 'proposal', 'wedding'] as const
 
 // Emoji per milestone
-const MILESTONE_ICONS: Record<typeof TIMELINE_KEYS[number], string> = {
-  met:        '🤝',
+const MILESTONE_ICONS: Record<(typeof TIMELINE_KEYS)[number], string> = {
+  met: '🤝',
   friendship: '🌸',
-  love:       '💛',
-  proposal:   '🪔',
-  wedding:    '🔥',
+  love: '💛',
+  proposal: '🪔',
+  wedding: '🔥',
 }
 
 // Colour accent per milestone (Tailwind arbitrary colour tokens)
-const MILESTONE_COLOURS: Record<typeof TIMELINE_KEYS[number], string> = {
-  met:        'text-gold',
+const MILESTONE_COLOURS: Record<(typeof TIMELINE_KEYS)[number], string> = {
+  met: 'text-gold',
   friendship: 'text-saffron',
-  love:       'text-marigold',
-  proposal:   'text-gold-light',
-  wedding:    'text-saffron',
+  love: 'text-marigold',
+  proposal: 'text-gold-light',
+  wedding: 'text-saffron',
 }
 
 interface MilestoneCardProps {
-  keyName: typeof TIMELINE_KEYS[number]
+  keyName: (typeof TIMELINE_KEYS)[number]
   index: number
 }
 
@@ -63,7 +65,9 @@ const MilestoneCard = ({ keyName, index }: MilestoneCardProps) => {
           </div>
 
           {/* Icon */}
-          <div className="text-3xl" aria-hidden="true">{MILESTONE_ICONS[keyName]}</div>
+          <div className="text-3xl" aria-hidden="true">
+            {MILESTONE_ICONS[keyName]}
+          </div>
 
           {/* Title */}
           <h3 className={cn('font-display text-xl font-bold', MILESTONE_COLOURS[keyName])}>
@@ -120,13 +124,13 @@ export const OurStoryV2 = () => {
     target: containerRef,
     offset: ['start 80%', 'end 30%'],
   })
-  const lineHeight = useSpring(
-    useTransform(scrollYProgress, [0, 1], ['0%', '100%']),
-    { stiffness: 80, damping: 20 }
-  )
+  const lineHeight = useSpring(useTransform(scrollYProgress, [0, 1], ['0%', '100%']), {
+    stiffness: 80,
+    damping: 20,
+  })
 
   return (
-    <section id="our-story" className="mandala-bg section-padding" ref={containerRef}>
+    <section id="our-story" className="section-padding mandala-bg" ref={containerRef}>
       <div className="section-container">
         <motion.div
           initial="hidden"

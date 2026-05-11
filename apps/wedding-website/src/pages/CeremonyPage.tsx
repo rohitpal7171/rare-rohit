@@ -2,25 +2,26 @@ import type { FC } from 'react'
 
 import { Navigate, useParams } from 'react-router-dom'
 
-import { Footer } from '@app/components/layout/Footer'
-import { Navbar } from '@app/components/layout/Navbar'
-import { PageWrapper } from '@app/components/layout/PageWrapper'
+import type { CeremonySlug } from '@shared/utils'
+
 import { Baraat } from '@app/components/ceremonies/Baraat'
 import { Haldi } from '@app/components/ceremonies/Haldi'
 import { Mehendi } from '@app/components/ceremonies/Mehendi'
 import { Pheras } from '@app/components/ceremonies/Pheras'
 import { Sangeet } from '@app/components/ceremonies/Sangeet'
 import { Vidaai } from '@app/components/ceremonies/Vidaai'
-import type { CeremonySlug } from '@shared/utils'
+import { Footer } from '@app/components/layout/Footer'
+import { Navbar } from '@app/components/layout/Navbar'
+import { PageWrapper } from '@app/components/layout/PageWrapper'
 
 // Reception removed — no reception in this wedding
 const ceremonyMap: Record<CeremonySlug, FC> = {
-  haldi:   Haldi,
+  haldi: Haldi,
   mehendi: Mehendi,
   sangeet: Sangeet,
-  baraat:  Baraat,
-  pheras:  Pheras,
-  vidaai:  Vidaai,
+  baraat: Baraat,
+  pheras: Pheras,
+  vidaai: Vidaai,
 }
 
 const VALID_SLUGS = new Set<string>(Object.keys(ceremonyMap))
@@ -32,7 +33,7 @@ export const CeremonyPage = () => {
     return <Navigate to="/" replace />
   }
 
-  const Component = ceremonyMap[slug as CeremonySlug] as FC
+  const Component = ceremonyMap[slug as CeremonySlug]
 
   return (
     <>

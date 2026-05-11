@@ -20,10 +20,7 @@ export const formatDate = (
   return new Intl.DateTimeFormat(localeMap[locale], defaultOptions).format(date)
 }
 
-export const formatTime = (
-  isoDate: string,
-  locale: SupportedLocale = 'en'
-): string => {
+export const formatTime = (isoDate: string, locale: SupportedLocale = 'en'): string => {
   const date = new Date(isoDate)
   const localeMap: Record<SupportedLocale, string> = {
     en: 'en-IN',

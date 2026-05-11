@@ -17,16 +17,9 @@ export const Z_INDEX = {
 } as const
 
 // Reception removed — no reception in this wedding
-export const CEREMONY_SLUGS = [
-  'haldi',
-  'mehendi',
-  'sangeet',
-  'baraat',
-  'pheras',
-  'vidaai',
-] as const
+export const CEREMONY_SLUGS = ['haldi', 'mehendi', 'sangeet', 'baraat', 'pheras', 'vidaai'] as const
 
-export type CeremonySlug = typeof CEREMONY_SLUGS[number]
+export type CeremonySlug = (typeof CEREMONY_SLUGS)[number]
 
 export const SUPPORTED_LANGUAGES = ['en', 'hi'] as const
-export type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number]
+export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number]

@@ -1,9 +1,11 @@
 # CLAUDE.md — shared/ui/
 
 ## Purpose
+
 Reusable React UI components shared across all apps.
 
 ## Components
+
 - `Button.tsx` — Base button with variants (primary, secondary, ghost)
 - `Modal.tsx` — Accessible modal with backdrop + escape key close
 - `Countdown.tsx` — Animated wedding day countdown timer
@@ -13,6 +15,7 @@ Reusable React UI components shared across all apps.
 - `LanguageToggle.tsx` — EN ↔ हिंदी language switcher
 
 ## Rules
+
 - Accept `className` prop on every component for external styling
 - Use `cn()` (clsx + tailwind-merge) for class merging
 - Never hardcode colors — use Tailwind tokens or CSS variables

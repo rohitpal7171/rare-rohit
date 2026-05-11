@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+
 import { useTranslation } from 'react-i18next'
 
 import { AnimatedSection } from '@shared/ui'
@@ -46,7 +47,9 @@ export const OurStory = () => {
                 >
                   <div className="flex-1">
                     {/* Use card-light on ivory background */}
-                    <div className={cn('card-light max-w-md', isLeft ? 'md:ml-auto' : 'md:mr-auto')}>
+                    <div
+                      className={cn('card-light max-w-md', isLeft ? 'md:ml-auto' : 'md:mr-auto')}
+                    >
                       <div className="mb-2 font-script text-3xl text-gold">
                         {t(`timeline.${key}.year`)}
                       </div>
@@ -60,10 +63,7 @@ export const OurStory = () => {
                   </div>
 
                   {/* Timeline dot */}
-                  <div
-                    aria-hidden="true"
-                    className="timeline-dot"
-                  >
+                  <div aria-hidden="true" className="timeline-dot">
                     <div className="h-2 w-2 rounded-full bg-gold" />
                   </div>
 

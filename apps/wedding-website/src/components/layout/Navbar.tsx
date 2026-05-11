@@ -1,5 +1,7 @@
-import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion'
 import { useState } from 'react'
+
+import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion'
+
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -9,12 +11,12 @@ import { cn } from '@shared/utils'
 import { weddingConfig } from '@app/config/wedding.config'
 
 const NAV_LINKS = [
-  { href: '/#our-story',  key: 'ourStory'   },
+  { href: '/#our-story', key: 'ourStory' },
   { href: '/#ceremonies', key: 'ceremonies' },
-  { href: '/#schedule',   key: 'schedule'   },
-  { href: '/#gallery',    key: 'gallery'    },
-  { href: '/#wishes',     key: 'wishes'     },
-  { href: '/#faq',        key: 'faq'        },
+  { href: '/#schedule', key: 'schedule' },
+  { href: '/#gallery', key: 'gallery' },
+  { href: '/#wishes', key: 'wishes' },
+  { href: '/#faq', key: 'faq' },
 ] as const
 
 export const Navbar = () => {
@@ -28,7 +30,9 @@ export const Navbar = () => {
   // Always build the MotionValue string — conditionally apply via opacity instead
   const backgroundColor = useMotionTemplate`rgba(45,27,78,${bgOpacity})`
 
-  const handleNavClick = () => { setMobileOpen(false) }
+  const handleNavClick = () => {
+    setMobileOpen(false)
+  }
 
   return (
     <motion.header
@@ -37,7 +41,7 @@ export const Navbar = () => {
       style={{ backgroundColor }}
       className={cn(
         'fixed left-0 right-0 top-0 z-30 transition-all duration-300',
-        !isHome && 'bg-divine/95 backdrop-blur-md shadow-divine'
+        !isHome && 'bg-divine/95 shadow-divine backdrop-blur-md'
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -65,7 +69,12 @@ export const Navbar = () => {
 
         <div className="flex items-center gap-3">
           <LanguageToggle />
-          <MobileNav isOpen={mobileOpen} onToggle={() => setMobileOpen((v) => !v)}>
+          <MobileNav
+            isOpen={mobileOpen}
+            onToggle={() => {
+              setMobileOpen((v) => !v)
+            }}
+          >
             <div className="mt-8 flex flex-col gap-5">
               {NAV_LINKS.map(({ href, key }) => (
                 <a

@@ -24,7 +24,9 @@ export const Modal = ({ isOpen, onClose, children, title, className }: ModalProp
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [isOpen])
 
   return (

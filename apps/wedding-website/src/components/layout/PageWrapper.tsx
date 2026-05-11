@@ -1,6 +1,7 @@
+import { type ReactNode, useEffect } from 'react'
+
 import { motion } from 'framer-motion'
-import type { ReactNode } from 'react'
-import { useEffect } from 'react'
+
 import { useLocation } from 'react-router-dom'
 
 import { pageTransition } from '@shared/utils'
@@ -14,8 +15,6 @@ export const PageWrapper = ({ children }: PageWrapperProps) => {
 
   useEffect(() => {
     if (hash !== '') {
-      // Hash present (e.g. /#ceremonies) — scroll to the target element
-      // Small delay so the page has rendered before we try to find the element
       const id = hash.replace('#', '')
       const timer = setTimeout(() => {
         const el = document.getElementById(id)
@@ -23,11 +22,14 @@ export const PageWrapper = ({ children }: PageWrapperProps) => {
           el.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }
       }, 100)
-      return () => clearTimeout(timer)
+      // Always return cleanup — fixes TS7030 "not all code paths return a value"
+      return () => {
+        clearTimeout(timer)
+      }
     }
-    // No hash — scroll to top as usual
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Explicit return undefined so all code paths return
+    return undefined
   }, [pathname, hash])
 
   return (

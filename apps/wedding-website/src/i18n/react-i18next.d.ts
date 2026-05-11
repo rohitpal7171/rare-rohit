@@ -16,17 +16,17 @@ declare module 'react-i18next' {
   interface CustomTypeOptions {
     defaultNS: 'common'
     resources: {
-      common:     typeof en_common
-      home:       typeof en_home
-      story:      typeof en_story
+      common: typeof en_common
+      home: typeof en_home
+      story: typeof en_story
       ceremonies: typeof en_ceremonies
-      schedule:   typeof en_schedule
-      gallery:    typeof en_gallery
-      party:      typeof en_party
-      travel:     typeof en_travel
-      rsvp:       typeof en_rsvp
-      faq:        typeof en_faq
-      wishes:     typeof en_wishes
+      schedule: typeof en_schedule
+      gallery: typeof en_gallery
+      party: typeof en_party
+      travel: typeof en_travel
+      rsvp: typeof en_rsvp
+      faq: typeof en_faq
+      wishes: typeof en_wishes
     }
   }
 }

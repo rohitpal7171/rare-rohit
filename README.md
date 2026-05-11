@@ -18,10 +18,10 @@ rare-rohit/
 
 ## Apps
 
-| App | Description | Status |
-|-----|-------------|--------|
+| App                                                 | Description                                          | Status         |
+| --------------------------------------------------- | ---------------------------------------------------- | -------------- |
 | [wedding-website](./apps/wedding-website/README.md) | Indian wedding website — bilingual (Hindi + English) | 🚧 In Progress |
-| trips | Travel memories & trip planner | 📋 Planned |
+| trips                                               | Travel memories & trip planner                       | 📋 Planned     |
 
 ## Getting Started
 
@@ -33,9 +33,11 @@ npm run check              # typecheck + lint + format:check
 ```
 
 ## Tech Stack
+
 React 18 · TypeScript 5 strict · Vite 5 SWC · Tailwind CSS v3 · Framer Motion v11
 React Router v6 · i18next · react-hook-form + zod · Netlify
 
 ## Planning Context
+
 All planning files, decisions log, and session notes live in `context/` (gitignored).
 Read `context/PLAN.md` for current status and `context/DECISIONS.md` for architecture decisions.

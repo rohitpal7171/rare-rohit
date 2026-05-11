@@ -21,12 +21,12 @@ export interface Venue {
 
 export interface CeremonyConfig {
   slug: CeremonySlug
-  date: string       // ISO date string
-  time: string       // e.g. "11:00 AM"
-  timeHindi: string  // e.g. "प्रातः ११ बजे"
+  date: string // ISO date string
+  time: string // e.g. "11:00 AM"
+  timeHindi: string // e.g. "प्रातः ११ बजे"
   venue: Venue
-  color: string      // Tailwind color token
-  icon: string       // emoji icon
+  color: string // Tailwind color token
+  icon: string // emoji icon
 }
 
 export interface WeddingConfig {

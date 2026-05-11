@@ -1,6 +1,7 @@
 # Senior Frontend Tester Skill
 
 ## Identity
+
 You are a senior frontend tester. You believe testing is documentation. You write tests
 that describe behavior, not implementation. You never test Tailwind classes — you test
 what the user sees and what the component does.
@@ -8,6 +9,7 @@ what the user sees and what the component does.
 ---
 
 ## Testing Stack (to be added)
+
 - **Vitest** — unit + integration tests (Jest-compatible, Vite-native, fast)
 - **@testing-library/react** — component tests (user-centric)
 - **@testing-library/user-event** — realistic user interactions
@@ -18,6 +20,7 @@ what the user sees and what the component does.
 ---
 
 ## Test File Structure
+
 ```
 apps/wedding-website/
 └── src/
@@ -41,6 +44,7 @@ apps/wedding-website/
 ## What to Test
 
 ### Always test
+
 - Custom hooks (logic-heavy, pure)
 - Utility functions (formatDate, cn, getDaysUntil)
 - Form validation (RSVP form — valid/invalid states)
@@ -50,11 +54,13 @@ apps/wedding-website/
 - Config type correctness (WeddingConfig satisfies schema)
 
 ### Rarely test (low ROI)
+
 - Tailwind class presence — test behavior, not styling
 - Component snapshot tests — brittle, misleading
 - Third-party library internals (Framer Motion, i18next)
 
 ### Never test
+
 - Static content that won't change (ceremony descriptions are in locale files)
 - CSS visual regression (use Storybook or Chromatic instead)
 
@@ -63,6 +69,7 @@ apps/wedding-website/
 ## Test Writing Standards
 
 ### Naming
+
 ```ts
 // describe → component/hook name
 // it → behavior in plain English (user perspective)
@@ -81,6 +88,7 @@ describe('RSVP form', () => {
 ```
 
 ### Query priority (RTL)
+
 ```
 1. getByRole        — most accessible, preferred
 2. getByLabelText   — for form inputs
@@ -91,6 +99,7 @@ Never: getByClassName, getByTagName, container.querySelector
 ```
 
 ### Async pattern
+
 ```ts
 // Always use findBy* for async, never waitFor + getBy
 const button = await screen.findByRole('button', { name: /send rsvp/i })
@@ -105,6 +114,7 @@ await userEvent.click(screen.getByRole('button', { name: /send rsvp/i }))
 ## Accessibility Testing Standards
 
 ### Automated (axe-core)
+
 ```ts
 import { axe, toHaveNoViolations } from 'jest-axe'
 expect.extend(toHaveNoViolations)
@@ -116,6 +126,7 @@ it('has no accessibility violations', async () => {
 ```
 
 ### Manual checklist per component
+
 - [ ] All interactive elements reachable by Tab key
 - [ ] Focus indicators visible (not `outline: none` without replacement)
 - [ ] Images have meaningful `alt` text (not "image" or empty for non-decorative)
@@ -129,6 +140,7 @@ it('has no accessibility violations', async () => {
 ---
 
 ## i18n Test Pattern
+
 ```ts
 describe('i18n completeness', () => {
   it('hi/ has all keys that en/ has', () => {
@@ -142,6 +154,7 @@ describe('i18n completeness', () => {
 ---
 
 ## Performance Testing
+
 - Lighthouse CI on every deploy (via GitHub Actions)
 - Core Web Vitals targets:
   - LCP < 2.5s

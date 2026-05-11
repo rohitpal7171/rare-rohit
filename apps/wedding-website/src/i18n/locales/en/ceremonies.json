@@ -7,9 +7,21 @@
     "description": "The Haldi ceremony involves applying a sacred paste of turmeric, sandalwood and rose water to both the bride and the groom. This ritual is performed individually — the bride at her home surrounded by her family, and the groom at his home surrounded by his. Though celebrated apart, both are blessed at the same time, connected by the same golden ritual before they are united forever.",
     "significance": "Turmeric is considered sacred in Hinduism — it purifies, protects and brings prosperity.",
     "facts": [
-      { "icon": "🌿", "q": "Why is turmeric used and not any other spice?", "a": "Turmeric (Haldi) contains curcumin, a natural antiseptic. It was used in ancient Ayurveda to cleanse the skin before sacred rituals — making it literally and spiritually purifying." },
-      { "icon": "🌤️", "q": "Why is Haldi done before the wedding day?", "a": "The Haldi ceremony is held a day before to give the turmeric paste time to work its glow on the skin. The bride and groom should not see each other after Haldi until the wedding." },
-      { "icon": "🤲", "q": "Who can apply the Haldi?", "a": "Only married women (suhaagan) traditionally apply Haldi — their blessings of a long married life are believed to transfer through the paste to the bride and groom." }
+      {
+        "icon": "🌿",
+        "q": "Why is turmeric used and not any other spice?",
+        "a": "Turmeric (Haldi) contains curcumin, a natural antiseptic. It was used in ancient Ayurveda to cleanse the skin before sacred rituals — making it literally and spiritually purifying."
+      },
+      {
+        "icon": "🌤️",
+        "q": "Why is Haldi done before the wedding day?",
+        "a": "The Haldi ceremony is held a day before to give the turmeric paste time to work its glow on the skin. The bride and groom should not see each other after Haldi until the wedding."
+      },
+      {
+        "icon": "🤲",
+        "q": "Who can apply the Haldi?",
+        "a": "Only married women (suhaagan) traditionally apply Haldi — their blessings of a long married life are believed to transfer through the paste to the bride and groom."
+      }
     ]
   },
   "mehendi": {
@@ -18,9 +30,21 @@
     "description": "Intricate henna designs are applied to the bride's hands and feet. The deeper the colour of the Mehendi, the deeper the love between the couple. The groom's name is hidden within the design for him to find.",
     "significance": "Mehendi represents joy, beauty and spiritual awakening in the new journey of life.",
     "facts": [
-      { "icon": "🌿", "q": "Why is the groom's name hidden in the Mehendi?", "a": "It is a fun tradition — the groom must find his name hidden in the bride's Mehendi design on the wedding night. Until he finds it, the bride has 'power' over him in the household!" },
-      { "icon": "❤️", "q": "What does the darkness of the Mehendi colour mean?", "a": "The deeper the Mehendi stains, the more the mother-in-law loves the bride — according to tradition. A dark colour also means a loving, devoted husband." },
-      { "icon": "🌙", "q": "Why is Mehendi applied at night?", "a": "Mehendi dye (lawsone) needs 6–8 hours to fully oxidise and darken. Night application means by morning the colour is deep, rich and ready to glow." }
+      {
+        "icon": "🌿",
+        "q": "Why is the groom's name hidden in the Mehendi?",
+        "a": "It is a fun tradition — the groom must find his name hidden in the bride's Mehendi design on the wedding night. Until he finds it, the bride has 'power' over him in the household!"
+      },
+      {
+        "icon": "❤️",
+        "q": "What does the darkness of the Mehendi colour mean?",
+        "a": "The deeper the Mehendi stains, the more the mother-in-law loves the bride — according to tradition. A dark colour also means a loving, devoted husband."
+      },
+      {
+        "icon": "🌙",
+        "q": "Why is Mehendi applied at night?",
+        "a": "Mehendi dye (lawsone) needs 6–8 hours to fully oxidise and darken. Night application means by morning the colour is deep, rich and ready to glow."
+      }
     ]
   },
   "sangeet": {
@@ -29,9 +53,21 @@
     "description": "An evening filled with music, dance, laughter and love. Both families come together to perform and celebrate. This joyous pre-wedding night sets the tone for the celebrations ahead.",
     "significance": "Sangeet unites both families through the universal language of music and dance.",
     "facts": [
-      { "icon": "🎶", "q": "What does 'Sangeet' literally mean?", "a": "'Sangeet' is Sanskrit for 'music sung together'. Originally it was an all-women ceremony where women sang folk songs — it has since evolved into a full family celebration." },
-      { "icon": "💃", "q": "Why do families perform dances at Sangeet?", "a": "Performances are a way for both families to tell the couple's story through art. It's the first official time both families bond — a symbolic merging of two clans." },
-      { "icon": "🪘", "q": "Is Sangeet the same as a Bachelorette party?", "a": "Not quite — Sangeet is a family celebration including elders, children and both sides. The tone is celebratory but rooted in tradition, not just the couple's friends." }
+      {
+        "icon": "🎶",
+        "q": "What does 'Sangeet' literally mean?",
+        "a": "'Sangeet' is Sanskrit for 'music sung together'. Originally it was an all-women ceremony where women sang folk songs — it has since evolved into a full family celebration."
+      },
+      {
+        "icon": "💃",
+        "q": "Why do families perform dances at Sangeet?",
+        "a": "Performances are a way for both families to tell the couple's story through art. It's the first official time both families bond — a symbolic merging of two clans."
+      },
+      {
+        "icon": "🪘",
+        "q": "Is Sangeet the same as a Bachelorette party?",
+        "a": "Not quite — Sangeet is a family celebration including elders, children and both sides. The tone is celebratory but rooted in tradition, not just the couple's friends."
+      }
     ]
   },
   "baraat": {
@@ -40,9 +76,21 @@
     "description": "The groom arrives in a grand procession accompanied by family and friends, dancing to dhol beats. The baraat is a vibrant, joyful celebration of the groom's journey to claim his bride.",
     "significance": "The Baraat symbolises the groom's arrival as a prince to receive his queen.",
     "facts": [
-      { "icon": "🐎", "q": "Why does the groom traditionally arrive on a horse?", "a": "Historically, a groom arriving on a white horse symbolised the arrival of a warrior-prince. Today it can be a horse, a decorated car, or simply walking — the royalty is in the spirit." },
-      { "icon": "🥁", "q": "What is the significance of the Dhol in Baraat?", "a": "The Dhol beats are said to ward off evil spirits and announce the arrival of joy. The louder the Dhol, the more the neighbourhood knows a celebration is underway." },
-      { "icon": "🌙", "q": "Why does Baraat usually arrive at night?", "a": "Night arrivals were practical in ancient times — it was cooler for travel. The torchlight procession also created a dramatic, celebratory atmosphere that became tradition." }
+      {
+        "icon": "🐎",
+        "q": "Why does the groom traditionally arrive on a horse?",
+        "a": "Historically, a groom arriving on a white horse symbolised the arrival of a warrior-prince. Today it can be a horse, a decorated car, or simply walking — the royalty is in the spirit."
+      },
+      {
+        "icon": "🥁",
+        "q": "What is the significance of the Dhol in Baraat?",
+        "a": "The Dhol beats are said to ward off evil spirits and announce the arrival of joy. The louder the Dhol, the more the neighbourhood knows a celebration is underway."
+      },
+      {
+        "icon": "🌙",
+        "q": "Why does Baraat usually arrive at night?",
+        "a": "Night arrivals were practical in ancient times — it was cooler for travel. The torchlight procession also created a dramatic, celebratory atmosphere that became tradition."
+      }
     ]
   },
   "pheras": {
@@ -51,9 +99,21 @@
     "description": "The most sacred ritual of the wedding — the couple takes seven rounds around the sacred fire (Agni), making seven divine promises to each other in the presence of God, family and the eternal flame.",
     "significance": "Each phera represents a vow — for food, strength, prosperity, wisdom, progeny, health and friendship.",
     "facts": [
-      { "icon": "🔥", "q": "Why is fire (Agni) the witness of Hindu marriage?", "a": "In Vedic tradition, Agni (fire) is the purifier and the messenger to the divine. Having fire as witness means God himself witnesses the vows — making them eternally binding." },
-      { "icon": "7️⃣", "q": "What are the 7 vows (Saptapadi) exactly?", "a": "1. Nourishment, 2. Strength, 3. Prosperity, 4. Happiness, 5. Progeny, 6. Health, 7. Friendship & lifelong companionship. Together they cover every dimension of a shared life." },
-      { "icon": "🌾", "q": "Why does the bride lead in some pheras?", "a": "In the first 4 pheras the bride leads, symbolising her role as the home's foundation. In the last 3 the groom leads, showing his responsibility to provide and protect." }
+      {
+        "icon": "🔥",
+        "q": "Why is fire (Agni) the witness of Hindu marriage?",
+        "a": "In Vedic tradition, Agni (fire) is the purifier and the messenger to the divine. Having fire as witness means God himself witnesses the vows — making them eternally binding."
+      },
+      {
+        "icon": "7️⃣",
+        "q": "What are the 7 vows (Saptapadi) exactly?",
+        "a": "1. Nourishment, 2. Strength, 3. Prosperity, 4. Happiness, 5. Progeny, 6. Health, 7. Friendship & lifelong companionship. Together they cover every dimension of a shared life."
+      },
+      {
+        "icon": "🌾",
+        "q": "Why does the bride lead in some pheras?",
+        "a": "In the first 4 pheras the bride leads, symbolising her role as the home's foundation. In the last 3 the groom leads, showing his responsibility to provide and protect."
+      }
     ]
   },
   "vidaai": {
@@ -62,9 +122,21 @@
     "description": "The bride bids farewell to her family home and begins her new journey with her husband. She throws rice and coins over her shoulder as she leaves — symbolising she repays her debts to her family and wishes them prosperity.",
     "significance": "Vidaai is a bittersweet moment — an ending and a beautiful new beginning.",
     "facts": [
-      { "icon": "🌾", "q": "Why does the bride throw rice over her shoulder?", "a": "Throwing rice (Akshat) backwards symbolises that she is repaying her family's love and wishing them abundance. She leaves giving, not taking — one last act of gratitude." },
-      { "icon": "😢", "q": "Why is the bride not supposed to look back during Vidaai?", "a": "Looking back is believed to bring grief to the natal home. It also symbolises fully embracing the new chapter — moving forward with courage rather than clinging to the past." },
-      { "icon": "🪙", "q": "What do the coins thrown at Vidaai mean?", "a": "Coins represent the bride returning her share of family wealth — a symbolic gesture that she takes only love and blessings, leaving prosperity behind for her family." }
+      {
+        "icon": "🌾",
+        "q": "Why does the bride throw rice over her shoulder?",
+        "a": "Throwing rice (Akshat) backwards symbolises that she is repaying her family's love and wishing them abundance. She leaves giving, not taking — one last act of gratitude."
+      },
+      {
+        "icon": "😢",
+        "q": "Why is the bride not supposed to look back during Vidaai?",
+        "a": "Looking back is believed to bring grief to the natal home. It also symbolises fully embracing the new chapter — moving forward with courage rather than clinging to the past."
+      },
+      {
+        "icon": "🪙",
+        "q": "What do the coins thrown at Vidaai mean?",
+        "a": "Coins represent the bride returning her share of family wealth — a symbolic gesture that she takes only love and blessings, leaving prosperity behind for her family."
+      }
     ]
   },
   "reception": {
@@ -73,9 +145,21 @@
     "description": "The newlyweds are formally introduced as a married couple to their extended family and friends.",
     "significance": "The reception is the couple's first public celebration as husband and wife.",
     "facts": [
-      { "icon": "🥂", "q": "What is the purpose of a Reception?", "a": "The reception allows extended family and friends who couldn't attend the wedding to meet and bless the couple formally as a married pair for the first time." },
-      { "icon": "💍", "q": "When did Reception become part of Indian weddings?", "a": "The formal reception is a relatively modern addition to Indian weddings, influenced by Western traditions in the 20th century. Traditional celebrations were purely ceremony-focused." },
-      { "icon": "🎊", "q": "Is Reception the same in every Indian community?", "a": "No — in South India, reception often happens before the wedding. In North India it is typically after. Each community has its own interpretation and timing." }
+      {
+        "icon": "🥂",
+        "q": "What is the purpose of a Reception?",
+        "a": "The reception allows extended family and friends who couldn't attend the wedding to meet and bless the couple formally as a married pair for the first time."
+      },
+      {
+        "icon": "💍",
+        "q": "When did Reception become part of Indian weddings?",
+        "a": "The formal reception is a relatively modern addition to Indian weddings, influenced by Western traditions in the 20th century. Traditional celebrations were purely ceremony-focused."
+      },
+      {
+        "icon": "🎊",
+        "q": "Is Reception the same in every Indian community?",
+        "a": "No — in South India, reception often happens before the wedding. In North India it is typically after. Each community has its own interpretation and timing."
+      }
     ]
   }
 }

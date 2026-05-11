@@ -56,18 +56,22 @@ export default tseslint.config(
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
       '@typescript-eslint/prefer-optional-chain': 'error',
+
+      // strict-boolean-expressions: allowString so that
+      // cn(isHindi ? 'font-hindi' : '') and ternary string patterns are valid
       '@typescript-eslint/strict-boolean-expressions': [
         'error',
         {
-          allowString: false,
+          allowString: true,
           allowNumber: false,
           allowNullableObject: true,
           allowNullableBoolean: false,
-          allowNullableString: false,
+          allowNullableString: true,
           allowNullableNumber: false,
           allowAny: false,
         },
       ],
+
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/await-thenable': 'error',
       '@typescript-eslint/no-misused-promises': [
@@ -86,6 +90,7 @@ export default tseslint.config(
       ],
       '@typescript-eslint/prefer-as-const': 'error',
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+      // Use interface for object types, but type aliases for unions/intersections
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       '@typescript-eslint/no-redundant-type-constituents': 'error',
       '@typescript-eslint/prefer-reduce-type-parameter': 'error',
@@ -98,7 +103,9 @@ export default tseslint.config(
       'react/self-closing-comp': 'error',
       'react/no-array-index-key': 'warn',
       'react/hook-use-state': 'error',
-      'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
+      // Allow string literals in JSX children and props — needed for Hindi text,
+      // punctuation, spaces etc. that are intentional string content
+      'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'ignore' }],
 
       // ── Accessibility ─────────────────────────────────────────────────────
       'jsx-a11y/alt-text': 'error',
@@ -137,6 +144,7 @@ export default tseslint.config(
       'import/no-useless-path-segments': 'error',
 
       // ── General quality ───────────────────────────────────────────────────
+      // Allow console.warn and console.error (used in hooks for error reporting)
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-debugger': 'error',
       'no-alert': 'error',

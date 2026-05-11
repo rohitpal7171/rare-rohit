@@ -57,10 +57,15 @@ export const useAudioPlayer = (
     setCurrentTime(0)
 
     const onCanPlay = () => setIsLoaded(true)
-    const onError = () => { setHasError(true); setIsLoaded(false) }
+    const onError = () => {
+      setHasError(true)
+      setIsLoaded(false)
+    }
     const onTimeUpdate = () => setCurrentTime(audio.currentTime)
     const onDurationChange = () => setDuration(audio.duration)
-    const onEnded = () => { if (!loop) setIsPlaying(false) }
+    const onEnded = () => {
+      if (!loop) setIsPlaying(false)
+    }
 
     audio.addEventListener('canplay', onCanPlay)
     audio.addEventListener('error', onError)
@@ -84,7 +89,10 @@ export const useAudioPlayer = (
 
   const play = useCallback(() => {
     if (audioRef.current === null || hasError) return
-    void audioRef.current.play().then(() => setIsPlaying(true)).catch(() => setHasError(true))
+    void audioRef.current
+      .play()
+      .then(() => setIsPlaying(true))
+      .catch(() => setHasError(true))
   }, [hasError])
 
   const pause = useCallback(() => {
@@ -116,5 +124,19 @@ export const useAudioPlayer = (
     setCurrentTime(seconds)
   }, [])
 
-  return { isPlaying, isMuted, volume, isLoaded, hasError, play, pause, toggle, toggleMute, setVolume, seek, currentTime, duration }
+  return {
+    isPlaying,
+    isMuted,
+    volume,
+    isLoaded,
+    hasError,
+    play,
+    pause,
+    toggle,
+    toggleMute,
+    setVolume,
+    seek,
+    currentTime,
+    duration,
+  }
 }

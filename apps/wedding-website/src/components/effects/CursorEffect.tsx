@@ -16,7 +16,7 @@ interface Particle {
   rotationSpeed: number
 }
 
-const EMOJIS_MOVE  = ['🌸', '🌼', '✨', '🌺'] as const
+const EMOJIS_MOVE = ['🌸', '🌼', '✨', '🌺'] as const
 const EMOJIS_CLICK = ['🪔', '🌸', '✨', '🌼', '🌺', '💛'] as const
 const MAX_PARTICLES = 40
 
@@ -58,11 +58,14 @@ export const CursorEffect = () => {
         const angle = Math.random() * Math.PI * 2
         const speed = forClick ? 1.5 + Math.random() * 3 : 0.3 + Math.random() * 1.2
         particlesRef.current.push({
-          x, y,
+          x,
+          y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed - (forClick ? 1.5 : 0.8),
           life: 1,
-          maxLife: forClick ? 50 + Math.floor(Math.random() * 30) : 30 + Math.floor(Math.random() * 20),
+          maxLife: forClick
+            ? 50 + Math.floor(Math.random() * 30)
+            : 30 + Math.floor(Math.random() * 20),
           size: forClick ? 18 + Math.random() * 10 : 12 + Math.random() * 8,
           emoji: forClick ? randomFrom(EMOJIS_CLICK) : randomFrom(EMOJIS_MOVE),
           rotation: Math.random() * 360,
@@ -106,7 +109,9 @@ export const CursorEffect = () => {
       lastPosRef.current = { x: e.clientX, y: e.clientY }
       spawnParticles(e.clientX, e.clientY, 2, false)
     }
-    const handleClick = (e: MouseEvent) => { spawnParticles(e.clientX, e.clientY, 8, true) }
+    const handleClick = (e: MouseEvent) => {
+      spawnParticles(e.clientX, e.clientY, 8, true)
+    }
     const handleTouchMove = (e: TouchEvent) => {
       const t = e.touches[0]
       if (t === undefined) return
@@ -129,10 +134,6 @@ export const CursorEffect = () => {
   if (prefersReduced) return null
 
   return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-50"
-    />
+    <canvas ref={canvasRef} aria-hidden="true" className="pointer-events-none fixed inset-0 z-50" />
   )
 }

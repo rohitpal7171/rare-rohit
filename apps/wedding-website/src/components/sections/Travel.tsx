@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+
 import { Car, MapPin, Plane, Train } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
@@ -16,8 +17,12 @@ export const Travel = () => {
     <section id="travel" className="section-padding mandala-bg">
       <div className="section-container">
         <AnimatedSection className="mb-12 text-center" stagger>
-          <motion.h2 variants={fadeInUp} className="section-title text-gold">{t('title')}</motion.h2>
-          <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-ivory/60">{t('subtitle')}</motion.p>
+          <motion.h2 variants={fadeInUp} className="section-title text-gold">
+            {t('title')}
+          </motion.h2>
+          <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-ivory/60">
+            {t('subtitle')}
+          </motion.p>
           <motion.div variants={fadeInUp} className="gold-divider mt-4" />
         </AnimatedSection>
 

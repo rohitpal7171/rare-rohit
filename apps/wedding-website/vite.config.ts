@@ -14,10 +14,10 @@ export default defineConfig({
   // ─── Path aliases ──────────────────────────────────────────────────────
   resolve: {
     alias: {
-      '@shared/ui':    path.resolve(__dirname, '../../shared/ui/index.ts'),
+      '@shared/ui': path.resolve(__dirname, '../../shared/ui/index.ts'),
       '@shared/hooks': path.resolve(__dirname, '../../shared/hooks/index.ts'),
       '@shared/utils': path.resolve(__dirname, '../../shared/utils/index.ts'),
-      '@app':          path.resolve(__dirname, './src'),
+      '@app': path.resolve(__dirname, './src'),
     },
   },
 
@@ -30,11 +30,7 @@ export default defineConfig({
       strict: true,
     },
     warmup: {
-      clientFiles: [
-        './src/App.tsx',
-        './src/pages/Home.tsx',
-        './src/components/sections/Hero.tsx',
-      ],
+      clientFiles: ['./src/App.tsx', './src/pages/Home.tsx', './src/components/sections/Hero.tsx'],
     },
   },
 
@@ -49,16 +45,16 @@ export default defineConfig({
 
     rollupOptions: {
       output: {
-        chunkFileNames:  'assets/js/[name]-[hash].js',
-        entryFileNames:  'assets/js/[name]-[hash].js',
-        assetFileNames:  'assets/[ext]/[name]-[hash].[ext]',
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
 
         manualChunks: {
-          'vendor-react':  ['react', 'react-dom', 'react-router-dom'],
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           'vendor-motion': ['framer-motion'],
-          'vendor-i18n':   ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
-          'vendor-form':   ['react-hook-form', 'zod', '@hookform/resolvers'],
-          'vendor-ui':     ['lucide-react', 'clsx', 'tailwind-merge'],
+          'vendor-i18n': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+          'vendor-form': ['react-hook-form', 'zod', '@hookform/resolvers'],
+          'vendor-ui': ['lucide-react', 'clsx', 'tailwind-merge'],
         },
       },
     },

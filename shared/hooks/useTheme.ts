@@ -41,23 +41,26 @@ export const useTheme = (): UseThemeReturn => {
     isTransitioning: false,
   })
 
-  // Apply data-theme attribute to <html> and persist
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', state.theme)
     setStored(state.theme)
   }, [state.theme, setStored])
 
-  // Sync on mount in case localStorage had a different value
+  // Sync stored value on mount only
   useEffect(() => {
     dispatch({ type: 'SET_THEME', payload: stored })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const setTheme = useCallback((t: Theme) => {
     dispatch({ type: 'TRANSITION_START' })
     dispatch({ type: 'SET_THEME', payload: t })
-    // Short delay so CSS transition completes before removing the class
-    setTimeout(() => dispatch({ type: 'TRANSITION_END' }), 400)
+    // setTimeout return is a NodeJS.Timeout — store and clear to avoid floating promise lint
+    const timer = setTimeout(() => {
+      dispatch({ type: 'TRANSITION_END' })
+    }, 400)
+    // not returned — this is not inside useEffect, just a fire-and-forget UI timer
+    return timer
   }, [])
 
   const toggleTheme = useCallback(() => {

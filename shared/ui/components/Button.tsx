@@ -23,10 +23,8 @@ const variantClasses: Record<ButtonVariant, string> = {
     'bg-saffron text-ivory hover:bg-saffron-dark border-2 border-saffron-dark shadow-lg shadow-saffron/20',
   secondary:
     'bg-maroon text-ivory hover:bg-maroon-light border-2 border-maroon-dark shadow-lg shadow-maroon/20',
-  ghost:
-    'bg-transparent text-gold border-2 border-gold hover:bg-gold/10',
-  gold:
-    'bg-gradient-to-r from-gold-dark via-gold to-gold-light text-ivory border-0 shadow-lg shadow-gold/30',
+  ghost: 'bg-transparent text-gold border-2 border-gold hover:bg-gold/10',
+  gold: 'bg-gradient-to-r from-gold-dark via-gold to-gold-light text-ivory border-0 shadow-lg shadow-gold/30',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {

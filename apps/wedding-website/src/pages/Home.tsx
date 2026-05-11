@@ -1,14 +1,14 @@
+import { Footer } from '@app/components/layout/Footer'
+import { Navbar } from '@app/components/layout/Navbar'
 import { Blessings } from '@app/components/sections/Blessings'
 import { CeremoniesGrid } from '@app/components/sections/CeremoniesGrid'
 import { FAQ } from '@app/components/sections/FAQ'
 import { Gallery } from '@app/components/sections/Gallery'
 import { Hero } from '@app/components/sections/Hero'
-import { OurStory } from '@app/components/sections/OurStory'         // original — keep
+import { OurStory } from '@app/components/sections/OurStory' // original — keep
 import { Schedule } from '@app/components/sections/Schedule'
 import { WeddingParty } from '@app/components/sections/WeddingParty'
 import { WishesWall } from '@app/components/sections/WishesWall'
-import { Footer } from '@app/components/layout/Footer'
-import { Navbar } from '@app/components/layout/Navbar'
 
 // ── Available story variants (swap by changing the import below) ───────────
 // import { OurStory } from '@app/components/sections/OurStory'       ← original (light bg, alternating cards)
