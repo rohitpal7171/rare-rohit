@@ -6,8 +6,7 @@
     "schedule": "Schedule",
     "gallery": "Gallery",
     "weddingParty": "Wedding Party",
-    "wishes": "Blessings",
-    "faq": "FAQ"
+    "wishes": "Blessings"
   },
   "language": { "toggle": "Toggle Language", "en": "English", "hi": "हिंदी" },
   "footer": {

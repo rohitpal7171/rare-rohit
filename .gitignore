@@ -66,3 +66,6 @@ coverage/
 # Safe to delete entirely — zero impact on the codebase
 context/
 PLAN.md
+
+
+.claude/worktrees/

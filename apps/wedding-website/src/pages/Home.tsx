@@ -1,8 +1,8 @@
+import { AmbientPlayer } from '@app/components/layout/AmbientPlayer'
 import { Footer } from '@app/components/layout/Footer'
 import { Navbar } from '@app/components/layout/Navbar'
 import { Blessings } from '@app/components/sections/Blessings'
 import { CeremoniesGrid } from '@app/components/sections/CeremoniesGrid'
-import { FAQ } from '@app/components/sections/FAQ'
 import { Gallery } from '@app/components/sections/Gallery'
 import { Hero } from '@app/components/sections/Hero'
 import { OurStory } from '@app/components/sections/OurStory' // original — keep
@@ -32,8 +32,8 @@ export const Home = () => {
         <Gallery />
         <WeddingParty />
         <WishesWall />
-        <FAQ />
       </main>
+      <AmbientPlayer />
       <Footer />
     </>
   )
