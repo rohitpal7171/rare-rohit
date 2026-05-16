@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import path from 'path'
 
 import react from '@vitejs/plugin-react-swc'
@@ -5,13 +6,8 @@ import { defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
 
 export default defineConfig({
-  // ─── Plugins ───────────────────────────────────────────────────────────
-  plugins: [
-    react(),
-    svgr(), // Transforms SVG files into React components
-  ],
+  plugins: [react(), svgr()],
 
-  // ─── Path aliases ──────────────────────────────────────────────────────
   resolve: {
     alias: {
       '@shared/ui': path.resolve(__dirname, '../../shared/ui/index.ts'),
@@ -21,20 +17,31 @@ export default defineConfig({
     },
   },
 
-  // ─── Dev server ────────────────────────────────────────────────────────
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    include: ['src/**/*.test.{ts,tsx}', '../../shared/**/*.test.{ts,tsx}'],
+    css: false,
+    // Disable cache so setup file changes always take effect
+    cache: false,
+    // Use the Babel-based React plugin for tests — SWC doesn't support vi.mock hoisting with JSX
+    server: {
+      deps: {
+        inline: ['framer-motion'],
+      },
+    },
+  },
+
   server: {
     port: 5173,
     strictPort: false,
-    fs: {
-      allow: ['../..'],
-      strict: true,
-    },
+    fs: { allow: ['../..'], strict: true },
     warmup: {
       clientFiles: ['./src/App.tsx', './src/pages/Home.tsx', './src/components/sections/Hero.tsx'],
     },
   },
 
-  // ─── Build ─────────────────────────────────────────────────────────────
   build: {
     target: 'es2022',
     minify: 'esbuild',
@@ -42,13 +49,11 @@ export default defineConfig({
     sourcemap: false,
     reportCompressedSize: true,
     chunkSizeWarningLimit: 500,
-
     rollupOptions: {
       output: {
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
-
         manualChunks: {
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           'vendor-motion': ['framer-motion'],
@@ -60,14 +65,6 @@ export default defineConfig({
     },
   },
 
-  // ─── Preview ───────────────────────────────────────────────────────────
-  preview: {
-    port: 4173,
-    strictPort: false,
-  },
-
-  // ─── CSS ───────────────────────────────────────────────────────────────
-  css: {
-    devSourcemap: true,
-  },
+  preview: { port: 4173, strictPort: false },
+  css: { devSourcemap: true },
 })

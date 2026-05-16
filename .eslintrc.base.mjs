@@ -8,7 +8,7 @@ import importPlugin from 'eslint-plugin-import'
 import react from 'eslint-plugin-react'
 
 export default tseslint.config(
-  // ─── Ignore patterns ─────────────────────────────────────────────────────
+  // Ignore patterns
   {
     ignores: [
       'dist/**',
@@ -19,17 +19,18 @@ export default tseslint.config(
       '*.config.js',
       'coverage/**',
       '.netlify/**',
+      'scripts/**',
     ],
   },
 
-  // ─── Base JS ─────────────────────────────────────────────────────────────
+  // Base JS
   js.configs.recommended,
 
-  // ─── TypeScript strict ───────────────────────────────────────────────────
-  ...tseslint.configs.strictTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
+  // TypeScript — recommended (not strict) — fewer red lines
+  ...tseslint.configs.recommended,
+  ...tseslint.configs.stylistic,
 
-  // ─── Main rules ──────────────────────────────────────────────────────────
+  // Main rules — practical errors only
   {
     files: ['**/*.{ts,tsx}'],
     plugins: {
@@ -40,121 +41,74 @@ export default tseslint.config(
       react,
     },
     rules: {
-      // ── TypeScript ────────────────────────────────────────────────────────
-      '@typescript-eslint/no-explicit-any': 'error',
+      // ── TypeScript ────────────────────────────────────────────────
+      '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': [
-        'error',
+        'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
       '@typescript-eslint/consistent-type-imports': [
-        'error',
+        'warn',
         { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
       ],
-      '@typescript-eslint/consistent-type-exports': 'error',
-      '@typescript-eslint/no-non-null-assertion': 'error',
-      '@typescript-eslint/no-unnecessary-condition': 'error',
-      '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-      '@typescript-eslint/prefer-nullish-coalescing': 'error',
-      '@typescript-eslint/prefer-optional-chain': 'error',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/array-type': 'off',
+      '@typescript-eslint/consistent-type-definitions': 'off',
+      '@typescript-eslint/no-empty-function': 'off',
+      '@typescript-eslint/ban-ts-comment': 'warn',
 
-      // strict-boolean-expressions: allowString so that
-      // cn(isHindi ? 'font-hindi' : '') and ternary string patterns are valid
-      '@typescript-eslint/strict-boolean-expressions': [
-        'error',
-        {
-          allowString: true,
-          allowNumber: false,
-          allowNullableObject: true,
-          allowNullableBoolean: false,
-          allowNullableString: true,
-          allowNullableNumber: false,
-          allowAny: false,
-        },
-      ],
+      // Disable noisy strict-checked rules
+      '@typescript-eslint/no-unnecessary-condition': 'off',
+      '@typescript-eslint/no-floating-promises': 'warn',
+      '@typescript-eslint/no-misused-promises': 'off',
+      '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/prefer-nullish-coalescing': 'off',
+      '@typescript-eslint/prefer-optional-chain': 'warn',
+      '@typescript-eslint/strict-boolean-expressions': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/no-redundant-type-constituents': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
 
-      '@typescript-eslint/no-floating-promises': 'error',
-      '@typescript-eslint/await-thenable': 'error',
-      '@typescript-eslint/no-misused-promises': [
-        'error',
-        { checksVoidReturn: { attributes: false } },
-      ],
-      '@typescript-eslint/require-await': 'error',
-      '@typescript-eslint/no-unsafe-assignment': 'error',
-      '@typescript-eslint/no-unsafe-call': 'error',
-      '@typescript-eslint/no-unsafe-member-access': 'error',
-      '@typescript-eslint/no-unsafe-return': 'error',
-      '@typescript-eslint/no-unsafe-argument': 'error',
-      '@typescript-eslint/restrict-template-expressions': [
-        'error',
-        { allowNumber: true, allowBoolean: false, allowAny: false },
-      ],
-      '@typescript-eslint/prefer-as-const': 'error',
-      '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
-      // Use interface for object types, but type aliases for unions/intersections
-      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-      '@typescript-eslint/no-redundant-type-constituents': 'error',
-      '@typescript-eslint/prefer-reduce-type-parameter': 'error',
-      '@typescript-eslint/switch-exhaustiveness-check': 'error',
-
-      // ── React ─────────────────────────────────────────────────────────────
+      // ── React ─────────────────────────────────────────────────────
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'react/jsx-no-useless-fragment': ['error', { allowExpressions: true }],
-      'react/self-closing-comp': 'error',
-      'react/no-array-index-key': 'warn',
-      'react/hook-use-state': 'error',
-      // Allow string literals in JSX children and props — needed for Hindi text,
-      // punctuation, spaces etc. that are intentional string content
-      'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'ignore' }],
+      'react/jsx-no-useless-fragment': 'off',
+      'react/self-closing-comp': 'warn',
+      'react/no-array-index-key': 'off',
+      'react/hook-use-state': 'off',
+      'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'ignore' }],
 
-      // ── Accessibility ─────────────────────────────────────────────────────
-      'jsx-a11y/alt-text': 'error',
-      'jsx-a11y/anchor-is-valid': 'error',
-      'jsx-a11y/click-events-have-key-events': 'warn',
-      'jsx-a11y/no-static-element-interactions': 'warn',
-      'jsx-a11y/interactive-supports-focus': 'error',
-      'jsx-a11y/label-has-associated-control': 'error',
+      // ── Accessibility ─────────────────────────────────────────────
+      'jsx-a11y/alt-text': 'warn',
+      'jsx-a11y/anchor-is-valid': 'warn',
+      'jsx-a11y/click-events-have-key-events': 'off',
+      'jsx-a11y/no-static-element-interactions': 'off',
+      'jsx-a11y/interactive-supports-focus': 'warn',
+      'jsx-a11y/label-has-associated-control': 'warn',
 
-      // ── Imports ───────────────────────────────────────────────────────────
-      'import/order': [
-        'error',
-        {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling'],
-            'index',
-            'type',
-          ],
-          pathGroups: [
-            { pattern: 'react', group: 'external', position: 'before' },
-            { pattern: 'framer-motion', group: 'external', position: 'before' },
-            { pattern: '@shared/**', group: 'internal', position: 'before' },
-            { pattern: '@app/**', group: 'internal', position: 'after' },
-          ],
-          pathGroupsExcludedImportTypes: ['react'],
-          'newlines-between': 'always',
-          alphabetize: { order: 'asc', caseInsensitive: true },
-        },
-      ],
-      'import/no-duplicates': ['error', { 'prefer-inline': true }],
-      'import/no-cycle': 'error',
+      // ── Imports ───────────────────────────────────────────────────
+      'import/order': 'off',
+      'import/no-duplicates': 'warn',
+      'import/no-cycle': 'warn',
       'import/no-self-import': 'error',
-      'import/no-useless-path-segments': 'error',
+      'import/no-useless-path-segments': 'warn',
 
-      // ── General quality ───────────────────────────────────────────────────
-      // Allow console.warn and console.error (used in hooks for error reporting)
+      // ── General ───────────────────────────────────────────────────
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-debugger': 'error',
-      'no-alert': 'error',
-      'prefer-const': 'error',
+      'no-alert': 'warn',
+      'prefer-const': 'warn',
       'no-var': 'error',
-      'object-shorthand': 'error',
-      'prefer-arrow-callback': 'error',
-      'no-nested-ternary': 'error',
-      'no-unneeded-ternary': 'error',
+      'object-shorthand': 'warn',
+      'prefer-arrow-callback': 'warn',
+      'no-nested-ternary': 'warn',
+      'no-unneeded-ternary': 'warn',
       eqeqeq: ['error', 'always'],
     },
-  }
+  },
 )

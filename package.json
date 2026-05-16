@@ -6,19 +6,18 @@
     "apps/*"
   ],
   "scripts": {
-    "dev:wedding": "npm -w apps/wedding-website run dev",
-    "build:wedding": "npm -w apps/wedding-website run build",
-    "preview:wedding": "npm -w apps/wedding-website run preview",
+    "dev:wedding":       "npm -w apps/wedding-website run dev",
+    "build:wedding":     "npm -w apps/wedding-website run build",
+    "preview:wedding":   "npm -w apps/wedding-website run preview",
     "typecheck:wedding": "npm -w apps/wedding-website run typecheck",
-    "lint:wedding": "npm -w apps/wedding-website run lint",
-    "lint:fix:wedding": "npm -w apps/wedding-website run lint:fix",
-    "format": "prettier --write \"**/*.{ts,tsx,json,css,md}\" --ignore-path .gitignore",
-    "format:check": "prettier --check \"**/*.{ts,tsx,json,css,md}\" --ignore-path .gitignore",
-    "typecheck:all": "npm run typecheck:wedding",
-    "lint:all": "npm run lint:wedding",
-    "build:all": "npm run build:wedding",
-    "check": "npm run typecheck:all && npm run lint:all && npm run format:check",
-    "pre-push": "node scripts/pre-commit-check.mjs"
+    "lint:wedding":      "npm -w apps/wedding-website run lint",
+    "lint:fix:wedding":  "npm -w apps/wedding-website run lint:fix",
+    "test":              "npm -w apps/wedding-website run test",
+    "test:watch":        "npm -w apps/wedding-website run test:watch",
+    "format":            "prettier --write \"**/*.{ts,tsx,json,css,md}\" --ignore-path .gitignore",
+    "format:check":      "prettier --check \"**/*.{ts,tsx,json,css,md}\" --ignore-path .gitignore",
+    "check":             "npm run typecheck:wedding && npm run lint:wedding && npm run format:check",
+    "pre-push":          "node scripts/pre-commit-check.mjs"
   },
   "engines": {
     "node": ">=20.0.0",
