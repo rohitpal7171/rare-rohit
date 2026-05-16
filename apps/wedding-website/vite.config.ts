@@ -1,9 +1,9 @@
-/// <reference types="vitest" />
 import path from 'path'
 
 import react from '@vitejs/plugin-react-swc'
-import { defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
+// Vite 8 removed `test` from defineConfig — must import from vitest/config
+import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   plugins: [react(), svgr()],
@@ -52,7 +52,6 @@ export default defineConfig({
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
-        // Vite 8 requires manualChunks as a function, not an object
         manualChunks: (id: string) => {
           if (id.includes('react-dom') || id.includes('react-router') || id.includes('node_modules/react/')) return 'vendor-react'
           if (id.includes('framer-motion')) return 'vendor-motion'
