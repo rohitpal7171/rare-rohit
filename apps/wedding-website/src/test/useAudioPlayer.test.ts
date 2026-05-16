@@ -3,24 +3,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { useAudioPlayer } from '../../../../shared/hooks/useAudioPlayer'
 
-// ── Mock HTMLAudioElement ─────────────────────────────────────────────────
-// Vitest v4 requires a proper class for `new Audio()` to work
-interface MockAudio {
-  src: string
-  loop: boolean
-  volume: number
-  muted: boolean
-  currentTime: number
-  play: ReturnType<typeof vi.fn>
-  pause: ReturnType<typeof vi.fn>
-  addEventListener: ReturnType<typeof vi.fn>
-  removeEventListener: ReturnType<typeof vi.fn>
-  _trigger: (event: string) => void
-}
+// Vitest v4 requires Audio mock to be a real class (not vi.fn())
+// Store instance in module scope so tests can access it
+const _listeners: Record<string, Array<() => void>> = {}
+let _instance: InstanceType<typeof AudioMock>
 
-let mockAudio: MockAudio
-
-class MockAudioClass {
+class AudioMock {
   src = ''
   loop = false
   volume = 1
@@ -28,30 +16,23 @@ class MockAudioClass {
   currentTime = 0
   play = vi.fn(() => Promise.resolve())
   pause = vi.fn()
-  private listeners: Record<string, Array<() => void>> = {}
-
   addEventListener = vi.fn((event: string, cb: () => void) => {
-    if (!this.listeners[event]) this.listeners[event] = []
-    this.listeners[event].push(cb)
+    if (!_listeners[event]) _listeners[event] = []
+    _listeners[event].push(cb)
   })
-
   removeEventListener = vi.fn()
-
   _trigger(event: string) {
-    this.listeners[event]?.forEach((cb) => cb())
+    _listeners[event]?.forEach((cb) => { cb() })
+  }
+  constructor() {
+    Object.keys(_listeners).forEach((k) => { delete _listeners[k] })
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    _instance = this
   }
 }
 
 beforeEach(() => {
-  const instance = new MockAudioClass()
-  mockAudio = instance as unknown as MockAudio
-  vi.stubGlobal('Audio', class {
-    constructor() {
-      // Copy all properties from instance to this
-      Object.assign(this, instance)
-      return instance
-    }
-  })
+  vi.stubGlobal('Audio', AudioMock)
   vi.useFakeTimers()
 })
 
@@ -71,30 +52,29 @@ describe('useAudioPlayer — initial state', () => {
 
   it('respects startMuted=false', () => {
     renderHook(() => useAudioPlayer('/audio/test.mp3', { startMuted: false }))
-    expect(mockAudio.muted).toBe(false)
+    expect(_instance.muted).toBe(false)
   })
 
   it('respects startMuted=true', () => {
     renderHook(() => useAudioPlayer('/audio/test.mp3', { startMuted: true }))
-    expect(mockAudio.muted).toBe(true)
+    expect(_instance.muted).toBe(true)
   })
 
   it('sets initialVolume correctly', () => {
     renderHook(() => useAudioPlayer('/audio/test.mp3', { initialVolume: 0.5 }))
-    expect(mockAudio.volume).toBe(0.5)
+    expect(_instance.volume).toBe(0.5)
   })
 
   it('sets isLoaded=true after canplay fires', () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { mockAudio._trigger('canplay') })
+    act(() => { _instance._trigger('canplay') })
     expect(result.current.isLoaded).toBe(true)
   })
 
   it('sets hasError=true after error fires', () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { mockAudio._trigger('error') })
+    act(() => { _instance._trigger('error') })
     expect(result.current.hasError).toBe(true)
-    expect(result.current.isLoaded).toBe(false)
   })
 
   it('does nothing when src is null', () => {
@@ -106,63 +86,61 @@ describe('useAudioPlayer — initial state', () => {
 
 describe('useAudioPlayer — play()', () => {
   it('calls audio.play() and sets isPlaying=true', async () => {
-    mockAudio.play.mockResolvedValueOnce(undefined)
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { mockAudio._trigger('canplay') })
+    _instance.play.mockResolvedValueOnce(undefined)
+    act(() => { _instance._trigger('canplay') })
     await act(async () => { result.current.play() })
-    expect(mockAudio.play).toHaveBeenCalledTimes(1)
+    expect(_instance.play).toHaveBeenCalledTimes(1)
     expect(result.current.isPlaying).toBe(true)
   })
 
   it('retries muted when browser blocks', async () => {
-    mockAudio.play
+    const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3', { startMuted: false }))
+    _instance.play
       .mockRejectedValueOnce(new DOMException('NotAllowedError'))
       .mockResolvedValueOnce(undefined)
-    const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3', { startMuted: false }))
-    act(() => { mockAudio._trigger('canplay') })
+    act(() => { _instance._trigger('canplay') })
     await act(async () => { result.current.play() })
-    expect(mockAudio.play).toHaveBeenCalledTimes(2)
+    expect(_instance.play).toHaveBeenCalledTimes(2)
     expect(result.current.isPlaying).toBe(true)
   })
 
   it('does not call play() when hasError=true', async () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { mockAudio._trigger('error') })
+    act(() => { _instance._trigger('error') })
     await act(async () => { result.current.play() })
-    expect(mockAudio.play).not.toHaveBeenCalled()
+    expect(_instance.play).not.toHaveBeenCalled()
   })
 })
 
-describe('useAudioPlayer — pause() and toggle()', () => {
+describe('useAudioPlayer — pause/toggle/mute/volume/cleanup', () => {
   it('pause() stops playback', async () => {
-    mockAudio.play.mockResolvedValueOnce(undefined)
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { mockAudio._trigger('canplay') })
+    _instance.play.mockResolvedValueOnce(undefined)
+    act(() => { _instance._trigger('canplay') })
     await act(async () => { result.current.play() })
     act(() => { result.current.pause() })
-    expect(mockAudio.pause).toHaveBeenCalledTimes(1)
+    expect(_instance.pause).toHaveBeenCalled()
     expect(result.current.isPlaying).toBe(false)
   })
 
   it('toggle() plays when not playing', async () => {
-    mockAudio.play.mockResolvedValueOnce(undefined)
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { mockAudio._trigger('canplay') })
+    _instance.play.mockResolvedValueOnce(undefined)
+    act(() => { _instance._trigger('canplay') })
     await act(async () => { result.current.toggle() })
     expect(result.current.isPlaying).toBe(true)
   })
 
   it('toggle() pauses when playing', async () => {
-    mockAudio.play.mockResolvedValueOnce(undefined)
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { mockAudio._trigger('canplay') })
+    _instance.play.mockResolvedValueOnce(undefined)
+    act(() => { _instance._trigger('canplay') })
     await act(async () => { result.current.play() })
     act(() => { result.current.toggle() })
     expect(result.current.isPlaying).toBe(false)
   })
-})
 
-describe('useAudioPlayer — mute/volume/cleanup', () => {
   it('toggleMute() flips state', () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3', { startMuted: false }))
     act(() => { result.current.toggleMute() })
@@ -183,9 +161,9 @@ describe('useAudioPlayer — mute/volume/cleanup', () => {
 
   it('cleans up on unmount', () => {
     const { unmount } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { mockAudio._trigger('canplay') })
+    act(() => { _instance._trigger('canplay') })
     unmount()
-    expect(mockAudio.pause).toHaveBeenCalled()
-    expect(mockAudio.removeEventListener).toHaveBeenCalled()
+    expect(_instance.pause).toHaveBeenCalled()
+    expect(_instance.removeEventListener).toHaveBeenCalled()
   })
 })

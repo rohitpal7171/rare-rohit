@@ -6,9 +6,6 @@ import { Music, Pause, Play, Volume2, VolumeX, X } from 'lucide-react'
 import { useAudioPlayer } from '@shared/hooks'
 import { cn, type CeremonySlug } from '@shared/utils'
 
-// Place MP3 files in public/audio/ — filenames must match exactly.
-// Player auto-plays muted after 3 seconds, then unmutes.
-// Hides itself gracefully if the file returns a 404 (hasError).
 const CEREMONY_AUDIO: Record<CeremonySlug, string> = {
   haldi:   '/audio/haldi.mp3',
   mehendi: '/audio/mehendi.mp3',
@@ -40,7 +37,6 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
     startMuted: true,
     loop: true,
     initialVolume: 0.35,
-    autoPlayDelay: 3000, // auto-starts muted after 3s, then unmutes
   })
 
   const [dismissed, setDismissed] = useState(false)
@@ -48,7 +44,6 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
 
   if (hasError || dismissed) return null
 
-  // Playing but still muted — show tap-to-unmute hint
   const showUnmuteHint = isPlaying && isMuted
 
   return (
@@ -62,7 +57,6 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
         role="region"
         aria-label={`Ceremony music: ${CEREMONY_MOOD[slug]}`}
       >
-        {/* Track info + hint */}
         <div className="flex flex-col">
           <div className="flex items-center gap-1.5">
             <Music size={14} className="text-gold/70" aria-hidden="true" />
@@ -81,7 +75,6 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
           )}
         </div>
 
-        {/* Volume slider */}
         <AnimatePresence>
           {showVolume && (
             <motion.input
@@ -100,21 +93,17 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
           )}
         </AnimatePresence>
 
-        {/* Mute toggle — highlighted when muted while playing */}
         <button
           onClick={() => { toggleMute(); setShowVolume((v) => !v) }}
           aria-label={isMuted ? 'Unmute' : 'Mute'}
           className={cn(
             'transition-colors',
-            isMuted && isPlaying
-              ? 'text-gold animate-pulse'        // pulsing gold when awaiting unmute
-              : 'text-ivory/60 hover:text-gold'
+            isMuted && isPlaying ? 'text-gold animate-pulse' : 'text-ivory/60 hover:text-gold'
           )}
         >
           {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
         </button>
 
-        {/* Play / Pause */}
         <button
           onClick={toggle}
           disabled={!isLoaded}
@@ -131,7 +120,6 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
           }
         </button>
 
-        {/* Dismiss */}
         <button
           onClick={() => { setDismissed(true) }}
           aria-label="Close music player"

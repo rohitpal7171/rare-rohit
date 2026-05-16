@@ -23,9 +23,7 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.test.{ts,tsx}', '../../shared/**/*.test.{ts,tsx}'],
     css: false,
-    // Disable cache so setup file changes always take effect
     cache: false,
-    // Use the Babel-based React plugin for tests — SWC doesn't support vi.mock hoisting with JSX
     server: {
       deps: {
         inline: ['framer-motion'],
@@ -54,12 +52,14 @@ export default defineConfig({
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-          'vendor-motion': ['framer-motion'],
-          'vendor-i18n': ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
-          'vendor-form': ['react-hook-form', 'zod', '@hookform/resolvers'],
-          'vendor-ui': ['lucide-react', 'clsx', 'tailwind-merge'],
+        // Vite 8 requires manualChunks as a function, not an object
+        manualChunks: (id: string) => {
+          if (id.includes('react-dom') || id.includes('react-router') || id.includes('node_modules/react/')) return 'vendor-react'
+          if (id.includes('framer-motion')) return 'vendor-motion'
+          if (id.includes('i18next')) return 'vendor-i18n'
+          if (id.includes('react-hook-form') || id.includes('zod') || id.includes('@hookform')) return 'vendor-form'
+          if (id.includes('lucide-react') || id.includes('clsx') || id.includes('tailwind-merge')) return 'vendor-ui'
+          return undefined
         },
       },
     },

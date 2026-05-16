@@ -1,7 +1,8 @@
+/// <reference types="vitest/globals" />
 import '@testing-library/jest-dom'
 
-// Vitest v4 hoists vi.mock() before ALL imports — even React is not available
-// during hoisting. Use async factory with dynamic import to get React safely.
+// Vitest v4 hoists vi.mock() before ALL imports.
+// Use async factory with dynamic import to get React safely.
 
 vi.mock('framer-motion', async () => {
   const { createElement, forwardRef, Fragment } = await import('react')
@@ -34,11 +35,11 @@ vi.mock('framer-motion', async () => {
     },
     AnimatePresence: ({ children }: { children: unknown }) =>
       createElement(Fragment, null, children as never),
-    useScroll:        () => ({ scrollYProgress: { get: () => 0 } }),
-    useTransform:     (_v: unknown, _i: unknown, output: unknown[]) => output[0],
-    useSpring:        (v: unknown) => v,
+    useScroll:         () => ({ scrollYProgress: { get: () => 0 } }),
+    useTransform:      (_v: unknown, _i: unknown, output: unknown[]) => output[0],
+    useSpring:         (v: unknown) => v,
     useMotionTemplate: (...args: unknown[]) => String(args.join('')),
-    useMotionValue:   (v: unknown) => ({ get: () => v, set: vi.fn() }),
+    useMotionValue:    (v: unknown) => ({ get: () => v, set: vi.fn() }),
   }
 })
 
