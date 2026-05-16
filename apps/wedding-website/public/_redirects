@@ -1,6 +1,3 @@
-# Static files — serve directly, never redirect to index.html
-/audio/*   /audio/:splat   200
-/favicon.svg   /favicon.svg   200
-
-# SPA fallback — all other routes go to index.html
+# SPA fallback — Netlify serves static files (audio, images etc.) automatically
+# before this rule is checked, so no special rules needed for /audio/*
 /*    /index.html   200

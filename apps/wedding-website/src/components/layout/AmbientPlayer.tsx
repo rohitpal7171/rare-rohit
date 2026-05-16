@@ -10,29 +10,33 @@ const AMBIENT_SRC = '/audio/sangeet.mp3'
 const TRIGGERS = ['click', 'scroll', 'keydown', 'touchstart', 'mousemove'] as const
 
 export const AmbientPlayer = () => {
-  const audio = useAudioPlayer(AMBIENT_SRC, {
-    startMuted: false,
-    loop: true,
-    initialVolume: 0.6,
-  })
+  const { isPlaying, isMuted, isLoaded, hasError, play, toggle, toggleMute } = useAudioPlayer(
+    AMBIENT_SRC,
+    { startMuted: false, loop: true, initialVolume: 0.3 }
+  )
 
-  const { isPlaying, isMuted, isLoaded, hasError, play, toggle, toggleMute } = audio
   const [dismissed, setDismissed] = useState(false)
   const startedRef = useRef(false)
+  // Keep latest play in a ref so the effect never has stale closure
+  const playRef = useRef(play)
+  useEffect(() => {
+    playRef.current = play
+  }, [play])
 
-  // Start audio on: any interaction OR 3 seconds after load — whichever first
+  // Start audio: any interaction OR 3s after load — whichever first
   useEffect(() => {
     if (!isLoaded || startedRef.current) return undefined
 
     const start = (): void => {
       if (startedRef.current) return
       startedRef.current = true
-      play()
+      playRef.current()
       TRIGGERS.forEach((evt) => {
         document.removeEventListener(evt, start)
       })
     }
 
+    // Fire immediately if 3s already passed (audio was cached and loaded fast)
     const timer = window.setTimeout(start, 3000)
     TRIGGERS.forEach((evt) => {
       document.addEventListener(evt, start, { passive: true, once: true })
@@ -44,19 +48,17 @@ export const AmbientPlayer = () => {
         document.removeEventListener(evt, start)
       })
     }
-  }, [isLoaded, play])
+  }, [isLoaded]) // only isLoaded — no play dependency, using playRef instead
 
-  // If we ended up muted (browser forced it), unmute on next interaction
+  // Unmute on next interaction if browser forced mute
   useEffect(() => {
     if (!isPlaying || !isMuted) return undefined
-
     const unmute = (): void => {
       toggleMute()
     }
     TRIGGERS.forEach((evt) => {
       document.addEventListener(evt, unmute, { passive: true, once: true })
     })
-
     return () => {
       TRIGGERS.forEach((evt) => {
         document.removeEventListener(evt, unmute)
@@ -75,15 +77,16 @@ export const AmbientPlayer = () => {
         {isLoading && (
           <motion.span
             aria-hidden="true"
-            className="absolute inset-[-3px] rounded-full border-2 border-transparent border-t-gold/50"
+            className="pointer-events-none absolute inset-[-3px] rounded-full border-2 border-transparent border-t-gold/50"
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           />
         )}
+
         {isActive && (
           <motion.span
             aria-hidden="true"
-            className="absolute inset-0 rounded-full border border-gold/40"
+            className="pointer-events-none absolute inset-0 rounded-full border border-gold/40"
             animate={{ scale: [1, 1.8, 1], opacity: [0.5, 0, 0.5] }}
             transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
           />
@@ -93,7 +96,7 @@ export const AmbientPlayer = () => {
           onClick={toggle}
           disabled={hasError}
           aria-label={isPlaying ? 'Pause ambient music' : 'Play ambient music'}
-          whileHover="hover"
+          whileHover={!isLoading ? 'hover' : undefined}
           whileTap={{ scale: 0.93 }}
           transition={{ type: 'spring', stiffness: 400, damping: 20 }}
           className={cn(

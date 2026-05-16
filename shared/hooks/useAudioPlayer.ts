@@ -20,6 +20,20 @@ export interface UseAudioPlayerReturn {
   seek: (seconds: number) => void
 }
 
+// ── Module-level audio cache ───────────────────────────────────────────────
+// One Audio element per src — never created twice for the same file.
+// This prevents the double-download when two components use the same src.
+const audioCache = new Map<string, HTMLAudioElement>()
+
+const getOrCreateAudio = (src: string): HTMLAudioElement => {
+  const existing = audioCache.get(src)
+  if (existing !== undefined) return existing
+  const audio = new Audio(src)
+  audio.preload = 'auto'
+  audioCache.set(src, audio)
+  return audio
+}
+
 export const useAudioPlayer = (
   src: string | null,
   options: UseAudioPlayerOptions = {}
@@ -29,48 +43,51 @@ export const useAudioPlayer = (
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const [isPlaying, setIsPlaying] = useState(false)
-  const [isMuted, setIsMuted] = useState(startMuted)
-  const [volume, setVolumeState] = useState(initialVolume)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [hasError, setHasError] = useState(false)
+  const [isMuted, setIsMuted]     = useState(startMuted)
+  const [volume, setVolumeState]  = useState(initialVolume)
+  const [isLoaded, setIsLoaded]   = useState(false)
+  const [hasError, setHasError]   = useState(false)
 
   useEffect(() => {
     if (src === null) return undefined
 
-    const audio = new Audio(src)
-    audio.loop = loop
+    const audio = getOrCreateAudio(src)
+    audio.loop   = loop
     audio.volume = initialVolume
-    audio.muted = startMuted // respect the option as passed
+    audio.muted  = startMuted
     audioRef.current = audio
 
-    setIsLoaded(false)
-    setHasError(false)
-    setIsPlaying(false)
-    setIsMuted(startMuted)
-
-    const onCanPlay = (): void => {
+    // If already loaded (cached), set state immediately
+    if (audio.readyState >= 3) {
       setIsLoaded(true)
-    }
-    const onError = (): void => {
-      setHasError(true)
+      setHasError(false)
+    } else {
       setIsLoaded(false)
+      setHasError(false)
     }
-    const onEnded = (): void => {
-      if (!loop) setIsPlaying(false)
-    }
+
+    setIsPlaying(!audio.paused)
+    setIsMuted(audio.muted)
+
+    const onCanPlay = (): void => { setIsLoaded(true) }
+    const onError   = (): void => { setHasError(true); setIsLoaded(false) }
+    const onEnded   = (): void => { if (!loop) setIsPlaying(false) }
+    const onPlay    = (): void => { setIsPlaying(true) }
+    const onPause   = (): void => { setIsPlaying(false) }
 
     audio.addEventListener('canplay', onCanPlay)
     audio.addEventListener('error', onError)
     audio.addEventListener('ended', onEnded)
+    audio.addEventListener('play', onPlay)
+    audio.addEventListener('pause', onPause)
 
     return () => {
-      audio.pause()
       audio.removeEventListener('canplay', onCanPlay)
       audio.removeEventListener('error', onError)
       audio.removeEventListener('ended', onEnded)
+      audio.removeEventListener('play', onPlay)
+      audio.removeEventListener('pause', onPause)
       audioRef.current = null
-      setIsPlaying(false)
-      setIsLoaded(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src])
@@ -79,22 +96,15 @@ export const useAudioPlayer = (
     if (audioRef.current === null || hasError) return
     void audioRef.current
       .play()
-      .then(() => {
-        setIsPlaying(true)
-      })
+      .then(() => { setIsPlaying(true) })
       .catch(() => {
-        // Browser blocked — try once with mute, may succeed silently
         if (audioRef.current !== null) {
           audioRef.current.muted = true
           setIsMuted(true)
           void audioRef.current
             .play()
-            .then(() => {
-              setIsPlaying(true)
-            })
-            .catch(() => {
-              setHasError(true)
-            })
+            .then(() => { setIsPlaying(true) })
+            .catch(() => { setHasError(true) })
         }
       })
   }, [hasError])
@@ -127,17 +137,5 @@ export const useAudioPlayer = (
     audioRef.current.currentTime = seconds
   }, [])
 
-  return {
-    isPlaying,
-    isMuted,
-    volume,
-    isLoaded,
-    hasError,
-    play,
-    pause,
-    toggle,
-    toggleMute,
-    setVolume,
-    seek,
-  }
+  return { isPlaying, isMuted, volume, isLoaded, hasError, play, pause, toggle, toggleMute, setVolume, seek }
 }

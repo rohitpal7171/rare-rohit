@@ -6,13 +6,8 @@
 [build.environment]
   NODE_VERSION = "20"
 
-# Static assets — serve directly, never redirect
-[[redirects]]
-  from   = "/audio/*"
-  to     = "/audio/:splat"
-  status = 200
-
-# SPA fallback — all other routes serve index.html
+# Netlify automatically serves static files from dist/ before checking redirects.
+# Only the SPA fallback is needed — audio files are served directly.
 [[redirects]]
   from   = "/*"
   to     = "/index.html"
