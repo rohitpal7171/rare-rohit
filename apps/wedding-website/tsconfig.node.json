@@ -9,7 +9,7 @@
     "strict": true,
     "skipLibCheck": true,
     "verbatimModuleSyntax": true,
-    "types": ["node"]
+    "types": ["node", "vitest/globals"]
   },
-  "include": ["vite.config.ts", "postcss.config.cjs"]
+  "include": ["vite.config.ts", "vitest.config.ts", "postcss.config.cjs"]
 }

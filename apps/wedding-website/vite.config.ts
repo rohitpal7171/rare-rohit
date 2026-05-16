@@ -2,8 +2,7 @@ import path from 'path'
 
 import react from '@vitejs/plugin-react-swc'
 import svgr from 'vite-plugin-svgr'
-// Vite 8 removed `test` from defineConfig — must import from vitest/config
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react(), svgr()],
@@ -14,20 +13,6 @@ export default defineConfig({
       '@shared/hooks': path.resolve(__dirname, '../../shared/hooks/index.ts'),
       '@shared/utils': path.resolve(__dirname, '../../shared/utils/index.ts'),
       '@app': path.resolve(__dirname, './src'),
-    },
-  },
-
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
-    include: ['src/**/*.test.{ts,tsx}', '../../shared/**/*.test.{ts,tsx}'],
-    css: false,
-    cache: false,
-    server: {
-      deps: {
-        inline: ['framer-motion'],
-      },
     },
   },
 
