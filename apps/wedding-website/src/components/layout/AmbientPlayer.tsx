@@ -96,7 +96,7 @@ export const AmbientPlayer = () => {
           onClick={toggle}
           disabled={hasError}
           aria-label={isPlaying ? 'Pause ambient music' : 'Play ambient music'}
-          whileHover={!isLoading ? 'hover' : undefined}
+          {...(!isLoading ? { whileHover: 'hover' } : {})}
           whileTap={{ scale: 0.93 }}
           transition={{ type: 'spring', stiffness: 400, damping: 20 }}
           className={cn(
