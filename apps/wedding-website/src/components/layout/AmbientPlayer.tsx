@@ -1,72 +1,59 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { Volume2, VolumeX, X } from 'lucide-react'
+import { Volume2, VolumeX } from 'lucide-react'
 
 import { useAudioPlayer } from '@shared/hooks'
 import { cn } from '@shared/utils'
 
 const AMBIENT_SRC = '/audio/sangeet.mp3'
-const TRIGGERS = ['click', 'scroll', 'keydown', 'touchstart', 'mousemove'] as const
 
 export const AmbientPlayer = () => {
   const { isPlaying, isMuted, isLoaded, hasError, play, toggle, toggleMute } = useAudioPlayer(
     AMBIENT_SRC,
-    { startMuted: false, loop: true, initialVolume: 0.3 }
+    { startMuted: true, loop: true, initialVolume: 0.3 }
   )
 
-  const [dismissed, setDismissed] = useState(false)
   const startedRef = useRef(false)
-  // Keep latest play in a ref so the effect never has stale closure
+
+  // Keep latest callbacks in refs — avoids stale closures in effects
   const playRef = useRef(play)
+  const toggleMuteRef = useRef(toggleMute)
   useEffect(() => {
     playRef.current = play
   }, [play])
-
-  // Start audio: any interaction OR 3s after load — whichever first
   useEffect(() => {
-    if (!isLoaded || startedRef.current) return undefined
+    toggleMuteRef.current = toggleMute
+  }, [toggleMute])
 
-    const start = (): void => {
+  // On first user interaction: start audio muted then unmute
+  useEffect(() => {
+    if (startedRef.current) return undefined
+
+    const triggers = ['click', 'touchstart'] as const
+
+    const handleFirstInteraction = (): void => {
       if (startedRef.current) return
       startedRef.current = true
+      // Remove all other listeners immediately
+      triggers.forEach((evt) => {
+        document.removeEventListener(evt, handleFirstInteraction)
+      })
       playRef.current()
-      TRIGGERS.forEach((evt) => {
-        document.removeEventListener(evt, start)
-      })
+      // Unmute after play() has had time to resolve
+      setTimeout(() => { toggleMuteRef.current() }, 300)
     }
 
-    // Fire immediately if 3s already passed (audio was cached and loaded fast)
-    const timer = window.setTimeout(start, 3000)
-    TRIGGERS.forEach((evt) => {
-      document.addEventListener(evt, start, { passive: true, once: true })
+    triggers.forEach((evt) => {
+      document.addEventListener(evt, handleFirstInteraction, { passive: true })
     })
 
     return () => {
-      window.clearTimeout(timer)
-      TRIGGERS.forEach((evt) => {
-        document.removeEventListener(evt, start)
+      triggers.forEach((evt) => {
+        document.removeEventListener(evt, handleFirstInteraction)
       })
     }
-  }, [isLoaded]) // only isLoaded — no play dependency, using playRef instead
-
-  // Unmute on next interaction if browser forced mute
-  useEffect(() => {
-    if (!isPlaying || !isMuted) return undefined
-    const unmute = (): void => {
-      toggleMute()
-    }
-    TRIGGERS.forEach((evt) => {
-      document.addEventListener(evt, unmute, { passive: true, once: true })
-    })
-    return () => {
-      TRIGGERS.forEach((evt) => {
-        document.removeEventListener(evt, unmute)
-      })
-    }
-  }, [isPlaying, isMuted, toggleMute])
-
-  if (dismissed) return null
+  }, [])
 
   const isActive = isPlaying && !isMuted
   const isLoading = !isLoaded && !hasError
@@ -93,7 +80,12 @@ export const AmbientPlayer = () => {
         )}
 
         <motion.button
-          onClick={toggle}
+          onClick={() => {
+            // If this click is also the first interaction, let handleFirstInteraction
+            // start the audio — don't toggle (which would immediately pause it)
+            if (!startedRef.current) return
+            toggle()
+          }}
           disabled={hasError}
           aria-label={isPlaying ? 'Pause ambient music' : 'Play ambient music'}
           {...(!isLoading ? { whileHover: 'hover' } : {})}
@@ -160,7 +152,7 @@ export const AmbientPlayer = () => {
             >
               {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
             </button>
-            <button
+            {/* <button
               onClick={() => {
                 setDismissed(true)
               }}
@@ -168,7 +160,7 @@ export const AmbientPlayer = () => {
               className="text-ivory/30 transition-colors hover:text-ivory/60"
             >
               <X size={13} />
-            </button>
+            </button> */}
           </motion.div>
         )}
       </AnimatePresence>
