@@ -1,50 +1,126 @@
 # CLAUDE.md — apps/wedding-website/
+# Last updated: 2026-05-24
 
 ## App Identity
 
 Indian wedding website for **Rohit Singh Pal & Priti Pal**.
-Wedding: 25 November 2026, Kokapur (near Udi Moad).
-Lagun: 24 November 2026, Gwalior.
-React 18 + TypeScript strict + Vite SWC + Tailwind v3 + Framer Motion v11.
-Bilingual: EN (dev default) / HI (prod default) via react-i18next.
-Theme: saffron + maroon + gold + ivory. Ganesh & Lakshmi divine motif.
-Marriage type: **Arranged marriage** — story content must reflect this.
+- **Pheras (main event):** 26 November 2026, 9:00 AM — Kokapur, Udi Modh, Uttar Pradesh
+- **Baraat:** 25 November 2026, 4:00 PM — Kokapur, Udi Modh, Uttar Pradesh
+- **Lagun:** 24 November 2026 — Gwalior, Madhya Pradesh
+- **Marriage type:** Arranged — story content must always reflect this
+- **Stack:** React 18 + TypeScript 5 strict + Vite 5 SWC + Tailwind v3 + Framer Motion v11
+- **Bilingual:** EN (dev default) / HI (prod default) via react-i18next
+- **Theme:** divine (dark purple) + maroon + gold + ivory + saffron
+- **Deployed at:** rohitwedspriti.netlify.app (auto-deploy on push to main)
 
-## Key Files
+---
 
-- `src/config/wedding.config.ts` — ALL personal details (names, dates, venues)
-- `src/config/types.ts` — TypeScript interfaces for config
-- `src/i18n/config.ts` — i18next init (change fallbackLng 'en'→'hi' for production)
-- `src/i18n/react-i18next.d.ts` — Typed t() via declaration merging
-- `src/router/index.tsx` — All routes
+## Key Files — Single Sources of Truth
+
+| File                          | Purpose                                      |
+|-------------------------------|----------------------------------------------|
+| `src/config/wedding.config.ts`| ALL personal details (names, dates, venues)  |
+| `src/config/types.ts`         | TypeScript interfaces for wedding domain     |
+| `src/i18n/config.ts`          | i18next init (fallbackLng: 'en' → 'hi' prod) |
+| `src/i18n/react-i18next.d.ts` | Typed t() via declaration merging (EN basis) |
+| `src/router/index.tsx`        | All routes (createBrowserRouter)             |
+| `tailwind.config.ts`          | Design tokens + component classes            |
+| `src/styles/index.css`        | CSS custom properties mirroring Tailwind     |
+
+---
 
 ## Routes
 
-- `/` → Home.tsx (all sections stacked)
-- `/ceremony/:slug` → CeremonyPage.tsx → renders individual ceremony component
-- `*` → NotFound.tsx
+| Path               | Component      | Notes                                     |
+|--------------------|----------------|-------------------------------------------|
+| `/`                | `Home`         | All sections stacked vertically           |
+| `/ceremony/:slug`  | `CeremonyPage` | Slug validated in component               |
+| `*`                | `NotFound`     | 404 fallback                              |
+
+Valid slugs: `haldi` | `mehendi` | `sangeet` | `baraat` | `pheras` | `vidaai` | `reception`
+Note: `reception` slug exists but Reception ceremony is not shown (no reception event).
+
+---
 
 ## Import Aliases
 
-- `@shared/ui` → shared/ui/index.ts
-- `@shared/hooks` → shared/hooks/index.ts
-- `@shared/utils` → shared/utils/index.ts
-- `@app/*` → src/\*
+```ts
+@shared/ui     → shared/ui/index.ts        (Button, Modal, Countdown, AnimatedSection, etc.)
+@shared/hooks  → shared/hooks/index.ts     (useAudioPlayer, useCountdown, etc.)
+@shared/utils  → shared/utils/index.ts     (cn, animations, constants, formatDate)
+@app/*         → src/*                     (config, pages, components, i18n, router)
+```
+
+---
 
 ## i18n Namespaces
 
-common | home | story | ceremonies | schedule | gallery | party | travel | rsvp | faq
-Both `en/` and `hi/` must have identical keys.
+| Namespace    | File              | Used in                               |
+|--------------|-------------------|---------------------------------------|
+| `common`     | common.json       | Navbar, Footer, shared buttons/labels |
+| `home`       | home.json         | Hero, Blessings sections              |
+| `story`      | story.json        | OurStory section                      |
+| `ceremonies` | ceremonies.json   | CeremoniesGrid + all ceremony pages   |
+| `schedule`   | schedule.json     | Schedule section                      |
+| `gallery`    | gallery.json      | Gallery section                       |
+| `party`      | party.json        | WeddingParty section                  |
+| `travel`     | travel.json       | Travel section                        |
+| `rsvp`       | rsvp.json         | RSVP section                          |
+| `faq`        | faq.json          | FAQ section                           |
+
+Both `en/` and `hi/` must have IDENTICAL key structure at all times.
+
+---
+
+## Netlify Deployment Config
+
+```toml
+[build]
+  base    = "apps/wedding-website"
+  command = "npm run build"
+  publish = "dist"
+```
+- Node version: 20
+- SPA routing: handled by `public/_redirects` (`/* /index.html 200`)
+- Environment vars: set in Netlify dashboard (never in committed code)
+- `.env.example` — documents required vars (commit this)
+- `.env` — local only (gitignored)
+
+---
+
+## Vite Config — Key Points
+
+- `@vitejs/plugin-react-swc` — SWC for fast builds
+- Path aliases match tsconfig paths exactly
+- `manualChunks` splits: vendor-react, vendor-motion, vendor-i18n, vendor-form, vendor-ui
+- Build output: `dist/`
+
+---
+
+## TypeScript Config Chain
+
+```
+tsconfig.base.json (root)
+  └── tsconfig.json (app — extends base, adds @app/* alias)
+        └── tsconfig.node.json (Vite config only)
+        └── tsconfig.test.json (Vitest only)
+```
+
+---
+
+## Testing (Vitest)
+
+- Test files: `src/test/*.test.{ts,tsx}`
+- Setup files: `src/test/setup.ts` + `src/test/setup.tsx`
+- Mocks: `src/test/__mocks__/`
+- Run: `npm run test` (from app directory)
+- Current tests: `AmbientPlayer.test.tsx`, `useAudioPlayer.test.ts`
+
+---
 
 ## Before Editing Any Content
 
-Read `context/WEDDING_DETAILS.md` — all confirmed real details are there.
-Never use old placeholder names (Rohit Verma, Priya Sharma) anywhere.
-
-## Netlify Deploy
-
-- Site: rohitwedspriti.netlify.app (tentative — confirm when deploying)
-- Base: `apps/wedding-website`
-- Build: `npm run build`
-- Publish: `dist`
-- Node: 20
+1. Read `context/WEDDING_DETAILS.md` — all confirmed real details
+2. Never use old placeholder names (Rohit Verma, Priya Sharma)
+3. Marriage is **arranged** — never use love-story language
+4. No reception, no RSVP, no travel info on website

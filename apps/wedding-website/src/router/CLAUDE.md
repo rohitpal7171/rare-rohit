@@ -1,20 +1,29 @@
-# CLAUDE.md — src/router/
+# CLAUDE.md — apps/wedding-website/src/router/
+# Last updated: 2026-05-24
 
-## File
+## File: index.tsx
 
-- `index.tsx` — All routes defined with `createBrowserRouter`.
+Defines all routes using React Router v6 `createBrowserRouter`.
 
 ## Routes
 
-| Path              | Component      | Notes                                    |
-| ----------------- | -------------- | ---------------------------------------- |
-| `/`               | `Home`         | All sections                             |
-| `/ceremony/:slug` | `CeremonyPage` | Slug validated in CeremonyPage, not here |
-| `*`               | `NotFound`     | 404 fallback                             |
+| Path               | Component      | Notes                                      |
+|--------------------|----------------|--------------------------------------------|
+| `/`                | `Home`         | All sections                               |
+| `/ceremony/:slug`  | `CeremonyPage` | Slug validated inside CeremonyPage         |
+| `*`                | `NotFound`     | 404 fallback                               |
 
-## Notes
+## Why createBrowserRouter (not createHashRouter)
 
-- `createBrowserRouter` is required (not `createHashRouter`) for clean URLs on Netlify
-- Netlify `_redirects` + `netlify.toml` redirect handles SPA routing
-- Do NOT add lazy loading here yet — app is small enough that it's premature
-- When adding lazy loading: wrap in `Suspense` with a page-level skeleton loader
+Clean URLs (`/ceremony/haldi` not `/#/ceremony/haldi`).
+Netlify's `_redirects` + `netlify.toml` handle SPA routing for hard refreshes.
+```
+/* /index.html 200   ← in public/_redirects
+```
+
+## Rules
+
+- Do NOT add slug validation here — it lives in `CeremonyPage.tsx`
+- Do NOT add lazy loading yet — app is small, premature optimization
+- When lazy loading is added: wrap each lazy component in `<Suspense fallback={<PageSkeleton />}>`
+- All route components imported from `@app/pages/`

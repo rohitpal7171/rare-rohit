@@ -1,22 +1,85 @@
-# CLAUDE.md — src/pages/
+# CLAUDE.md — apps/wedding-website/src/pages/
+# Last updated: 2026-05-24
 
 ## Pages
 
-- `Home.tsx` — Composes all 10 sections in order. Renders Navbar + main + Footer.
-- `CeremonyPage.tsx` — Dynamic route `/ceremony/:slug`. Validates slug against `VALID_SLUGS` set, redirects to `/` if invalid. Renders Navbar + PageWrapper + ceremony component + Footer.
-- `NotFound.tsx` — 404 fallback for `*` route.
+| File               | Route              | Purpose                                     |
+|--------------------|--------------------|---------------------------------------------|
+| `Home.tsx`         | `/`                | Composes all active sections                |
+| `CeremonyPage.tsx` | `/ceremony/:slug`  | Dynamic ceremony detail page                |
+| `NotFound.tsx`     | `*`                | 404 fallback                                |
 
-## Section Order in Home.tsx
+---
 
-Hero → Blessings → OurStory → CeremoniesGrid → Schedule → Gallery → WeddingParty → Travel → RSVP → FAQ
+## Home.tsx
 
-## Section Background Alternation
+Renders Navbar + all active sections in order + Footer.
 
-Dark (mandala-bg): Hero, Blessings, CeremoniesGrid, Gallery, Travel, FAQ
-Light (bg-ivory): OurStory, Schedule, WeddingParty, RSVP
-— Never two dark or two light sections in a row.
+### Current Section Order
+```tsx
+<Navbar />
+<main>
+  <Hero />          // #home       — dark
+  <Blessings />     // #blessings  — dark
+  <OurStory />      // #our-story  — light
+  <CeremoniesGrid/> // #ceremonies — dark
+  <Schedule />      // #schedule   — light
+  <Gallery />       // #gallery    — dark
+  <WeddingParty />  // #wedding-party — light
+  <WishesWall />    // #wishes     — varies
+  <FAQ />           // #faq        — dark
+</main>
+<Footer />
+```
 
-## CeremonyPage slug validation
+NOT rendered (inactive): Travel, RSVP, Reception.
 
-Uses `VALID_SLUGS = new Set(Object.keys(ceremonyMap))` — type-safe guard.
-Import `FC` from 'react' explicitly — required by `verbatimModuleSyntax`.
+### Section ID Anchors
+Nav links use `<a href="/#section-id">` — section IDs must match exactly.
+IDs: `home`, `blessings`, `our-story`, `ceremonies`, `schedule`, `gallery`, `wedding-party`, `faq`
+
+---
+
+## CeremonyPage.tsx
+
+Handles `/ceremony/:slug` dynamic route.
+
+### Slug Validation
+```ts
+const VALID_SLUGS = new Set(Object.keys(ceremonyMap))
+// If slug not in set → navigate('/', { replace: true })
+```
+
+### ceremonyMap
+```ts
+const ceremonyMap: Record<CeremonySlug, FC> = {
+  haldi:     Haldi,
+  mehendi:   Mehendi,
+  sangeet:   Sangeet,
+  baraat:    Baraat,
+  pheras:    Pheras,
+  vidaai:    Vidaai,
+  reception: Reception,   // exists but not linked from site
+}
+```
+
+### Structure
+```tsx
+<Navbar />
+<PageWrapper>
+  <DynamicCeremonyComponent />
+</PageWrapper>
+<Footer />
+```
+
+### Import Notes
+- Must `import type { FC } from 'react'` — required by `verbatimModuleSyntax`
+- `useNavigate` for invalid slug redirect
+- `useParams` for slug extraction
+
+---
+
+## NotFound.tsx
+
+- Renders a 404 page with link back to `/`
+- Also: `public/404.html` exists for Netlify to serve on hard 404s before React loads
