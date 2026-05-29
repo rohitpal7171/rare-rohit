@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router-dom'
 import { cn } from '@shared/utils'
 
 import { CursorEffect } from '@app/components/effects/CursorEffect'
+import { ScrollProgress } from '@app/components/layout/ScrollProgress'
 
 import { router } from './router'
 
@@ -24,6 +25,7 @@ export default function App() {
     <div className={cn('min-h-screen', isHindi ? 'font-hindi' : 'font-body')}>
       {/* Global cursor effect — canvas overlay, pointer-events: none */}
       <CursorEffect />
+      <ScrollProgress />
       <RouterProvider router={router} />
     </div>
   )

@@ -2,6 +2,7 @@ import { Heart } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { weddingConfig } from '@app/config/wedding.config'
+import { ShareButton } from '@app/components/layout/ShareButton'
 
 export const Footer = () => {
   const { t } = useTranslation('common')
@@ -11,6 +12,9 @@ export const Footer = () => {
       <div className="mx-auto max-w-2xl space-y-4">
         <p className="font-script text-3xl text-gold">{weddingConfig.hashtag}</p>
         <p className="font-body text-sm text-ivory/50">{t('footer.hashtag')}</p>
+        <div className="flex justify-center">
+          <ShareButton />
+        </div>
         <div className="gold-divider" />
         <p className="font-hindi text-sm text-ivory/60">{t('footer.blessings')}</p>
         <div className="flex items-center justify-center gap-1 font-body text-xs text-ivory/30">

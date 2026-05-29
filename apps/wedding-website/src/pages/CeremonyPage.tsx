@@ -4,6 +4,7 @@ import { Navigate, useParams } from 'react-router-dom'
 
 import type { CeremonySlug } from '@shared/utils'
 
+import { weddingConfig } from '@app/config/wedding.config'
 import { Baraat } from '@app/components/ceremonies/Baraat'
 import { Haldi } from '@app/components/ceremonies/Haldi'
 import { Mehendi } from '@app/components/ceremonies/Mehendi'
@@ -34,11 +35,16 @@ export const CeremonyPage = () => {
   }
 
   const Component = ceremonyMap[slug as CeremonySlug]
+  const accentColor = weddingConfig.ceremonies[slug as CeremonySlug]?.color
+
+  if (Component === undefined) {
+    return <Navigate to="/" replace />
+  }
 
   return (
     <>
       <Navbar />
-      <PageWrapper>
+      <PageWrapper accentColor={accentColor}>
         <Component />
       </PageWrapper>
       <Footer />

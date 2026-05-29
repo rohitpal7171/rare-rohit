@@ -19,43 +19,41 @@ export const transitions = {
 // ─── Entrance variants ─────────────────────────────────────────────────────
 
 export const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 36, filter: 'blur(4px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: transitions.smooth },
-  exit: { opacity: 0, y: -20, transition: transitions.exit },
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: transitions.smooth },
+  exit: { opacity: 0, y: -16, transition: transitions.exit },
 }
 
 export const fadeInDown: Variants = {
-  hidden: { opacity: 0, y: -36, filter: 'blur(4px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: transitions.smooth },
-  exit: { opacity: 0, y: 20, transition: transitions.exit },
+  hidden: { opacity: 0, y: -28 },
+  visible: { opacity: 1, y: 0, transition: transitions.smooth },
+  exit: { opacity: 0, y: 16, transition: transitions.exit },
 }
 
 export const fadeInLeft: Variants = {
-  hidden: { opacity: 0, x: -56, filter: 'blur(4px)' },
+  hidden: { opacity: 0, x: -48 },
   visible: {
     opacity: 1,
     x: 0,
-    filter: 'blur(0px)',
     transition: { ...transitions.smooth, duration: 0.7 },
   },
-  exit: { opacity: 0, x: 20, transition: transitions.exit },
+  exit: { opacity: 0, x: 16, transition: transitions.exit },
 }
 
 export const fadeInRight: Variants = {
-  hidden: { opacity: 0, x: 56, filter: 'blur(4px)' },
+  hidden: { opacity: 0, x: 48 },
   visible: {
     opacity: 1,
     x: 0,
-    filter: 'blur(0px)',
     transition: { ...transitions.smooth, duration: 0.7 },
   },
-  exit: { opacity: 0, x: -20, transition: transitions.exit },
+  exit: { opacity: 0, x: -16, transition: transitions.exit },
 }
 
 export const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.88, filter: 'blur(4px)' },
-  visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: transitions.smooth },
-  exit: { opacity: 0, scale: 0.94, transition: transitions.exit },
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1, transition: transitions.smooth },
+  exit: { opacity: 0, scale: 0.95, transition: transitions.exit },
 }
 
 export const scaleInBounce: Variants = {
@@ -68,10 +66,9 @@ export const scaleInBounce: Variants = {
 }
 
 export const blurIn: Variants = {
-  hidden: { opacity: 0, filter: 'blur(16px)', scale: 1.04 },
+  hidden: { opacity: 0, scale: 1.04 },
   visible: {
     opacity: 1,
-    filter: 'blur(0px)',
     scale: 1,
     transition: { ...transitions.smooth, duration: 0.8 },
   },
@@ -118,14 +115,13 @@ export const staggerContainerSlow: Variants = {
 // ─── Page transitions ───────────────────────────────────────────────────────
 
 export const pageTransition: Variants = {
-  initial: { opacity: 0, y: 16, filter: 'blur(4px)' },
+  initial: { opacity: 0, y: 12 },
   animate: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
-    transition: { ...transitions.smooth, duration: 0.5 },
+    transition: { ...transitions.smooth, duration: 0.4 },
   },
-  exit: { opacity: 0, y: -12, filter: 'blur(2px)', transition: transitions.exit },
+  exit: { opacity: 0, y: -8, transition: transitions.exit },
 }
 
 export const pageSlide: Variants = {

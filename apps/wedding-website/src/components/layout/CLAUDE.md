@@ -1,15 +1,17 @@
 # CLAUDE.md — apps/wedding-website/src/components/layout/
-# Last updated: 2026-05-24
+# Last updated: 2026-05-29
 
 ## Components in This Folder
 
-| File               | Status  | Purpose                                      |
-|--------------------|---------|----------------------------------------------|
-| `AmbientPlayer.tsx`| ACTIVE  | Floating ॐ button + ambient music player     |
-| `Navbar.tsx`       | ACTIVE  | Fixed top navigation bar                     |
-| `Footer.tsx`       | ACTIVE  | Page footer with hashtag and credits         |
-| `PageWrapper.tsx`  | ACTIVE  | Scroll-to-top + page transition wrapper      |
-| `ThemeToggle.tsx`  | INACTIVE| Light/dark toggle — kept, not rendered       |
+| File                  | Status   | Purpose                                          |
+|-----------------------|----------|--------------------------------------------------|
+| `AmbientPlayer.tsx`   | ACTIVE   | Floating ॐ button + ambient music player         |
+| `Navbar.tsx`          | ACTIVE   | Fixed top navigation bar                         |
+| `Footer.tsx`          | ACTIVE   | Footer with hashtag, share button, credits       |
+| `PageWrapper.tsx`     | ACTIVE   | Scroll-to-top + page transition + color flash    |
+| `ScrollProgress.tsx`  | ACTIVE   | Gold progress line at top of viewport            |
+| `ShareButton.tsx`     | ACTIVE   | Web Share API + clipboard fallback button        |
+| `ThemeToggle.tsx`     | INACTIVE | Light/dark toggle — kept, not rendered           |
 
 ---
 
@@ -19,7 +21,7 @@
 **Hook:** `useAudioPlayer` from `@shared/hooks`
 **Position:** `fixed bottom-6 left-6 z-40`
 
-### Current Autoplay Strategy (as of 2026-05-24)
+### Current Autoplay Strategy (as of 2026-05-29)
 Browser autoplay policy blocks unmuted audio without user gesture.
 Solution: start muted, unmute on first real interaction.
 
@@ -60,13 +62,48 @@ const {
 ```
 
 ### Visual States
-| State         | Visual                                              |
-|---------------|-----------------------------------------------------|
-| Loading       | Spinning gold border ring around button             |
-| Active+unmuted| Gold glow border + pulsing ring + ॐ glows gold      |
-| Muted/paused  | Dim gold ॐ, no glow                                |
-| Error         | `cursor-not-allowed opacity-40`                     |
-| Pill (shown when isPlaying + isLoaded) | Shows "Tap to unmute" or "Ambient Music" + mute button |
+| State          | Visual                                                             |
+|----------------|--------------------------------------------------------------------|
+| Loading        | Spinning gold border ring around button                            |
+| Active+unmuted | Gold glow border + pulsing ring + ॐ glows gold                    |
+| Muted/paused   | Dim gold ॐ, no glow                                               |
+| Error          | `cursor-not-allowed opacity-40`                                    |
+| Pill           | Shows "Tap to unmute" or "Ambient Music" + mute button             |
+
+---
+
+## ScrollProgress.tsx
+
+- `fixed top-0 left-0 z-[70]` — above everything including Navbar (z-30)
+- `useScroll()` → `scrollYProgress` (0 to 1)
+- `useSpring()` → smooth spring-physics lag on the bar
+- `useMotionValueEvent` — correct v11 API for subscribing to MotionValue changes
+- Fades in after 1% scroll, fades out at top
+- Gold gradient: `#A07830 → #C9A84C → #E2C97E → #C9A84C`
+- Rendered globally in `App.tsx` — persists across all route changes
+
+---
+
+## PageWrapper.tsx
+
+- Wraps all non-Home pages (ceremony pages only)
+- Scrolls to top on route change
+- `pageTransition` variant from `@shared/utils/animations` — fade + slide up on enter
+- **Ceremony color flash:** brief colored overlay fades from `opacity 0.18 → 0` in 500ms
+  - Only renders when `accentColor` prop is passed (null = no flash)
+  - Color map: `marigold → #FFBE00` | `saffron → #FF6B00` | `maroon → #800020` | `divine → #2D1B4E` | `gold → #C9A84C`
+- Does NOT wrap Home page
+
+---
+
+## ShareButton.tsx
+
+- Renders in `Footer.tsx`
+- `navigator.share` (Web Share API) on mobile/supported browsers
+- Falls back to `navigator.clipboard.writeText` on desktop
+- Shares: site URL + `#RohitWedsPriti` text + title
+- Animated `Share → ✓ Copied!` state swap via `AnimatePresence`
+- Resets back to idle after 2.5s
 
 ---
 
@@ -74,33 +111,25 @@ const {
 
 - **Fixed top, z-30** — always visible
 - **Transparent** on hero section → `bg-divine/95 backdrop-blur` on scroll + all other pages
-- Uses `useMotionTemplate` (NOT `.get()`) for reactive MotionValue background — this is critical
-- Nav anchor links use `<a href="/#section-id">` — NOT React Router `<Link>` (Link causes full reload on anchor nav)
+- Uses `useMotionTemplate` (NOT `.get()`) for reactive MotionValue background
+- Nav anchor links use `<a href="/#section-id">` — NOT React Router `<Link>`
 - Desktop: inline links | Mobile: hamburger → drawer
 - **ThemeToggle removed** — do not add back without explicit instruction
 
-### Z-index Hierarchy
+### Z-index Hierarchy (full stack)
 ```
-z-20 — page content
-z-30 — Navbar
-z-40 — AmbientPlayer (fixed bottom-left)
-z-50 — Mobile nav drawer
-z-60 — Modals / overlays
+z-30   — Navbar
+z-40   — AmbientPlayer (fixed bottom-left)
+z-50   — Mobile nav drawer
+z-[60] — Ceremony color flash overlay (PageWrapper)
+z-[70] — ScrollProgress bar (above everything)
 ```
 
 ---
 
 ## Footer.tsx
 
-- Shows hashtag `#RohitWedsPriti`
-- "Made with ❤️" credits line
-- No nav links (hashtag only)
-
----
-
-## PageWrapper.tsx
-
-- Wraps all non-Home pages (ceremony pages)
-- Scrolls to top on route change via `useEffect` watching `location.pathname`
-- Applies page entrance animation via Framer Motion
-- Does NOT wrap Home page (Home handles its own sections)
+- Hashtag `#RohitWedsPriti`
+- `ShareButton` — Web Share / clipboard copy
+- Blessings text (Hindi)
+- "Made with ❤️ and love" credits

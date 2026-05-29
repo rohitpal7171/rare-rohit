@@ -8,10 +8,24 @@ import { pageTransition } from '@shared/utils'
 
 export interface PageWrapperProps {
   children: ReactNode
+  /** Optional ceremony color token — triggers a brief color flash on enter */
+  accentColor?: string
 }
 
-export const PageWrapper = ({ children }: PageWrapperProps) => {
+// Maps weddingConfig color tokens to hex values
+// Must mirror the design system in tailwind.config.ts
+const COLOR_MAP: Record<string, string> = {
+  marigold: '#FFBE00',
+  saffron: '#FF6B00',
+  maroon: '#800020',
+  gold: '#C9A84C',
+  divine: '#2D1B4E',
+  ivory: '#FDF6EC',
+}
+
+export const PageWrapper = ({ children, accentColor }: PageWrapperProps) => {
   const { pathname, hash } = useLocation()
+  const flashColor = accentColor !== undefined ? (COLOR_MAP[accentColor] ?? '#C9A84C') : null
 
   useEffect(() => {
     if (hash !== '') {
@@ -22,13 +36,14 @@ export const PageWrapper = ({ children }: PageWrapperProps) => {
           el.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }
       }, 100)
-      // Always return cleanup — fixes TS7030 "not all code paths return a value"
       return () => {
         clearTimeout(timer)
       }
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    // Explicit return undefined so all code paths return
+    // Only scroll to top on ceremony pages — Home manages its own scroll position
+    if (pathname.startsWith('/ceremony/')) {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }
     return undefined
   }, [pathname, hash])
 
@@ -40,6 +55,17 @@ export const PageWrapper = ({ children }: PageWrapperProps) => {
       animate="animate"
       exit="exit"
     >
+      {/* Ceremony color flash — only on ceremony pages, fades out on enter */}
+      {flashColor !== null && (
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-0 z-[60]"
+          initial={{ opacity: 0.18 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          style={{ backgroundColor: flashColor }}
+        />
+      )}
       {children}
     </motion.div>
   )
