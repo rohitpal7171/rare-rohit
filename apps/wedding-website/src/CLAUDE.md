@@ -1,5 +1,5 @@
 # CLAUDE.md — apps/wedding-website/src/
-# Last updated: 2026-05-24
+# Last updated: 2026-05-29
 
 ## Directory Map
 
@@ -8,7 +8,7 @@ src/
 ├── App.tsx               — Root component: i18n init + router provider + AmbientPlayer
 ├── main.tsx              — Entry point: ReactDOM.createRoot
 ├── config/               — Domain types + wedding data (source of truth)
-├── i18n/                 — i18next config + 10 namespace JSON files (en + hi)
+├── i18n/                 — i18next config + 9 namespace JSON files (en + hi)
 ├── components/
 │   ├── layout/           — Navbar, Footer, PageWrapper, AmbientPlayer, ThemeToggle
 │   ├── sections/         — All home page sections

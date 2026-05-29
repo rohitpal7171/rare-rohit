@@ -15,7 +15,6 @@ const NAV_LINKS = [
   { href: '/#ceremonies', key: 'ceremonies' },
   { href: '/#schedule', key: 'schedule' },
   { href: '/#gallery', key: 'gallery' },
-  { href: '/#wishes', key: 'wishes' },
 ] as const
 
 export const Navbar = () => {

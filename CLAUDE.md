@@ -1,5 +1,5 @@
 # CLAUDE.md — rare-rohit Monorepo Root
-# Last updated: 2026-05-24
+# Last updated: 2026-05-29
 
 ## ⚠️ BEFORE EVERY GIT PUSH — NON-NEGOTIABLE
 ```bash
@@ -77,7 +77,7 @@ rare-rohit/
 │       └── vitest.config.ts
 ├── shared/                      ← No package.json — Vite path aliases only
 │   ├── hooks/                   ← useAudioPlayer, useCountdown, useScrollAnimation,
-│   │                               useLocalStorage, useMediaQuery, useTheme, useWishes
+│   │                               useLocalStorage, useMediaQuery, useTheme
 │   ├── ui/components/           ← AnimatedSection, Button, Countdown, LanguageToggle,
 │   │                               LazyImage, MobileNav, Modal
 │   └── utils/                   ← animations.ts, cn.ts, constants.ts, formatDate.ts
@@ -102,7 +102,7 @@ rare-rohit/
 |------------|-----------------------------------------|
 | Language   | TypeScript 5 strict                     |
 | Framework  | React 18                                |
-| Build      | Vite 5 + SWC (@vitejs/plugin-react-swc) |
+| Build      | Vite 8 + @vitejs/plugin-react (Oxc/Rolldown native) |
 | Styling    | Tailwind CSS v3 + custom plugin         |
 | Animation  | Framer Motion v11                       |
 | i18n       | i18next + react-i18next                 |
@@ -213,7 +213,8 @@ import { fadeInUp, staggerContainer, scaleInBounce } from '@shared/utils'
 
 ## i18n System
 
-- **10 namespaces:** common, home, story, ceremonies, schedule, gallery, party, travel, rsvp, faq
+- **9 namespaces:** common, home, story, ceremonies, schedule, gallery, party, travel, rsvp, faq
+  (wishes namespace removed — WishesWall feature removed 2026-05-29)
 - **2 languages:** `en` (dev default) → `hi` (prod default, change before launch)
 - **RULE:** Add keys to BOTH `en/` and `hi/` simultaneously, always
 - **Type safety:** `react-i18next.d.ts` uses EN JSON as source of truth for typed `t()`
@@ -261,19 +262,20 @@ On page refresh the cache is cleared. On HMR it persists (expected behavior in d
 | `sections/RSVP.tsx`                   | No RSVP on this wedding               |
 | `sections/Travel.tsx`                 | Travel info is private                |
 | `sections/Reception.tsx`              | No reception ceremony                 |
+| `sections/WishesWall.tsx`             | Feature removed — stub file only      |
 | `sections/OurStoryV2.tsx`             | Dark bg variant — swap in if needed   |
 | `layout/ThemeToggle.tsx`              | Light-theme-only decision             |
 | `shared/hooks/useTheme.ts`            | Light-theme-only decision             |
+| `shared/hooks/useWishes.ts`           | Feature removed — stub file only      |
 
 ---
 
-## Open TODOs (as of 2026-05-24)
+## Open TODOs (as of 2026-05-29)
 
 - [ ] Exact times for Haldi, Mehendi, Sangeet ceremonies
 - [ ] Full addresses + Google Maps pins for all venues
 - [ ] Add 6 ceremony MP3s to `public/audio/` (haldi/mehendi/sangeet/baraat/pheras/vidaai.mp3)
 - [ ] Real Instagram / Facebook URLs in `wedding.config.ts`
-- [ ] JSONBin account + API keys → `.env` (for WishesWall)
 - [ ] Engagement photos → `public/assets/gallery/`
 - [ ] Schedule.tsx — connect to real ceremony times
 - [ ] Gallery.tsx — masonry grid + lightbox (needs photos)

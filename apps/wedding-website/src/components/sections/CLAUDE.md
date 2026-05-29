@@ -1,5 +1,5 @@
 # CLAUDE.md — apps/wedding-website/src/components/sections/
-# Last updated: 2026-05-24
+# Last updated: 2026-05-29
 
 ## All Sections
 
@@ -13,7 +13,7 @@
 | `Schedule.tsx`     | `#schedule`     | `schedule`   | Light  | PARTIAL  | Needs real ceremony times         |
 | `Gallery.tsx`      | `#gallery`      | `gallery`    | Dark   | PARTIAL  | Needs photos                      |
 | `WeddingParty.tsx` | `#wedding-party`| `party`      | Light  | PARTIAL  | Needs party list + bios           |
-| `WishesWall.tsx`   | `#blessings`    | `wishes`     | —      | PARTIAL  | Needs JSONBin API keys            |
+| `WishesWall.tsx`   | —               | —            | —      | REMOVED  | Stub file only — feature removed      |
 | `Travel.tsx`       | `#travel`       | `travel`     | Dark   | INACTIVE | Travel info private               |
 | `RSVP.tsx`         | `#rsvp`         | `rsvp`       | Light  | INACTIVE | No RSVP for this wedding          |
 | `FAQ.tsx`          | `#faq`          | `faq`        | Dark   | ACTIVE   | Accordion, veg-only food          |
@@ -23,9 +23,9 @@
 ## Section Order in Home.tsx (current)
 
 ```
-Hero → Blessings → OurStory → CeremoniesGrid → Schedule → Gallery → WeddingParty → WishesWall → FAQ
+Hero → Blessings → OurStory → CeremoniesGrid → Schedule → Gallery → WeddingParty → FAQ
 ```
-(Travel, RSVP not rendered)
+(WishesWall removed, Travel + RSVP not rendered)
 
 ---
 
@@ -75,10 +75,8 @@ Visual flow: dark → light → dark → light — no two same-bg sections adjac
 - Needs real party list with names, roles, bios, photos
 
 ### WishesWall.tsx
-- Public blessings/wishes wall
-- Reads/writes to JSONBin
-- Requires `VITE_JSONBIN_BIN_ID` + `VITE_JSONBIN_API_KEY` in `.env`
-- Currently non-functional until JSONBin is set up
+- **REMOVED** — stub file only, do not use or import
+- JSONBin-based feature was removed on 2026-05-29
 
 ### FAQ.tsx
 - Animated accordion

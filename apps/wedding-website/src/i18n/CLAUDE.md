@@ -1,5 +1,5 @@
 # CLAUDE.md — apps/wedding-website/src/i18n/
-# Last updated: 2026-05-24
+# Last updated: 2026-05-29
 
 ## Files
 
@@ -7,8 +7,8 @@
 |-----------------------|------------------------------------------------------------------|
 | `config.ts`           | i18next init — language detection, namespaces, fallback          |
 | `react-i18next.d.ts`  | Declaration merging — types `t()` based on EN JSON shapes        |
-| `locales/en/`         | English translations (10 JSON files)                             |
-| `locales/hi/`         | Hindi translations (10 JSON files — identical key structure)     |
+| `locales/en/`         | English translations (9 JSON files)                              |
+| `locales/hi/`         | Hindi translations (9 JSON files — identical key structure)      |
 
 ---
 
@@ -26,6 +26,9 @@
 | `travel`     | travel.json        | travel.json        | Section inactive|
 | `rsvp`       | rsvp.json          | rsvp.json          | Section inactive|
 | `faq`        | faq.json           | faq.json           | Active         |
+
+**Removed namespaces:** `wishes` (removed 2026-05-29 with WishesWall feature)
+Locale files `en/wishes.json` and `hi/wishes.json` still exist on disk but are not loaded.
 
 ---
 

@@ -1,5 +1,5 @@
 # CLAUDE.md — shared/hooks/
-# Last updated: 2026-05-24
+# Last updated: 2026-05-29
 
 ## Hooks in This Folder
 
@@ -11,7 +11,7 @@
 | `useLocalStorage.ts`   | `useLocalStorage`   | Typed localStorage with SSR safety             |
 | `useMediaQuery.ts`     | `useMediaQuery`     | Reactive breakpoint detection                  |
 | `useTheme.ts`          | `useTheme`          | Dark/light toggle — INACTIVE (kept for future) |
-| `useWishes.ts`         | `useWishes`         | JSONBin CRUD for WishesWall                    |
+| `useWishes.ts`         | —                   | **REMOVED** — stub file only                  |
 | `index.ts`             | —                   | Barrel exports — import from here only         |
 
 ---
@@ -128,17 +128,6 @@ const isMobile = useMediaQuery('(max-width: 768px)')
 const isTablet = useMediaQuery('(max-width: 1024px)')
 // Reactive — updates on window resize
 // Uses matchMedia API
-```
-
----
-
-## useWishes
-
-```ts
-const { wishes, addWish, isLoading, error } = useWishes()
-// Reads/writes to JSONBin via JSONBIN_BIN_ID + JSONBIN_API_KEY from import.meta.env
-// Requires .env setup — not functional until JSONBin account created
-// See context/TODO.md for setup steps
 ```
 
 ---

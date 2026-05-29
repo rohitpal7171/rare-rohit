@@ -1,5 +1,5 @@
 # CLAUDE.md — apps/wedding-website/
-# Last updated: 2026-05-24
+# Last updated: 2026-05-29
 
 ## App Identity
 
@@ -8,7 +8,7 @@ Indian wedding website for **Rohit Singh Pal & Priti Pal**.
 - **Baraat:** 25 November 2026, 4:00 PM — Kokapur, Udi Modh, Uttar Pradesh
 - **Lagun:** 24 November 2026 — Gwalior, Madhya Pradesh
 - **Marriage type:** Arranged — story content must always reflect this
-- **Stack:** React 18 + TypeScript 5 strict + Vite 5 SWC + Tailwind v3 + Framer Motion v11
+- **Stack:** React 18 + TypeScript 5 strict + Vite 8 + @vitejs/plugin-react + Tailwind v3 + Framer Motion v11
 - **Bilingual:** EN (dev default) / HI (prod default) via react-i18next
 - **Theme:** divine (dark purple) + maroon + gold + ivory + saffron
 - **Deployed at:** rohitwedspriti.netlify.app (auto-deploy on push to main)
@@ -64,8 +64,8 @@ Note: `reception` slug exists but Reception ceremony is not shown (no reception 
 | `schedule`   | schedule.json     | Schedule section                      |
 | `gallery`    | gallery.json      | Gallery section                       |
 | `party`      | party.json        | WeddingParty section                  |
-| `travel`     | travel.json       | Travel section                        |
-| `rsvp`       | rsvp.json         | RSVP section                          |
+| `travel`     | travel.json       | Travel section (inactive)             |
+| `rsvp`       | rsvp.json         | RSVP section (inactive)               |
 | `faq`        | faq.json          | FAQ section                           |
 
 Both `en/` and `hi/` must have IDENTICAL key structure at all times.
@@ -90,7 +90,7 @@ Both `en/` and `hi/` must have IDENTICAL key structure at all times.
 
 ## Vite Config — Key Points
 
-- `@vitejs/plugin-react-swc` — SWC for fast builds
+- `@vitejs/plugin-react` v6 — Oxc/Rolldown native, zero build warnings on Vite 8
 - Path aliases match tsconfig paths exactly
 - `manualChunks` splits: vendor-react, vendor-motion, vendor-i18n, vendor-form, vendor-ui
 - Build output: `dist/`
