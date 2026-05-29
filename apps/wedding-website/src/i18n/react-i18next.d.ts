@@ -10,7 +10,6 @@ import type en_rsvp from './locales/en/rsvp.json'
 import type en_schedule from './locales/en/schedule.json'
 import type en_story from './locales/en/story.json'
 import type en_travel from './locales/en/travel.json'
-import type en_wishes from './locales/en/wishes.json'
 
 declare module 'react-i18next' {
   interface CustomTypeOptions {
@@ -26,7 +25,6 @@ declare module 'react-i18next' {
       travel: typeof en_travel
       rsvp: typeof en_rsvp
       faq: typeof en_faq
-      wishes: typeof en_wishes
     }
   }
 }

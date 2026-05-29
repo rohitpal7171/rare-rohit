@@ -12,7 +12,6 @@ import en_rsvp from './locales/en/rsvp.json'
 import en_schedule from './locales/en/schedule.json'
 import en_story from './locales/en/story.json'
 import en_travel from './locales/en/travel.json'
-import en_wishes from './locales/en/wishes.json'
 import hi_ceremonies from './locales/hi/ceremonies.json'
 import hi_common from './locales/hi/common.json'
 import hi_faq from './locales/hi/faq.json'
@@ -23,7 +22,6 @@ import hi_rsvp from './locales/hi/rsvp.json'
 import hi_schedule from './locales/hi/schedule.json'
 import hi_story from './locales/hi/story.json'
 import hi_travel from './locales/hi/travel.json'
-import hi_wishes from './locales/hi/wishes.json'
 
 const resources = {
   en: {
@@ -37,7 +35,6 @@ const resources = {
     travel: en_travel,
     rsvp: en_rsvp,
     faq: en_faq,
-    wishes: en_wishes,
   },
   hi: {
     common: hi_common,
@@ -50,7 +47,6 @@ const resources = {
     travel: hi_travel,
     rsvp: hi_rsvp,
     faq: hi_faq,
-    wishes: hi_wishes,
   },
 }
 

@@ -8,7 +8,6 @@ import { Hero } from '@app/components/sections/Hero'
 import { OurStory } from '@app/components/sections/OurStory' // original — keep
 import { Schedule } from '@app/components/sections/Schedule'
 import { WeddingParty } from '@app/components/sections/WeddingParty'
-import { WishesWall } from '@app/components/sections/WishesWall'
 
 // ── Available story variants (swap by changing the import below) ───────────
 // import { OurStory } from '@app/components/sections/OurStory'       ← original (light bg, alternating cards)
@@ -31,7 +30,6 @@ export const Home = () => {
         <Schedule />
         <Gallery />
         <WeddingParty />
-        <WishesWall />
       </main>
       <AmbientPlayer />
       <Footer />
