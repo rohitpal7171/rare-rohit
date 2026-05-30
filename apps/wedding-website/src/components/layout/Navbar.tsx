@@ -11,10 +11,11 @@ import { cn } from '@shared/utils'
 import { weddingConfig } from '@app/config/wedding.config'
 
 const NAV_LINKS = [
-  { href: '/#our-story', key: 'ourStory' },
-  { href: '/#ceremonies', key: 'ceremonies' },
-  { href: '/#schedule', key: 'schedule' },
-  { href: '/#gallery', key: 'gallery' },
+  { href: '/#our-story',      key: 'ourStory'      },
+  { href: '/#ceremonies',     key: 'ceremonies'    },
+  { href: '/#schedule',       key: 'schedule'      },
+  { href: '/#gallery',        key: 'gallery'       },
+  { href: '/#divine-invites', key: 'divineInvites' },
 ] as const
 
 export const Navbar = () => {
@@ -52,12 +53,12 @@ export const Navbar = () => {
           </span>
         </Link>
 
-        <ul className="hidden items-center gap-5 lg:flex">
+        <ul className="hidden items-center gap-4 lg:flex xl:gap-6">
           {NAV_LINKS.map(({ href, key }) => (
             <li key={key}>
               <a
                 href={href}
-                className="font-body text-sm font-medium text-ivory/80 transition-colors hover:text-gold"
+                className="font-body text-xs font-medium text-ivory/80 transition-colors hover:text-gold xl:text-sm"
               >
                 {t(`nav.${key}`)}
               </a>

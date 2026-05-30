@@ -24,8 +24,8 @@ const Schedule = lazy(() =>
 const Gallery = lazy(() =>
   import('@app/components/sections/Gallery').then((m) => ({ default: m.Gallery }))
 )
-const WeddingParty = lazy(() =>
-  import('@app/components/sections/WeddingParty').then((m) => ({ default: m.WeddingParty }))
+const DivineBlessings = lazy(() =>
+  import('@app/components/sections/DivineBlessings').then((m) => ({ default: m.DivineBlessings }))
 )
 
 // ── Available story variants (swap by changing the import below) ───────────
@@ -36,6 +36,7 @@ const WeddingParty = lazy(() =>
 // Travel    → private, not on website
 // RSVP      → managed by family
 // Reception → no reception
+// WeddingParty → replaced by DivineBlessings (2026-05-30)
 
 // Minimal section skeleton — just keeps layout stable while lazy chunks load
 const SectionSkeleton = () => (
@@ -97,7 +98,7 @@ export const Home = () => {
           <Gallery />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
-          <WeddingParty />
+          <DivineBlessings />
         </Suspense>
       </main>
       <AmbientPlayer />
