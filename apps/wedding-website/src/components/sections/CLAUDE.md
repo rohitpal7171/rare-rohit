@@ -1,94 +1,103 @@
 # CLAUDE.md — apps/wedding-website/src/components/sections/
-# Last updated: 2026-05-29
+# Last updated: 2026-05-30
 
-## All Sections
+## Active Sections
 
-| File               | Section ID      | Namespace    | BG     | Status   | Notes                             |
-|--------------------|-----------------|--------------|--------|----------|-----------------------------------|
-| `Hero.tsx`         | `#home`         | `home`       | Dark   | ACTIVE   | Fullscreen, countdown, petals     |
-| `Blessings.tsx`    | `#blessings`    | `home`       | Dark   | ACTIVE   | Ganesh + Lakshmi shloka cards     |
-| `OurStory.tsx`     | `#our-story`    | `story`      | Light  | ACTIVE   | Arranged marriage timeline        |
-| `OurStoryV2.tsx`   | `#our-story`    | `story`      | Dark   | INACTIVE | Dark bg variant — swap in if needed|
-| `CeremoniesGrid.tsx`| `#ceremonies`  | `ceremonies` | Dark   | ACTIVE   | 6 ceremony cards (not reception)  |
-| `Schedule.tsx`     | `#schedule`     | `schedule`   | Light  | PARTIAL  | Needs real ceremony times         |
-| `Gallery.tsx`      | `#gallery`      | `gallery`    | Dark   | PARTIAL  | Needs photos                      |
-| `WeddingParty.tsx` | `#wedding-party`| `party`      | Light  | PARTIAL  | Needs party list + bios           |
-| `WishesWall.tsx`   | —               | —            | —      | REMOVED  | Stub file only — feature removed      |
-| `Travel.tsx`       | `#travel`       | `travel`     | Dark   | INACTIVE | Travel info private               |
-| `RSVP.tsx`         | `#rsvp`         | `rsvp`       | Light  | INACTIVE | No RSVP for this wedding          |
-| `FAQ.tsx`          | `#faq`          | `faq`        | Dark   | ACTIVE   | Accordion, veg-only food          |
+| File                 | Section ID       | Background   | i18n NS      | Lazy | Status  |
+|----------------------|------------------|--------------|--------------|------|---------|
+| `Hero.tsx`           | `#home`          | mandala-bg   | `home`       | No   | ACTIVE  |
+| `Blessings.tsx`      | `#blessings`     | mandala-bg   | `home`       | Yes  | ACTIVE  |
+| `OurStory.tsx`       | `#our-story`     | bg-ivory     | `story`      | Yes  | ACTIVE  |
+| `CeremoniesGrid.tsx` | `#ceremonies`    | mandala-bg   | `ceremonies` | Yes  | ACTIVE  |
+| `Schedule.tsx`       | `#schedule`      | bg-ivory     | `schedule`   | Yes  | ACTIVE  |
+| `Gallery.tsx`        | `#gallery`       | mandala-bg   | `gallery`    | Yes  | ACTIVE  |
+| `DivineBlessings.tsx`| `#divine-invites`| bg-white     | `common`     | Yes  | ACTIVE  |
+
+### Background alternation rule
+Dark → Light → Dark → Light → Dark → Dark (DivineBlessings breaks the strict rule with white bg — acceptable as final section before Footer)
 
 ---
 
-## Section Order in Home.tsx (current)
+## Inactive Sections (files kept, not rendered)
 
-```
-Hero → Blessings → OurStory → CeremoniesGrid → Schedule → Gallery → WeddingParty → FAQ
-```
-(WishesWall removed, Travel + RSVP not rendered)
-
----
-
-## Background Alternation Rule — NEVER break
-
-```
-DARK  sections (mandala-bg class): Hero, Blessings, CeremoniesGrid, Gallery, FAQ
-LIGHT sections (bg-ivory):         OurStory, Schedule, WeddingParty, RSVP
-```
-Visual flow: dark → light → dark → light — no two same-bg sections adjacent.
+| File                 | Replaced by / Reason               |
+|----------------------|------------------------------------|
+| `WeddingParty.tsx`   | Replaced by `DivineBlessings.tsx`  |
+| `WishesWall.tsx`     | Feature removed (stub only)        |
+| `OurStoryV2.tsx`     | Dark bg variant, swap in if needed |
+| `RSVP.tsx`           | No RSVP on this wedding            |
+| `Travel.tsx`         | Travel info is private             |
+| `Reception.tsx`      | No reception ceremony              |
 
 ---
 
-## Section-Specific Notes
+## DivineBlessings.tsx — Key Notes
 
-### Hero.tsx
-- Fullscreen (100vh) with mandala-bg
-- Floating rose petal animation — CSS only (no Framer Motion conflict)
-- `Countdown` component from `@shared/ui` targeting `weddingConfig.wedding.date`
-- Location shown below countdown (Kokapur, Udi Modh, UP)
-- Names: Rohit Singh Pal & Priti Pal (from `weddingConfig`, not hardcoded)
+**Manifest:** `public/wedding_pics/deities/manifest.json`
+```json
+{ "deities": ["ganesha.png", "shiva.png", ...] }
+```
+- Add/remove filenames from the array to control which images appear
+- Supports PNG, JPG, GIF, WebP
+- Section renders nothing if manifest is missing or empty
+- Uses `common` namespace keys: `divineInvites.eyebrow`, `divineInvites.title`, `divineInvites.subtitle`
 
-### OurStory.tsx
-- **Arranged marriage** — content must never suggest love-at-first-sight narrative
-- Timeline: First Meeting (20 Jan 2026) → Roka (30 Jan 2026) → Wedding (Nov 2026)
-- Alternating left/right cards on desktop, single column on mobile
-- Light bg (bg-ivory) — use `.card-light` not `.card-divine`
+**Marquee:**
+- Two identical track divs side by side (`track-A` + `track-B`)
+- CSS `@keyframes divineMarquee` animates wrapper left by 50% (= one track width)
+- At -50%, `track-B` is exactly where `track-A` started → seamless infinite loop
+- `animationPlayState: paused` on hover/touch
+- Each image has staggered float animation (`y: 0 → -12 → 0`)
+- Container box is `height + 24px` — extra 24px prevents float from being clipped
 
-### CeremoniesGrid.tsx
-- Shows 6 ceremony cards: Haldi, Mehendi, Sangeet, Baraat, Pheras, Vidaai
-- **Reception NOT shown** (no reception event)
-- Cards link to `/ceremony/[slug]`
-- "View details" text — hardcoded EN, add to `common.json` when Hindi ready
+---
 
-### Schedule.tsx
-- Day-wise timeline: 4 days (23 Nov → 26 Nov)
-- Currently uses placeholder times — needs real ceremony times from Rohit
-- Day labels from `schedule.json` (both en + hi)
+## Hero.tsx — Key Notes
 
-### Gallery.tsx
-- Masonry grid + lightbox
+- `min-h-screen` — always full viewport height
+- `OmSymbol` and `FloatingPetal` are `memo()` — never re-render from AmbientPlayer state
+- Countdown via `<Countdown targetDate={wedding.date} />` from `@shared/ui`
+- Floating petals: 6 positions, CSS `animate-petal-fall` keyframe
+
+---
+
+## OurStory.tsx — Key Notes
+
+- Timeline keys: `met`, `friendship`, `love`, `proposal`, `wedding`
+- Alternating left/right layout on md+, stacked on mobile
+- Uses `fadeInLeft` / `fadeInRight` from `@shared/utils`
+- Light section (`bg-ivory`) — uses `card-light` not `card-divine`
+
+---
+
+## CeremoniesGrid.tsx — Key Notes
+
+- Reads slugs from `CEREMONY_SLUGS` constant in `@shared/utils`
+- Each card links to `/ceremony/:slug`
+- Active slugs: `haldi`, `mehendi`, `sangeet`, `baraat`, `pheras`, `vidaai`
+- `reception` slug exists in config but NOT in `CEREMONY_SLUGS` — not shown
+
+---
+
+## Schedule.tsx — Key Notes
+
+- 4 hardcoded days: Day1 (23 Nov), Day2 (24 Nov Lagun), Day3 (25 Nov Baraat), Day4 (26 Nov Wedding)
+- Reads ceremony times from `weddingConfig.ceremonies[slug].time`
+- TODO: ceremony times are TBD for Haldi, Mehendi, Sangeet
+
+---
+
+## Gallery.tsx — Key Notes
+
+- Currently shows "Photos coming soon" placeholder
+- TODO: Add masonry grid + lightbox when engagement photos are available
 - Photos go in `public/assets/gallery/`
-- Currently empty / placeholder state
-
-### WeddingParty.tsx
-- Bride's side + Groom's side member cards
-- Needs real party list with names, roles, bios, photos
-
-### WishesWall.tsx
-- **REMOVED** — stub file only, do not use or import
-- JSONBin-based feature was removed on 2026-05-29
-
-### FAQ.tsx
-- Animated accordion
-- Key answers: Veg food only, no RSVP needed, dress code info
-- Remove any RSVP or travel questions (those sections are not on site)
 
 ---
 
-## Rules
+## Blessings.tsx — Key Notes
 
-- All text via `useTranslation('namespace')` — zero hardcoded strings (except noted TODOs)
-- Use `AnimatedSection` from `@shared/ui` for scroll-reveal on section content
-- Framer Motion variants from `@shared/utils/animations` — never inline
-- `cn()` for conditional Tailwind classes
-- Never import `weddingConfig` indirectly — import directly from `@app/config/wedding.config`
+- Two cards: Lord Ganesha + Goddess Lakshmi
+- Sanskrit shloka + English meaning
+- Uses `glowPulse` animation variant from `@shared/utils`
+- Dark section (`mandala-bg`) — uses `card-divine`

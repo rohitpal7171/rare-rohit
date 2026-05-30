@@ -17,20 +17,20 @@
 ```tsx
 <Navbar />
 <main>
-  <Hero />           // #home        — dark  — EAGER (above fold)
-  <Blessings />      // #blessings   — dark  — lazy
-  <OurStory />       // #our-story   — light — lazy
-  <CeremoniesGrid /> // #ceremonies  — dark  — lazy
-  <Schedule />       // #schedule    — light — lazy
-  <Gallery />        // #gallery     — dark  — lazy
-  <WeddingParty />   // #wedding-party — light — lazy
+  <Hero />            // #home          — dark  — EAGER (above fold)
+  <Blessings />       // #blessings     — dark  — lazy
+  <OurStory />        // #our-story     — light — lazy
+  <CeremoniesGrid />  // #ceremonies    — dark  — lazy
+  <Schedule />        // #schedule      — light — lazy
+  <Gallery />         // #gallery       — dark  — lazy
+  <DivineBlessings /> // #divine-invites — white — lazy
 </main>
-<AmbientPlayer />    // fixed bottom-left — always eager
+<AmbientPlayer />    // fixed bottom-left  — always eager
 <WeddingCharacters/> // fixed bottom-right — always eager
 <Footer />
 ```
 
-NOT rendered: Travel, RSVP, Reception, WishesWall, FAQ (stubs kept, not imported).
+NOT rendered: Travel, RSVP, Reception, WishesWall, WeddingParty, FAQ (stubs kept, not imported).
 
 ### Lazy Loading Strategy
 Hero is eager (above fold). All other sections are `React.lazy()` + `<Suspense>`.
@@ -61,7 +61,7 @@ return () => timers.forEach(clearTimeout)
 
 ### Section ID Anchors
 Nav links use `<a href="/#section-id">` — section IDs must match exactly.
-IDs: `home`, `blessings`, `our-story`, `ceremonies`, `schedule`, `gallery`, `wedding-party`
+IDs: `home`, `blessings`, `our-story`, `ceremonies`, `schedule`, `gallery`, `divine-invites`
 
 ---
 

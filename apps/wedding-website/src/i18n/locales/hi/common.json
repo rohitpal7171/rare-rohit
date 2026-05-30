@@ -5,7 +5,6 @@
     "ceremonies": "रस्में",
     "schedule": "कार्यक्रम",
     "gallery": "गैलरी",
-    "weddingParty": "वेडिंग पार्टी",
     "divineInvites": "दिव्य निमंत्रण"
   },
   "language": { "toggle": "भाषा बदलें", "en": "English", "hi": "हिंदी" },
@@ -35,5 +34,10 @@
   "errors": {
     "notFound": "पृष्ठ नहीं मिला",
     "notFoundDesc": "जो पृष्ठ आप ढूंढ रहे हैं वह मौजूद नहीं है।"
+  },
+  "divineInvites": {
+    "eyebrow": "विशेष निमंत्रण",
+    "title": "देवी देवताओं को",
+    "subtitle": "हम इस पवित्र बंधन की शुरुआत देवी-देवताओं के आशीर्वाद से करते हैं"
   }
 }

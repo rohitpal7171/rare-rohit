@@ -66,13 +66,14 @@ rare-rohit/
 │       │   ├── styles/          ← Tailwind directives + CSS custom properties
 │       │   └── test/            ← Vitest tests + setup files
 │       ├── public/
-│       │   ├── audio/sangeet.mp3            ← 5.1MB ambient player audio (EXISTS ✅)
-│       │   ├── wedding_pics/namaste/        ← bride_groom_namaste.png (EXISTS ✅)
+│       │   ├── audio/sangeet.mp3                    ← 5.1MB ambient audio (EXISTS ✅)
+│       │   ├── wedding_pics/namaste/                ← bride_groom_namaste.png (EXISTS ✅)
+│       │   ├── wedding_pics/deities/                ← deity images + manifest.json (EXISTS ✅)
 │       │   ├── favicon.svg
 │       │   ├── 404.html
 │       │   ├── sitemap.xml
 │       │   ├── robots.txt
-│       │   └── _redirects                   ← Netlify SPA routing rule
+│       │   └── _redirects                           ← Netlify SPA routing rule
 │       ├── netlify.toml
 │       ├── tailwind.config.ts
 │       ├── vite.config.ts
@@ -215,12 +216,26 @@ import { fadeInUp, staggerContainer, scaleInBounce } from '@shared/utils'
 
 ## i18n System
 
-- **9 namespaces:** common, home, story, ceremonies, schedule, gallery, party, travel, rsvp, faq
-  (wishes namespace removed — WishesWall feature removed 2026-05-29)
+- **8 active namespaces:** common, home, story, ceremonies, schedule, gallery, travel, rsvp, faq
+  - `party` namespace removed — `WeddingParty` section replaced by `DivineBlessings` (2026-05-30)
+  - `wishes` namespace removed — `WishesWall` feature removed (2026-05-29)
 - **2 languages:** `en` (dev default) → `hi` (prod default, change before launch)
 - **RULE:** Add keys to BOTH `en/` and `hi/` simultaneously, always
 - **Type safety:** `react-i18next.d.ts` uses EN JSON as source of truth for typed `t()`
 - **Language persistence:** stored in `localStorage` key `i18nextLng`
+
+### Active namespace → section mapping
+| Namespace  | Used by section        |
+|------------|------------------------|
+| `common`   | Navbar, Footer, DivineBlessings, all shared UI |
+| `home`     | Hero, Blessings        |
+| `story`    | OurStory               |
+| `ceremonies` | CeremoniesGrid + all ceremony pages |
+| `schedule` | Schedule               |
+| `gallery`  | Gallery                |
+| `faq`      | FAQ (inactive section) |
+| `travel`   | Travel (inactive)      |
+| `rsvp`     | RSVP (inactive)        |
 
 ---
 
@@ -259,16 +274,19 @@ On page refresh the cache is cleared. On HMR it persists (expected behavior in d
 
 ## Inactive Files (keep, do not delete)
 
-| File                                  | Why kept                              |
-|---------------------------------------|---------------------------------------|
-| `sections/RSVP.tsx`                   | No RSVP on this wedding               |
-| `sections/Travel.tsx`                 | Travel info is private                |
-| `sections/Reception.tsx`              | No reception ceremony                 |
-| `sections/WishesWall.tsx`             | Feature removed — stub file only      |
-| `sections/OurStoryV2.tsx`             | Dark bg variant — swap in if needed   |
-| `layout/ThemeToggle.tsx`              | Light-theme-only decision             |
-| `shared/hooks/useTheme.ts`            | Light-theme-only decision             |
-| `shared/hooks/useWishes.ts`           | Feature removed — stub file only      |
+| File                                  | Why kept                                        |
+|---------------------------------------|-------------------------------------------------|
+| `sections/RSVP.tsx`                   | No RSVP on this wedding                         |
+| `sections/Travel.tsx`                 | Travel info is private                          |
+| `sections/Reception.tsx`              | No reception ceremony                           |
+| `sections/WeddingParty.tsx`           | Replaced by DivineBlessings (2026-05-30)        |
+| `sections/WishesWall.tsx`             | Feature removed — stub file only                |
+| `sections/OurStoryV2.tsx`             | Dark bg variant — swap in if needed             |
+| `layout/ThemeToggle.tsx`              | Light-theme-only decision                       |
+| `shared/hooks/useTheme.ts`            | Light-theme-only decision                       |
+| `shared/hooks/useWishes.ts`           | Feature removed — stub file only                |
+| `i18n/locales/en/party.json`          | WeddingParty replaced — keep file, removed from bundle |
+| `i18n/locales/hi/party.json`          | WeddingParty replaced — keep file, removed from bundle |
 
 ---
 
@@ -281,9 +299,17 @@ On page refresh the cache is cleared. On HMR it persists (expected behavior in d
 - [ ] Engagement photos → `public/assets/gallery/`
 - [ ] Schedule.tsx — connect to real ceremony times
 - [ ] Gallery.tsx — masonry grid + lightbox (needs photos)
-- [ ] WeddingParty.tsx — member cards (needs party list + bios)
 - [ ] Switch `fallbackLng: 'en'` → `'hi'` before production
 - [ ] GitHub push → Netlify connect → confirm domain rohitwedspriti.netlify.app
+
+## Completed (2026-05-30)
+
+- [x] Deity images added to `public/wedding_pics/deities/` ✅
+- [x] `manifest.json` created and working ✅
+- [x] DivineBlessings section — seamless marquee, float animation, EN+HI translations ✅
+- [x] Navbar updated with Divine Invites link ✅
+- [x] `party` namespace removed from i18n bundle ✅
+- [x] `nav.weddingParty` key removed from both JSON files ✅
 
 ---
 
