@@ -90,7 +90,7 @@ export const WeddingCharacters = () => {
     <motion.div
       aria-hidden="true"
       // overflow-hidden prevents image bleeding outside viewport on mobile
-      className="pointer-events-none fixed bottom-0 right-0 z-[24] overflow-hidden"
+      className="pointer-events-none fixed bottom-0 right-0 z-[24]"
       // Entrance: slides up once on mount
       initial={{ opacity: 0, y: 80 }}
       animate={{ opacity: 1, y: 0 }}
