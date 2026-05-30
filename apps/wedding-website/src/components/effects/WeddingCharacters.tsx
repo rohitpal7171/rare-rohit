@@ -137,10 +137,10 @@ export const WeddingCharacters = () => {
       dragControls={dragControls}
       dragMomentum={false}
       dragElastic={0.1}
-      // Constrain so image can't be dragged fully off-screen
+      // Constrain drag within viewport — image never causes overflow
       dragConstraints={{
-        top:    -window.innerHeight * 0.7,
-        left:   -window.innerWidth  * 0.7,
+        top:    -(window.innerHeight * 0.85),
+        left:   -(window.innerWidth  * 0.85),
         right:  0,
         bottom: 0,
       }}

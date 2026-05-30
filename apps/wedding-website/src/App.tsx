@@ -22,7 +22,7 @@ export default function App() {
   }, [i18n.language])
 
   return (
-    <div className={cn('min-h-screen', isHindi ? 'font-hindi' : 'font-body')}>
+    <div className={cn('min-h-screen overflow-x-hidden', isHindi ? 'font-hindi' : 'font-body')}>
       {/* Global cursor effect — canvas overlay, pointer-events: none */}
       <CursorEffect />
       <ScrollProgress />
