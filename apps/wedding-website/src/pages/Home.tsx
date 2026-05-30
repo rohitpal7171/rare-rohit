@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 import { AmbientPlayer } from '@app/components/layout/AmbientPlayer'
 import { Footer } from '@app/components/layout/Footer'
 import { Navbar } from '@app/components/layout/Navbar'
+import { WeddingCharacters } from '@app/components/effects/WeddingCharacters'
 import { Hero } from '@app/components/sections/Hero'
 
 // Hero is above-the-fold — eager. All others lazy-loaded to reduce initial parse cost.
@@ -100,6 +101,7 @@ export const Home = () => {
         </Suspense>
       </main>
       <AmbientPlayer />
+      <WeddingCharacters />
       <Footer />
     </>
   )
