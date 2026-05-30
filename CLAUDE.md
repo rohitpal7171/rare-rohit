@@ -1,5 +1,5 @@
 # CLAUDE.md — rare-rohit Monorepo Root
-# Last updated: 2026-05-29
+# Last updated: 2026-05-30
 
 ## ⚠️ BEFORE EVERY GIT PUSH — NON-NEGOTIABLE
 ```bash
@@ -55,22 +55,24 @@ rare-rohit/
 │       ├── src/
 │       │   ├── config/          ← wedding.config.ts + types.ts (domain source of truth)
 │       │   ├── components/
-│       │   │   ├── layout/      ← Navbar, Footer, PageWrapper, AmbientPlayer, ThemeToggle
+│       │   │   ├── layout/      ← Navbar, Footer, PageWrapper, AmbientPlayer,
+│       │   │   │                   ScrollProgress, ShareButton, ThemeToggle(inactive)
 │       │   │   ├── sections/    ← All home page sections
-│       │   │   ├── ceremonies/  ← 7 ceremony detail components + helpers
-│       │   │   └── effects/     ← CursorEffect
+│       │   │   ├── ceremonies/  ← 6 ceremony detail components + helpers
+│       │   │   └── effects/     ← CursorEffect, WeddingCharacters
 │       │   ├── i18n/            ← i18next config + locales/en/ + locales/hi/
 │       │   ├── pages/           ← Home, CeremonyPage, NotFound
 │       │   ├── router/          ← createBrowserRouter config
 │       │   ├── styles/          ← Tailwind directives + CSS custom properties
 │       │   └── test/            ← Vitest tests + setup files
 │       ├── public/
-│       │   ├── audio/sangeet.mp3  ← 5.1MB ambient player audio (EXISTS ✅)
+│       │   ├── audio/sangeet.mp3            ← 5.1MB ambient player audio (EXISTS ✅)
+│       │   ├── wedding_pics/namaste/        ← bride_groom_namaste.png (EXISTS ✅)
 │       │   ├── favicon.svg
 │       │   ├── 404.html
 │       │   ├── sitemap.xml
 │       │   ├── robots.txt
-│       │   └── _redirects         ← Netlify SPA routing rule
+│       │   └── _redirects                   ← Netlify SPA routing rule
 │       ├── netlify.toml
 │       ├── tailwind.config.ts
 │       ├── vite.config.ts
@@ -270,7 +272,7 @@ On page refresh the cache is cleared. On HMR it persists (expected behavior in d
 
 ---
 
-## Open TODOs (as of 2026-05-29)
+## Open TODOs (as of 2026-05-30)
 
 - [ ] Exact times for Haldi, Mehendi, Sangeet ceremonies
 - [ ] Full addresses + Google Maps pins for all venues
@@ -282,6 +284,23 @@ On page refresh the cache is cleared. On HMR it persists (expected behavior in d
 - [ ] WeddingParty.tsx — member cards (needs party list + bios)
 - [ ] Switch `fallbackLng: 'en'` → `'hi'` before production
 - [ ] GitHub push → Netlify connect → confirm domain rohitwedspriti.netlify.app
+
+---
+
+## Performance Rules (established 2026-05-30)
+
+- **No `filter: blur()`** on any animation variant — causes GPU compositing storm on mobile
+- **Hero section eager, all others lazy** — `React.lazy()` + `<Suspense>` per section
+- **`behavior: 'instant'`** for scroll-to-top on ceremony pages — `smooth` fights Framer Motion entrance
+- **No `window.scrollTo` on Home navigation** — browser handles scroll restoration
+- All animation variants defined in `shared/utils/animations.ts` only — never inline
+
+## Overflow Rules (established 2026-05-30)
+
+- `body class="overflow-x-hidden"` in `index.html` — prevents any element bleeding right
+- `overflow-x-hidden` on root App div in `App.tsx` — double defence
+- `fixed` elements must have `right: 0` drag constraint if draggable — prevents rightward overflow
+- `touch-none` Tailwind class required on draggable elements for mobile touch support
 
 ---
 

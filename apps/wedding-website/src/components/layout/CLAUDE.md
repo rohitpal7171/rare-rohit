@@ -1,5 +1,5 @@
 # CLAUDE.md — apps/wedding-website/src/components/layout/
-# Last updated: 2026-05-29
+# Last updated: 2026-05-30
 
 ## Components in This Folder
 
@@ -99,11 +99,13 @@ const {
 ## ShareButton.tsx
 
 - Renders in `Footer.tsx`
-- `navigator.share` (Web Share API) on mobile/supported browsers
-- Falls back to `navigator.clipboard.writeText` on desktop
-- Shares: site URL + `#RohitWedsPriti` text + title
-- Animated `Share → ✓ Copied!` state swap via `AnimatePresence`
-- Resets back to idle after 2.5s
+- 4 share options: Copy Link / WhatsApp / Facebook / Instagram
+- **Copy Link** — `navigator.clipboard.writeText(SITE_URL)`
+- **WhatsApp** — `wa.me/?text=...` — opens app on mobile, web.whatsapp.com on desktop
+- **Facebook** — `facebook.com/sharer/sharer.php?u=...` — opens app on mobile, website on desktop
+- **Instagram** — no web share API exists. Copies link to clipboard + opens Instagram app via `instagram://` URI on mobile, opens instagram.com on desktop
+- Click-outside closes the dropdown panel (`useRef` + `mousedown` listener)
+- Panel opens upward (`bottom-full`) — correct since button is in Footer at page bottom
 
 ---
 
@@ -118,11 +120,13 @@ const {
 
 ### Z-index Hierarchy (full stack)
 ```
+z-[24] — WeddingCharacters (fixed bottom-right)
 z-30   — Navbar
 z-40   — AmbientPlayer (fixed bottom-left)
 z-50   — Mobile nav drawer
 z-[60] — Ceremony color flash overlay (PageWrapper)
 z-[70] — ScrollProgress bar (above everything)
+z-50   — CursorEffect canvas (pointer-events: none)
 ```
 
 ---
