@@ -1,18 +1,20 @@
 /**
  * WeddingCharacters.tsx
- * Couple PNG fixed at bottom-right. Visible on all screen sizes.
- * Animations: entrance slide-up, continuous idle float, section bounce reaction.
+ * Couple PNG fixed at bottom-right.
  *
- * LAYOUT RULES (prevent overflow/scroll):
- * - overflow-hidden on wrapper prevents image bleeding outside viewport
- * - max-w with responsive sizes ensures image never exceeds safe width
- * - pointer-events-none so it never blocks clicks
- * - No competing y transforms — parallax removed, single y axis on idle float only
+ * Interactions:
+ * - Hover  → cursor grab
+ * - Drag   → freely repositionable anywhere on screen
+ * - Click (no drag) × 1 → 2× size
+ * - Click (no drag) × 2 → 4× size
+ * - Click (no drag) × 3 → reset to original size & position
+ * - Section change → gentle scale pulse
+ * - Always: idle float bob
  */
 
 import { useEffect, useRef, useState } from 'react'
 
-import { animate, motion } from 'framer-motion'
+import { animate, motion, useDragControls } from 'framer-motion'
 
 // ─── Section detection ────────────────────────────────────────────────────────
 
@@ -66,56 +68,115 @@ const REACTIONS: Record<SectionId, Reaction> = {
   'gallery':    { scale: [1, 1.04, 1],       duration: 1.1 },
 }
 
+// Base height — responsive across all screen sizes
+const BASE_HEIGHT = 'clamp(90px, calc(10vw + 8vh), 320px)'
+
+// Drag distance threshold — moves less than this = treated as a click, not a drag
+const DRAG_CLICK_THRESHOLD = 5
+
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export const WeddingCharacters = () => {
-  const section     = useActiveSection()
-  const ref         = useRef<HTMLDivElement>(null)
-  const prevSection = useRef<SectionId | null>(null)
+  const section      = useActiveSection()
+  const reactionRef  = useRef<HTMLDivElement>(null)
+  const prevSection  = useRef<SectionId | null>(null)
+  const dragControls = useDragControls()
 
-  // Section change → bounce reaction (rotate + scale only, NO y — idle float handles y)
+  // Size cycle: 0=1×, 1=2×, 2=4× — click at 2 resets to 0
+  const [clickCount, setClickCount] = useState(0)
+
+  // Track drag distance to distinguish click from drag
+  const dragStartPos = useRef<{ x: number; y: number } | null>(null)
+
+  // Section change → scale pulse
   useEffect(() => {
-    if (ref.current === null) return
+    if (reactionRef.current === null) return
     if (prevSection.current === section) return
     prevSection.current = section
 
     const r = REACTIONS[section]
-    void animate(ref.current, { scale: r.scale }, {
+    void animate(reactionRef.current, { scale: r.scale }, {
       duration: r.duration,
       ease: [0.22, 1, 0.36, 1],
     })
   }, [section])
 
+  const sizeScale = Math.pow(2, clickCount)
+
+  // Cap scale so image height never exceeds window height
+  // BASE_HEIGHT resolves to clamp(90px, calc(10vw + 8vh), 320px)
+  // We approximate the actual rendered height to compute max allowed scale
+  const getMaxScale = (): number => {
+    const baseH = Math.min(320, Math.max(90, 0.10 * window.innerWidth + 0.08 * window.innerHeight))
+    return window.innerHeight / baseH
+  }
+  const cappedScale = Math.min(sizeScale, getMaxScale())
+
+  const handlePointerDown = (e: React.PointerEvent): void => {
+    dragStartPos.current = { x: e.clientX, y: e.clientY }
+    dragControls.start(e)
+  }
+
+  const handlePointerUp = (e: React.PointerEvent): void => {
+    if (dragStartPos.current === null) return
+    const dx = Math.abs(e.clientX - dragStartPos.current.x)
+    const dy = Math.abs(e.clientY - dragStartPos.current.y)
+    const moved = Math.sqrt(dx * dx + dy * dy)
+
+    // Only treat as click if pointer barely moved
+    if (moved < DRAG_CLICK_THRESHOLD) {
+      // Cycle: 0 → 1 → 2 → 0 (reset)
+      setClickCount((c) => (c >= 2 ? 0 : c + 1))
+    }
+    dragStartPos.current = null
+  }
+
   return (
     <motion.div
-      aria-hidden="true"
-      // overflow-hidden prevents image bleeding outside viewport on mobile
-      className="pointer-events-none fixed bottom-0 right-0 z-[24]"
-      // Entrance: slides up once on mount
+      drag
+      dragControls={dragControls}
+      dragMomentum={false}
+      dragElastic={0.1}
+      // Constrain so image can't be dragged fully off-screen
+      dragConstraints={{
+        top:    -window.innerHeight * 0.7,
+        left:   -window.innerWidth  * 0.7,
+        right:  0,
+        bottom: 0,
+      }}
+      className="fixed bottom-0 right-0 z-[24] touch-none"
+      style={{ cursor: 'grab' }}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
       initial={{ opacity: 0, y: 80 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.8, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* Idle float: gentle bob, only this div moves on y-axis */}
+      {/* Idle float */}
       <motion.div
-        ref={ref}
+        ref={reactionRef}
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-        // Responsive right padding via Tailwind
         className="px-2 sm:px-3 md:px-4 lg:px-6"
       >
-        <img
-          src="/wedding_pics/namaste/bride_groom_namaste.png"
-          alt="Rohit and Priti"
-          draggable={false}
-          className="block select-none"
-          style={{
-            // mobile 390px → ~110px | tablet 768px → ~175px | desktop 1440px → ~260px | 2K → 320px
-            height: 'clamp(90px, calc(10vw + 8vh), 320px)',
-            width: 'auto',
-            maxWidth: '30vw',  // never wider than 30% viewport — prevents horizontal overflow
-          }}
-        />
+        {/* Size scale — grows from bottom-right corner */}
+        <motion.div
+          animate={{ scale: cappedScale }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transformOrigin: 'bottom right' }}
+        >
+          <img
+            src="/wedding_pics/namaste/bride_groom_namaste.png"
+            alt="Rohit and Priti"
+            draggable={false}
+            className="block select-none"
+            style={{
+              height: BASE_HEIGHT,
+              width: 'auto',
+              maxWidth: '30vw',
+            }}
+          />
+        </motion.div>
       </motion.div>
     </motion.div>
   )
