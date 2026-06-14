@@ -21,6 +21,7 @@ interface FlipCardProps {
 
 const FlipCard = ({ slug, index }: FlipCardProps) => {
   const { t } = useTranslation('ceremonies')
+  const { t: tc } = useTranslation('common')
   const [flipped, setFlipped] = useState(false)
 
   const question = t(`${slug}.facts.${index}.q`)
@@ -47,18 +48,18 @@ const FlipCard = ({ slug, index }: FlipCardProps) => {
           <span className="text-3xl" aria-hidden="true">
             {icon}
           </span>
-          <p className="font-body text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+          <p className="font-body text-sm font-medium text-maroon">
             {question}
           </p>
-          <p className="font-body text-xs opacity-50" style={{ color: 'var(--text-muted)' }}>
-            Tap to reveal
+          <p className="font-body text-xs text-maroon/60">
+            {tc('ceremony.flipReveal')}
           </p>
         </div>
 
         {/* Back — answer */}
         <div className="flip-card-back gap-3">
           <p className="font-body text-sm leading-relaxed text-ivory/85">{answer}</p>
-          <p className="font-body text-xs text-gold/60">Tap to flip back</p>
+          <p className="font-body text-xs text-gold/60">{tc('ceremony.flipBack')}</p>
         </div>
       </div>
     </div>

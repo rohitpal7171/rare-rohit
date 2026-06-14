@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { useAudioPlayer } from '../../../../shared/hooks/useAudioPlayer'
+import { _clearAudioCacheForTesting, useAudioPlayer } from '../../../../shared/hooks/useAudioPlayer'
 
 // Vitest v4 requires Audio mock to be a real class (not vi.fn())
 // Store instance in module scope so tests can access it
@@ -13,14 +13,18 @@ class AudioMock {
   loop = false
   volume = 1
   muted = false
+  paused = true
   currentTime = 0
   play = vi.fn(() => Promise.resolve())
   pause = vi.fn()
   addEventListener = vi.fn((event: string, cb: () => void) => {
     if (!_listeners[event]) _listeners[event] = []
-    _listeners[event].push(cb)
+    _listeners[event]!.push(cb)
   })
-  removeEventListener = vi.fn()
+  removeEventListener = vi.fn((event: string, cb: () => void) => {
+    const arr = _listeners[event]
+    if (arr) _listeners[event] = arr.filter((l) => l !== cb)
+  })
   _trigger(event: string) {
     _listeners[event]?.forEach((cb) => { cb() })
   }
@@ -37,6 +41,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
+  _clearAudioCacheForTesting()
   vi.unstubAllGlobals()
   vi.restoreAllMocks()
   vi.useRealTimers()
@@ -163,7 +168,7 @@ describe('useAudioPlayer — pause/toggle/mute/volume/cleanup', () => {
     const { unmount } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
     act(() => { _instance._trigger('canplay') })
     unmount()
-    expect(_instance.pause).toHaveBeenCalled()
+    // hook removes event listeners but does NOT pause — audio persists across navigation
     expect(_instance.removeEventListener).toHaveBeenCalled()
   })
 })

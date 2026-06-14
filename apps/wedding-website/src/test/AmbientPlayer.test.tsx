@@ -4,18 +4,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { AmbientPlayer } from '../components/layout/AmbientPlayer'
 
-// ── Mock @shared/utils ────────────────────────────────────────────────────
 vi.mock('@shared/utils', () => ({
   cn: (...args: unknown[]) => args.filter(Boolean).join(' '),
 }))
 
-// ── Mock @shared/hooks ────────────────────────────────────────────────────
 const mockPlay       = vi.fn()
 const mockToggle     = vi.fn()
 const mockToggleMute = vi.fn()
 
 const defaultState = {
-  isPlaying: false, isMuted: false, isLoaded: false, hasError: false, volume: 0.2,
+  isPlaying: false, isMuted: false, isLoaded: false, hasError: false, volume: 0.3,
   play: mockPlay, pause: vi.fn(), toggle: mockToggle,
   toggleMute: mockToggleMute, setVolume: vi.fn(), seek: vi.fn(),
 }
@@ -39,6 +37,8 @@ afterEach(() => {
   vi.restoreAllMocks()
 })
 
+// ── Rendering ─────────────────────────────────────────────────────────────────
+
 describe('AmbientPlayer — rendering', () => {
   it('renders the OM button', () => {
     render(React.createElement(AmbientPlayer))
@@ -50,139 +50,105 @@ describe('AmbientPlayer — rendering', () => {
     expect(screen.getByText('ॐ')).toBeInTheDocument()
   })
 
-  it('does not render after dismissed', () => {
-    hookState = { ...hookState, isPlaying: true, isLoaded: true, isMuted: false }
-    render(React.createElement(AmbientPlayer))
-    fireEvent.click(screen.getByRole('button', { name: /dismiss/i }))
-    expect(screen.queryByText('ॐ')).not.toBeInTheDocument()
-  })
-
   it('button is disabled when hasError=true', () => {
     hookState = { ...hookState, hasError: true }
     render(React.createElement(AmbientPlayer))
     expect(screen.getByRole('button', { name: /play ambient music/i })).toBeDisabled()
   })
 
-  it('shows Ambient Music when playing unmuted', () => {
+  it('shows audio.ambientMusic key when playing unmuted', () => {
     hookState = { ...hookState, isPlaying: true, isLoaded: true, isMuted: false }
     render(React.createElement(AmbientPlayer))
-    expect(screen.getByText('Ambient Music')).toBeInTheDocument()
+    expect(screen.getByText('audio.ambientMusic')).toBeInTheDocument()
   })
 
-  it('shows Tap to unmute when playing muted', () => {
+  it('shows audio.tapToUnmute key when playing muted', () => {
     hookState = { ...hookState, isPlaying: true, isLoaded: true, isMuted: true }
     render(React.createElement(AmbientPlayer))
-    expect(screen.getByText('Tap to unmute')).toBeInTheDocument()
+    expect(screen.getByText('audio.tapToUnmute')).toBeInTheDocument()
   })
 
   it('does not show pill when not playing', () => {
     hookState = { ...hookState, isPlaying: false, isLoaded: true }
     render(React.createElement(AmbientPlayer))
-    expect(screen.queryByText('Ambient Music')).not.toBeInTheDocument()
+    expect(screen.queryByText('audio.ambientMusic')).not.toBeInTheDocument()
+  })
+
+  it('shows mute toggle button inside pill when playing', () => {
+    hookState = { ...hookState, isPlaying: true, isLoaded: true, isMuted: false }
+    render(React.createElement(AmbientPlayer))
+    expect(screen.getByRole('button', { name: /mute/i })).toBeInTheDocument()
   })
 })
 
-describe('AmbientPlayer — autoplay', () => {
-  it('does NOT call play() before loaded', () => {
-    hookState = { ...hookState, isLoaded: false }
+// ── First-interaction triggers ────────────────────────────────────────────────
+
+describe('AmbientPlayer — first interaction triggers play', () => {
+  it('does NOT call play() without any user interaction', () => {
     render(React.createElement(AmbientPlayer))
-    act(() => { vi.advanceTimersByTime(5000) })
+    act(() => { vi.advanceTimersByTime(10_000) })
     expect(mockPlay).not.toHaveBeenCalled()
   })
 
-  it('calls play() after exactly 3 seconds', () => {
-    hookState = { ...hookState, isLoaded: true }
-    render(React.createElement(AmbientPlayer))
-    act(() => { vi.advanceTimersByTime(2999) })
-    expect(mockPlay).not.toHaveBeenCalled()
-    act(() => { vi.advanceTimersByTime(1) })
-    expect(mockPlay).toHaveBeenCalledTimes(1)
-  })
-
-  it('does not call play() twice when interaction fires first', () => {
-    hookState = { ...hookState, isLoaded: true }
-    render(React.createElement(AmbientPlayer))
-    act(() => { vi.advanceTimersByTime(1000) })
-    fireEvent.click(document)
-    expect(mockPlay).toHaveBeenCalledTimes(1)
-    act(() => { vi.advanceTimersByTime(3000) })
-    expect(mockPlay).toHaveBeenCalledTimes(1)
-  })
-})
-
-describe('AmbientPlayer — interaction triggers', () => {
-  it('plays on click', () => {
-    hookState = { ...hookState, isLoaded: true }
+  it('calls play() on document click', () => {
     render(React.createElement(AmbientPlayer))
     fireEvent.click(document)
     expect(mockPlay).toHaveBeenCalledTimes(1)
   })
 
-  it('plays on scroll', () => {
-    hookState = { ...hookState, isLoaded: true }
-    render(React.createElement(AmbientPlayer))
-    fireEvent.scroll(document)
-    expect(mockPlay).toHaveBeenCalledTimes(1)
-  })
-
-  it('plays on keydown', () => {
-    hookState = { ...hookState, isLoaded: true }
-    render(React.createElement(AmbientPlayer))
-    fireEvent.keyDown(document)
-    expect(mockPlay).toHaveBeenCalledTimes(1)
-  })
-
-  it('plays on touchstart', () => {
-    hookState = { ...hookState, isLoaded: true }
+  it('calls play() on document touchstart', () => {
     render(React.createElement(AmbientPlayer))
     fireEvent.touchStart(document)
     expect(mockPlay).toHaveBeenCalledTimes(1)
   })
 
-  it('plays on mousemove', () => {
-    hookState = { ...hookState, isLoaded: true }
+  it('does NOT call play() on scroll (scroll is not a registered trigger)', () => {
     render(React.createElement(AmbientPlayer))
-    fireEvent.mouseMove(document)
-    expect(mockPlay).toHaveBeenCalledTimes(1)
+    fireEvent.scroll(document)
+    expect(mockPlay).not.toHaveBeenCalled()
   })
 
-  it('only calls play() once for multiple events', () => {
-    hookState = { ...hookState, isLoaded: true }
+  it('only calls play() once for multiple interactions', () => {
     render(React.createElement(AmbientPlayer))
     fireEvent.click(document)
-    fireEvent.scroll(document)
-    fireEvent.keyDown(document)
+    fireEvent.touchStart(document)
+    fireEvent.click(document)
     expect(mockPlay).toHaveBeenCalledTimes(1)
   })
 })
 
-describe('AmbientPlayer — muted fallback', () => {
-  it('calls toggleMute() when playing muted and user interacts', () => {
-    hookState = { ...hookState, isPlaying: true, isMuted: true, isLoaded: true }
+// ── 300ms unmute timer ────────────────────────────────────────────────────────
+
+describe('AmbientPlayer — 300ms unmute after first interaction', () => {
+  it('does NOT call toggleMute() before 300ms', () => {
     render(React.createElement(AmbientPlayer))
     fireEvent.click(document)
+    act(() => { vi.advanceTimersByTime(299) })
+    expect(mockToggleMute).not.toHaveBeenCalled()
+  })
+
+  it('calls toggleMute() exactly at 300ms after first interaction', () => {
+    render(React.createElement(AmbientPlayer))
+    fireEvent.click(document)
+    act(() => { vi.advanceTimersByTime(300) })
     expect(mockToggleMute).toHaveBeenCalledTimes(1)
   })
 
-  it('does NOT call toggleMute() when already unmuted', () => {
-    hookState = { ...hookState, isPlaying: true, isMuted: false, isLoaded: true }
+  it('does NOT call toggleMute() without any interaction even after 300ms', () => {
     render(React.createElement(AmbientPlayer))
-    fireEvent.click(document)
-    expect(mockToggleMute).not.toHaveBeenCalled()
-  })
-
-  it('does NOT call toggleMute() when not playing', () => {
-    hookState = { ...hookState, isPlaying: false, isMuted: true, isLoaded: true }
-    render(React.createElement(AmbientPlayer))
-    fireEvent.click(document)
+    act(() => { vi.advanceTimersByTime(300) })
     expect(mockToggleMute).not.toHaveBeenCalled()
   })
 })
 
+// ── Button interactions ───────────────────────────────────────────────────────
+
 describe('AmbientPlayer — button interactions', () => {
-  it('OM button calls toggle()', () => {
-    hookState = { ...hookState, isLoaded: true }
+  it('OM button calls toggle() after first interaction is established', () => {
     render(React.createElement(AmbientPlayer))
+    // Establish first interaction via document (not the button itself)
+    fireEvent.click(document.body)
+    // Now the OM button click should call toggle()
     fireEvent.click(screen.getByRole('button', { name: /play ambient music/i }))
     expect(mockToggle).toHaveBeenCalledTimes(1)
   })

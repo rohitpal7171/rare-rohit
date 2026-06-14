@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { Volume2, VolumeX } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 import { useAudioPlayer } from '@shared/hooks'
 import { cn } from '@shared/utils'
@@ -9,6 +10,7 @@ import { cn } from '@shared/utils'
 const AMBIENT_SRC = '/audio/sangeet.mp3'
 
 export const AmbientPlayer = () => {
+  const { t } = useTranslation('common')
   const { isPlaying, isMuted, isLoaded, hasError, play, toggle, toggleMute } = useAudioPlayer(
     AMBIENT_SRC,
     { startMuted: true, loop: true, initialVolume: 0.3 }
@@ -143,7 +145,7 @@ export const AmbientPlayer = () => {
             className="flex items-center gap-2 rounded-full border border-gold/20 bg-divine/90 px-3 py-2 backdrop-blur-md"
           >
             <span className="font-body text-xs text-ivory/65">
-              {isMuted ? 'Tap to unmute' : 'Ambient Music'}
+              {isMuted ? t('audio.tapToUnmute') : t('audio.ambientMusic')}
             </span>
             <button
               onClick={toggleMute}
@@ -152,15 +154,6 @@ export const AmbientPlayer = () => {
             >
               {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
             </button>
-            {/* <button
-              onClick={() => {
-                setDismissed(true)
-              }}
-              aria-label="Dismiss player"
-              className="text-ivory/30 transition-colors hover:text-ivory/60"
-            >
-              <X size={13} />
-            </button> */}
           </motion.div>
         )}
       </AnimatePresence>

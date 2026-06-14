@@ -25,6 +25,9 @@ export interface UseAudioPlayerReturn {
 // This prevents the double-download when two components use the same src.
 const audioCache = new Map<string, HTMLAudioElement>()
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const _clearAudioCacheForTesting = (): void => { audioCache.clear() }
+
 const getOrCreateAudio = (src: string): HTMLAudioElement => {
   const existing = audioCache.get(src)
   if (existing !== undefined) return existing

@@ -3,6 +3,7 @@
   "subtitle": "Each ritual is a thread that weaves our souls together",
   "haldi": {
     "name": "Haldi",
+    "mood": "Folk & Dhol",
     "tagline": "The Golden Glow",
     "description": "The Haldi ceremony involves applying a sacred paste of turmeric, sandalwood and rose water to both the bride and the groom. This ritual is performed individually — the bride at her home surrounded by her family, and the groom at his home surrounded by his. Though celebrated apart, both are blessed at the same time, connected by the same golden ritual before they are united forever.",
     "significance": "Turmeric is considered sacred in Hinduism — it purifies, protects and brings prosperity.",
@@ -26,6 +27,7 @@
   },
   "mehendi": {
     "name": "Mehendi",
+    "mood": "Soft Ghazal",
     "tagline": "The Art of Love",
     "description": "Intricate henna designs are applied to the bride's hands and feet. The deeper the colour of the Mehendi, the deeper the love between the couple. The groom's name is hidden within the design for him to find.",
     "significance": "Mehendi represents joy, beauty and spiritual awakening in the new journey of life.",
@@ -49,6 +51,7 @@
   },
   "sangeet": {
     "name": "Sangeet",
+    "mood": "Bollywood Beats",
     "tagline": "The Night of Music",
     "description": "An evening filled with music, dance, laughter and love. Both families come together to perform and celebrate. This joyous pre-wedding night sets the tone for the celebrations ahead.",
     "significance": "Sangeet unites both families through the universal language of music and dance.",
@@ -72,6 +75,7 @@
   },
   "baraat": {
     "name": "Baraat",
+    "mood": "Shehnai & Dhol",
     "tagline": "The Grand Procession",
     "description": "The groom arrives in a grand procession accompanied by family and friends, dancing to dhol beats. The baraat is a vibrant, joyful celebration of the groom's journey to claim his bride.",
     "significance": "The Baraat symbolises the groom's arrival as a prince to receive his queen.",
@@ -95,6 +99,7 @@
   },
   "pheras": {
     "name": "Pheras",
+    "mood": "Vedic Mantras",
     "tagline": "The Sacred Vows",
     "description": "The most sacred ritual of the wedding — the couple takes seven rounds around the sacred fire (Agni), making seven divine promises to each other in the presence of God, family and the eternal flame.",
     "significance": "Each phera represents a vow — for food, strength, prosperity, wisdom, progeny, health and friendship.",
@@ -118,6 +123,7 @@
   },
   "vidaai": {
     "name": "Vidaai",
+    "mood": "Classical",
     "tagline": "The Emotional Farewell",
     "description": "The bride bids farewell to her family home and begins her new journey with her husband. She throws rice and coins over her shoulder as she leaves — symbolising she repays her debts to her family and wishes them prosperity.",
     "significance": "Vidaai is a bittersweet moment — an ending and a beautiful new beginning.",
@@ -141,6 +147,7 @@
   },
   "reception": {
     "name": "Reception",
+    "mood": "Orchestral",
     "tagline": "The Grand Celebration",
     "description": "The newlyweds are formally introduced as a married couple to their extended family and friends.",
     "significance": "The reception is the couple's first public celebration as husband and wife.",

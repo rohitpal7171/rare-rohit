@@ -29,7 +29,14 @@
     "about": "About this Ceremony",
     "significance": "Significance",
     "didYouKnow": "Did You Know?",
-    "tapToReveal": "Tap each card to reveal the answer"
+    "tapToReveal": "Tap each card to reveal the answer",
+    "flipReveal": "Tap to reveal",
+    "flipBack": "Tap to flip back"
+  },
+  "audio": {
+    "tapToUnmute": "Tap to unmute",
+    "ambientMusic": "Ambient Music",
+    "loading": "Loading..."
   },
   "errors": {
     "notFound": "Page not found",

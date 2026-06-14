@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router-dom'
 import { cn } from '@shared/utils'
 
 import { CursorEffect } from '@app/components/effects/CursorEffect'
+import { ErrorBoundary } from '@app/components/layout/ErrorBoundary'
 import { ScrollProgress } from '@app/components/layout/ScrollProgress'
 
 import { router } from './router'
@@ -26,7 +27,9 @@ export default function App() {
       {/* Global cursor effect — canvas overlay, pointer-events: none */}
       <CursorEffect />
       <ScrollProgress />
-      <RouterProvider router={router} />
+      <ErrorBoundary>
+        <RouterProvider router={router} />
+      </ErrorBoundary>
     </div>
   )
 }

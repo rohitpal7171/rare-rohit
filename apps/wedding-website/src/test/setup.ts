@@ -32,6 +32,7 @@ vi.mock('framer-motion', async () => {
       header:  makeEl('header'),
       section: makeEl('section'),
       a:       makeEl('a'),
+      input:   makeEl('input'),
     },
     AnimatePresence: ({ children }: { children: unknown }) =>
       createElement(Fragment, null, children as never),

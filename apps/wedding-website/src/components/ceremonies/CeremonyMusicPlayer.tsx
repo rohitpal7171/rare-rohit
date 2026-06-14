@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { AnimatePresence, motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { Music, Pause, Play, Volume2, VolumeX, X } from 'lucide-react'
 
 import { useAudioPlayer } from '@shared/hooks'
@@ -15,20 +16,13 @@ const CEREMONY_AUDIO: Record<CeremonySlug, string> = {
   vidaai:  '/audio/vidaai.mp3',
 }
 
-const CEREMONY_MOOD: Record<CeremonySlug, string> = {
-  haldi:   'Folk & Dhol',
-  mehendi: 'Soft Ghazal',
-  sangeet: 'Bollywood Beats',
-  baraat:  'Shehnai & Dhol',
-  pheras:  'Vedic Mantras',
-  vidaai:  'Classical',
-}
-
 export interface CeremonyMusicPlayerProps {
   slug: CeremonySlug
 }
 
 export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
+  const { t } = useTranslation('ceremonies')
+  const { t: tc } = useTranslation('common')
   const src: string = CEREMONY_AUDIO[slug]
   const {
     isPlaying, isMuted, isLoaded, hasError,
@@ -55,13 +49,13 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
         transition={{ type: 'spring', stiffness: 300, damping: 28 }}
         className="music-player"
         role="region"
-        aria-label={`Ceremony music: ${CEREMONY_MOOD[slug]}`}
+        aria-label={`Ceremony music: ${t(`${slug}.mood`)}`}
       >
         <div className="flex flex-col">
           <div className="flex items-center gap-1.5">
             <Music size={14} className="text-gold/70" aria-hidden="true" />
             <span className="font-body text-xs text-ivory/60">
-              {isLoaded ? CEREMONY_MOOD[slug] : 'Loading...'}
+              {isLoaded ? t(`${slug}.mood`) : tc('audio.loading')}
             </span>
           </div>
           {showUnmuteHint && (
@@ -70,7 +64,7 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
               animate={{ opacity: 1 }}
               className="font-body text-xs text-gold/70 mt-0.5"
             >
-              Tap 🔊 to unmute
+              {tc('audio.tapToUnmute')}
             </motion.span>
           )}
         </div>
