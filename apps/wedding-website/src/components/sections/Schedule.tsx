@@ -48,7 +48,9 @@ export const Schedule = () => {
           <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-maroon/60">
             {t('subtitle')}
           </motion.p>
-          <motion.div variants={fadeInUp} className="gold-divider mt-4" aria-hidden="true" />
+          <motion.div variants={fadeInUp} className="divider-floral mt-4" aria-hidden="true">
+            🌼
+          </motion.div>
         </AnimatedSection>
 
         <motion.div

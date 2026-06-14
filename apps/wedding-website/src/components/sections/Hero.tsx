@@ -10,12 +10,12 @@ import { cn, fadeInUp, orbitReverse, orbitSlow, staggerContainer } from '@shared
 import { weddingConfig } from '@app/config/wedding.config'
 
 const PETAL_POSITIONS = [
-  { x: '8%',  delay: 0 },
-  { x: '22%', delay: 1.5 },
-  { x: '38%', delay: 0.8 },
-  { x: '55%', delay: 2.2 },
-  { x: '70%', delay: 0.4 },
-  { x: '85%', delay: 1.8 },
+  { x: '8%',  delay: 0,   emoji: '🌸' },
+  { x: '22%', delay: 1.5, emoji: '🌺' },
+  { x: '38%', delay: 0.8, emoji: '🌼' },
+  { x: '55%', delay: 2.2, emoji: '🌸' },
+  { x: '70%', delay: 0.4, emoji: '🌻' },
+  { x: '85%', delay: 1.8, emoji: '🌷' },
 ] as const
 
 const SPARKLES = [
@@ -29,12 +29,19 @@ const SPARKLES = [
   { x: '23%', y: '10%', delay: 1.8, dur: 3.7 },
 ] as const
 
+const HEARTS = [
+  { x: '18%', delay: 1.2, dur: 5.5 },
+  { x: '52%', delay: 2.8, dur: 6.5 },
+  { x: '75%', delay: 0.6, dur: 5.0 },
+] as const
+
 interface FloatingPetalProps {
   x: string
   delay: number
+  emoji: string
 }
 
-const FloatingPetal = memo(({ x, delay }: FloatingPetalProps) => (
+const FloatingPetal = memo(({ x, delay, emoji }: FloatingPetalProps) => (
   <div
     aria-hidden="true"
     className="pointer-events-none absolute animate-petal-fall text-2xl opacity-60"
@@ -45,7 +52,7 @@ const FloatingPetal = memo(({ x, delay }: FloatingPetalProps) => (
       animationDuration: `${8 + delay}s`,
     }}
   >
-    🌸
+    {emoji}
   </div>
 ))
 FloatingPetal.displayName = 'FloatingPetal'
@@ -95,14 +102,29 @@ export const Hero = () => {
       id="home"
       className="mandala-bg relative flex min-h-screen flex-col items-center justify-center overflow-hidden"
     >
-      {/* Petals */}
+      {/* Mixed flower petals — fall from top */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-        {PETAL_POSITIONS.map(({ x, delay }) => (
-          <FloatingPetal key={x} x={x} delay={delay} />
+        {PETAL_POSITIONS.map(({ x, delay, emoji }) => (
+          <FloatingPetal key={x} x={x} delay={delay} emoji={emoji} />
         ))}
       </div>
 
-      {/* Gold sparkle particles — drift upward and fade */}
+      {/* Floating hearts — drift upward */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        {HEARTS.map(({ x, delay, dur }) => (
+          <motion.div
+            key={x}
+            className="absolute text-xl"
+            style={{ left: x, bottom: '15%' }}
+            animate={{ y: [0, -40, -80, -120], opacity: [0, 0.7, 0.5, 0] }}
+            transition={{ duration: dur, repeat: Infinity, delay, ease: 'easeOut' }}
+          >
+            💕
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Gold sparkle particles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         {SPARKLES.map(({ x, y, delay, dur }) => (
           <motion.div
@@ -167,6 +189,18 @@ export const Hero = () => {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center gap-6 px-4 text-center">
 
+        {/* Save the Date badge */}
+        <motion.div
+          initial={{ opacity: 0, y: -10, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+          className="inline-flex items-center gap-2 rounded-full border border-gold/25 bg-gold/5 px-5 py-1.5"
+        >
+          <span aria-hidden="true">💕</span>
+          <span className="font-script text-base text-gold/90">{t('hero.badge')}</span>
+          <span aria-hidden="true">💕</span>
+        </motion.div>
+
         {/* ॐ — memoized, decoupled from all parent state */}
         <OmSymbol />
 
@@ -180,9 +214,7 @@ export const Hero = () => {
           <motion.div variants={fadeInUp} className="space-y-2">
             <h1 className="font-display text-5xl font-bold text-ivory sm:text-6xl lg:text-7xl">
               <span className="text-gold-shimmer">{groom.name}</span>
-              <span className="mx-4 font-script text-gold/60" aria-hidden="true">
-                &amp;
-              </span>
+              <span className="mx-3 text-2xl" aria-hidden="true">💕</span>
               <span className="sr-only"> and </span>
               <span className="text-gold-shimmer">{bride.name}</span>
             </h1>
@@ -195,7 +227,9 @@ export const Hero = () => {
             {t('hero.subtitle')}
           </motion.p>
 
-          <motion.div variants={fadeInUp} className="gold-divider w-32" aria-hidden="true" />
+          <motion.div variants={fadeInUp} className="divider-floral w-full" aria-hidden="true">
+            🌸
+          </motion.div>
 
           <motion.div variants={fadeInUp}>
             <Countdown targetDate={wedding.date} />

@@ -7,6 +7,14 @@ import { cn, fadeInLeft, fadeInRight, fadeInUp, glowPulse, hoverLift } from '@sh
 
 const TIMELINE_KEYS = ['met', 'friendship', 'love', 'proposal', 'wedding'] as const
 
+const TIMELINE_ICONS: Record<typeof TIMELINE_KEYS[number], string> = {
+  met:        '💕',
+  friendship: '🌸',
+  love:       '🌼',
+  proposal:   '🪔',
+  wedding:    '💒',
+}
+
 export const OurStory = () => {
   const { t } = useTranslation('story')
 
@@ -20,7 +28,9 @@ export const OurStory = () => {
           <motion.h2 variants={fadeInUp} className="section-title mt-2 text-maroon">
             {t('title')}
           </motion.h2>
-          <motion.div variants={fadeInUp} className="gold-divider mt-4" aria-hidden="true" />
+          <motion.div variants={fadeInUp} className="divider-floral mt-4" aria-hidden="true">
+            🌸
+          </motion.div>
         </AnimatedSection>
 
         <div className="relative">
@@ -56,6 +66,9 @@ export const OurStory = () => {
                       className={cn('card-light max-w-md', isLeft ? 'md:ml-auto' : 'md:mr-auto')}
                       {...hoverLift}
                     >
+                      <div className="mb-3 text-3xl" aria-hidden="true">
+                        {TIMELINE_ICONS[key]}
+                      </div>
                       <div className="mb-2 font-script text-3xl text-gold">
                         {t(`timeline.${key}.year`)}
                       </div>

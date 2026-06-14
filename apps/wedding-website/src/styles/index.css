@@ -393,6 +393,26 @@
     animation: shimmer 1.5s linear infinite;
   }
 
+  /* ── Floral divider ──────────────────────────────────────────────── */
+  .divider-floral {
+    @apply mx-auto my-6 flex items-center justify-center gap-3;
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      height: 1px;
+      flex: 1 1 0%;
+      max-width: 8rem;
+      opacity: 0.45;
+    }
+    &::before {
+      background: linear-gradient(to right, transparent, var(--color-gold));
+    }
+    &::after {
+      background: linear-gradient(to left, transparent, var(--color-gold));
+    }
+  }
+
   /* ── Timeline ─────────────────────────────────────────────────────── */
   .timeline-line {
     @apply absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 md:block;
