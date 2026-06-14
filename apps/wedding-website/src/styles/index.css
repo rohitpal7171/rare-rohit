@@ -242,8 +242,11 @@
       border-color var(--duration-normal) var(--ease-smooth),
       box-shadow var(--duration-normal) var(--ease-smooth);
     &:hover {
-      border-color: rgba(201, 168, 76, 0.35);
-      box-shadow: var(--shadow-gold);
+      border-color: rgba(201, 168, 76, 0.5);
+      box-shadow:
+        0 0 0 1px rgba(201, 168, 76, 0.06),
+        0 8px 40px rgba(201, 168, 76, 0.22),
+        0 0 80px rgba(201, 168, 76, 0.06);
     }
   }
 
@@ -252,9 +255,12 @@
     background: #fdf6ec;
     border: 1px solid rgba(201, 168, 76, 0.15);
     box-shadow: var(--shadow-card);
-    transition: box-shadow var(--duration-normal) var(--ease-smooth);
+    transition:
+      box-shadow var(--duration-normal) var(--ease-smooth),
+      border-color var(--duration-normal) var(--ease-smooth);
     &:hover {
-      box-shadow: 0 8px 40px rgba(45, 27, 78, 0.12);
+      box-shadow: 0 8px 40px rgba(45, 27, 78, 0.14), 0 0 0 1px rgba(201, 168, 76, 0.12);
+      border-color: rgba(201, 168, 76, 0.3);
     }
   }
 

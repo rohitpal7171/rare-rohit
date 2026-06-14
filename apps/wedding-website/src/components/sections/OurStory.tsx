@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 
 import { AnimatedSection } from '@shared/ui'
-import { cn, fadeInLeft, fadeInRight, fadeInUp } from '@shared/utils'
+import { cn, fadeInLeft, fadeInRight, fadeInUp, glowPulse, hoverLift } from '@shared/utils'
 
 const TIMELINE_KEYS = ['met', 'friendship', 'love', 'proposal', 'wedding'] as const
 
@@ -24,10 +24,15 @@ export const OurStory = () => {
         </AnimatedSection>
 
         <div className="relative">
-          {/* Centre timeline line */}
-          <div
+          {/* Centre timeline line — draws in from top as section enters view */}
+          <motion.div
             aria-hidden="true"
             className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-gold/0 via-gold/40 to-gold/0 md:block"
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+            style={{ originY: 0 }}
           />
 
           <div className="space-y-12">
@@ -47,8 +52,9 @@ export const OurStory = () => {
                 >
                   <div className="flex-1">
                     {/* Use card-light on ivory background */}
-                    <div
+                    <motion.div
                       className={cn('card-light max-w-md', isLeft ? 'md:ml-auto' : 'md:mr-auto')}
+                      {...hoverLift}
                     >
                       <div className="mb-2 font-script text-3xl text-gold">
                         {t(`timeline.${key}.year`)}
@@ -59,13 +65,19 @@ export const OurStory = () => {
                       <p className="font-body text-sm leading-relaxed text-maroon/60">
                         {t(`timeline.${key}.description`)}
                       </p>
-                    </div>
+                    </motion.div>
                   </div>
 
-                  {/* Timeline dot */}
-                  <div aria-hidden="true" className="timeline-dot">
+                  {/* Timeline dot — pulsing gold glow */}
+                  <motion.div
+                    aria-hidden="true"
+                    className="timeline-dot"
+                    variants={glowPulse}
+                    initial="initial"
+                    animate="animate"
+                  >
                     <div className="h-2 w-2 rounded-full bg-gold" />
-                  </div>
+                  </motion.div>
 
                   <div className="hidden flex-1 md:block" />
                 </motion.div>

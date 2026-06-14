@@ -58,7 +58,7 @@ export const Navbar = () => {
             <li key={key}>
               <a
                 href={href}
-                className="font-body text-xs font-medium text-ivory/80 transition-colors hover:text-gold xl:text-sm"
+                className="link-underline font-body text-xs font-medium text-ivory/80 transition-colors hover:text-gold xl:text-sm"
               >
                 {t(`nav.${key}`)}
               </a>

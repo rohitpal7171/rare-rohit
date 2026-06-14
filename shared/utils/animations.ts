@@ -247,3 +247,33 @@ export const tapPress: Pick<MotionProps, 'whileTap' | 'transition'> = {
   whileTap: { scale: 0.96 },
   transition: transitions.springSnappy,
 }
+
+// ─── Orbital rotations ─────────────────────────────────────────────────────
+
+export const orbitSlow: Variants = {
+  initial: { rotate: 0 },
+  animate: {
+    rotate: 360,
+    transition: { duration: 30, repeat: Infinity, ease: 'linear' },
+  },
+}
+
+export const orbitReverse: Variants = {
+  initial: { rotate: 0 },
+  animate: {
+    rotate: -360,
+    transition: { duration: 45, repeat: Infinity, ease: 'linear' },
+  },
+}
+
+// ─── 3-D card entrance ─────────────────────────────────────────────────────
+
+export const cardReveal3D: Variants = {
+  hidden: { opacity: 0, y: 40, rotateX: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: { ...transitions.smooth, duration: 0.7 },
+  },
+}

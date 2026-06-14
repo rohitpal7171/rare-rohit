@@ -5,7 +5,15 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import { AnimatedSection } from '@shared/ui'
-import { CEREMONY_SLUGS, fadeInUp, formatDate, scaleIn, staggerContainer } from '@shared/utils'
+import {
+  CEREMONY_SLUGS,
+  cardReveal3D,
+  fadeInUp,
+  floatLoopSlow,
+  formatDate,
+  hoverLift,
+  staggerContainer,
+} from '@shared/utils'
 
 import { weddingConfig } from '@app/config/wedding.config'
 
@@ -33,16 +41,23 @@ export const CeremoniesGrid = () => {
           whileInView="visible"
           viewport={{ once: true }}
           className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          style={{ perspective: '1200px' }}
         >
           {CEREMONY_SLUGS.map((slug) => {
             const ceremony = weddingConfig.ceremonies[slug]
             return (
-              <motion.div key={slug} variants={scaleIn}>
+              <motion.div key={slug} variants={cardReveal3D} {...hoverLift}>
                 <Link to={`/ceremony/${slug}`} className="group block">
                   <div className="card-divine h-full space-y-3 transition-all duration-300 hover:border-gold/50 hover:shadow-gold">
-                    <div className="text-4xl" aria-hidden="true">
+                    <motion.div
+                      className="text-4xl"
+                      aria-hidden="true"
+                      variants={floatLoopSlow}
+                      initial="initial"
+                      animate="animate"
+                    >
                       {ceremony.icon}
-                    </div>
+                    </motion.div>
                     <h3 className="font-display text-xl font-bold text-gold">
                       {t(`${slug}.name`)}
                     </h3>

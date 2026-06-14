@@ -5,7 +5,7 @@ import { ChevronDown, MapPin } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Countdown } from '@shared/ui'
-import { cn, fadeInUp, staggerContainer } from '@shared/utils'
+import { cn, fadeInUp, orbitReverse, orbitSlow, staggerContainer } from '@shared/utils'
 
 import { weddingConfig } from '@app/config/wedding.config'
 
@@ -18,12 +18,22 @@ const PETAL_POSITIONS = [
   { x: '85%', delay: 1.8 },
 ] as const
 
+const SPARKLES = [
+  { x: '12%', y: '22%', delay: 0,   dur: 3.5 },
+  { x: '82%', y: '18%', delay: 0.9, dur: 4   },
+  { x: '35%', y: '75%', delay: 1.6, dur: 3.2 },
+  { x: '68%', y: '58%', delay: 0.3, dur: 4.2 },
+  { x: '8%',  y: '52%', delay: 2.1, dur: 3.8 },
+  { x: '92%', y: '40%', delay: 0.7, dur: 3   },
+  { x: '55%', y: '88%', delay: 1.3, dur: 4.5 },
+  { x: '23%', y: '10%', delay: 1.8, dur: 3.7 },
+] as const
+
 interface FloatingPetalProps {
   x: string
   delay: number
 }
 
-// Memoized — never re-renders unless props change (it has none)
 const FloatingPetal = memo(({ x, delay }: FloatingPetalProps) => (
   <div
     aria-hidden="true"
@@ -42,20 +52,36 @@ FloatingPetal.displayName = 'FloatingPetal'
 
 // Memoized ॐ so AmbientPlayer state changes never cause it to re-animate
 const OmSymbol = memo(() => (
-  <motion.div
-    aria-hidden="true"
-    className="text-6xl"
-    initial={{ opacity: 0, scale: 0.5 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-    style={{
-      color: '#FF6B00',
-      textShadow:
-        '0 0 12px rgba(255,107,0,0.9), 0 0 30px rgba(255,107,0,0.5), 0 0 60px rgba(255,107,0,0.2)',
-    }}
-  >
-    ॐ
-  </motion.div>
+  <div className="relative flex items-center justify-center" aria-hidden="true">
+    {/* Expanding aura ring 1 */}
+    <motion.div
+      className="absolute h-16 w-16 rounded-full"
+      style={{ backgroundColor: 'rgba(255, 107, 0, 0.18)' }}
+      animate={{ scale: [1, 2.8], opacity: [0.55, 0] }}
+      transition={{ duration: 2.5, repeat: Infinity, ease: 'easeOut' }}
+    />
+    {/* Expanding aura ring 2 — offset phase */}
+    <motion.div
+      className="absolute h-16 w-16 rounded-full"
+      style={{ backgroundColor: 'rgba(255, 107, 0, 0.1)' }}
+      animate={{ scale: [1, 2.2], opacity: [0.35, 0] }}
+      transition={{ duration: 2.5, repeat: Infinity, ease: 'easeOut', delay: 1.2 }}
+    />
+    {/* OM text — decoupled from all parent state via memo */}
+    <motion.span
+      className="relative z-10 text-6xl"
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+      style={{
+        color: '#FF6B00',
+        textShadow:
+          '0 0 12px rgba(255,107,0,0.9), 0 0 30px rgba(255,107,0,0.5), 0 0 60px rgba(255,107,0,0.2)',
+      }}
+    >
+      ॐ
+    </motion.span>
+  </div>
 ))
 OmSymbol.displayName = 'OmSymbol'
 
@@ -76,16 +102,69 @@ export const Hero = () => {
         ))}
       </div>
 
-      {/* Mandala rings */}
+      {/* Gold sparkle particles — drift upward and fade */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        {SPARKLES.map(({ x, y, delay, dur }) => (
+          <motion.div
+            key={`${x}-${y}`}
+            className="absolute h-1 w-1 rounded-full bg-gold"
+            style={{ left: x, top: y }}
+            animate={{ opacity: [0, 0.85, 0.85, 0], y: [0, -28, -56], scale: [0.5, 1, 0] }}
+            transition={{ duration: dur, repeat: Infinity, delay, ease: 'easeOut' }}
+          />
+        ))}
+      </div>
+
+      {/* SVG concentric rings — draw in on load */}
       <div
         aria-hidden="true"
-        className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10 opacity-30"
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+      >
+        <svg width="700" height="700" viewBox="0 0 700 700" className="overflow-visible">
+          <motion.circle
+            cx="350" cy="350" r="330"
+            stroke="rgba(201,168,76,0.14)" strokeWidth="1" fill="none"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 3, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
+          />
+          <motion.circle
+            cx="350" cy="350" r="265"
+            stroke="rgba(201,168,76,0.09)" strokeWidth="0.6" fill="none"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 3, ease: [0.22, 1, 0.36, 1], delay: 0.9 }}
+          />
+          <motion.circle
+            cx="350" cy="350" r="185"
+            stroke="rgba(255,107,0,0.07)" strokeWidth="0.5" fill="none"
+            strokeDasharray="3 7"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 3, ease: [0.22, 1, 0.36, 1], delay: 1.3 }}
+          />
+        </svg>
+      </div>
+
+      {/* Rotating dashed rings */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[580px] w-[580px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{ border: '1px dashed rgba(201,168,76,0.09)' }}
+        variants={orbitSlow}
+        initial="initial"
+        animate="animate"
       />
-      <div
+      <motion.div
         aria-hidden="true"
-        className="absolute left-1/2 top-1/2 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/10 opacity-20"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{ border: '1px dashed rgba(255,107,0,0.07)' }}
+        variants={orbitReverse}
+        initial="initial"
+        animate="animate"
       />
 
+      {/* Content */}
       <div className="relative z-10 flex flex-col items-center gap-6 px-4 text-center">
 
         {/* ॐ — memoized, decoupled from all parent state */}
@@ -138,16 +217,19 @@ export const Hero = () => {
             </div>
           </motion.div>
         </motion.div>
-
       </div>
 
+      {/* Scroll indicator — vertical line + chevron */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gold/40"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
         aria-hidden="true"
       >
-        <ChevronDown size={28} />
+        <div className="flex flex-col items-center gap-1">
+          <div className="h-8 w-px bg-gradient-to-b from-transparent to-gold/40" />
+          <ChevronDown size={20} className="text-gold/40" />
+        </div>
       </motion.div>
     </section>
   )
