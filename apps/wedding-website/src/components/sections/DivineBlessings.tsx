@@ -174,8 +174,13 @@ const Marquee = ({ files, height, paused }: MarqueeProps) => {
       <div
         className="flex w-max items-end"
         style={{
-          // Only start scrolling once images are ready
-          animation: isReady ? 'divineMarquee 30s linear infinite' : 'none',
+          // Only start scrolling once images are ready.
+          // Longhand properties only — mixing the `animation` shorthand with
+          // `animationPlayState` makes React's style diffing conflict (warning).
+          animationName: isReady ? 'divineMarquee' : 'none',
+          animationDuration: '30s',
+          animationTimingFunction: 'linear',
+          animationIterationCount: 'infinite',
           animationPlayState: paused ? 'paused' : 'running',
           willChange: 'transform',
         }}

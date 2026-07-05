@@ -25,25 +25,36 @@ const useActiveSection = (): SectionId => {
   const [active, setActive] = useState<SectionId>('home')
 
   useEffect(() => {
-    const detect = (): SectionId => {
-      const trigger = window.innerHeight * 0.4
-      let best: SectionId = 'home'
-      let bestDist = Infinity
+    // Cached absolute section tops — measured only when the page's size
+    // actually changes (ResizeObserver on body), never during scroll.
+    // The scroll handler is pure arithmetic on window.scrollY — zero layout
+    // reads → no forced reflow while scrolling.
+    let offsets: { id: SectionId; top: number }[] = []
+
+    const measure = (): void => {
+      const y = window.scrollY
+      offsets = []
       for (const id of SECTION_IDS) {
         const el = document.getElementById(id)
         if (el === null) continue
-        const dist = trigger - el.getBoundingClientRect().top
+        offsets.push({ id, top: el.getBoundingClientRect().top + y })
+      }
+    }
+
+    const detect = (): SectionId => {
+      const line = window.scrollY + window.innerHeight * 0.4
+      let best: SectionId = 'home'
+      let bestDist = Infinity
+      for (const o of offsets) {
+        const dist = line - o.top
         if (dist >= 0 && dist < bestDist) {
           bestDist = dist
-          best = id
+          best = o.id
         }
       }
       return best
     }
 
-    // rAF-throttled: at most one detect() (5× getBoundingClientRect) per frame,
-    // batched to the frame boundary instead of firing on every scroll event.
-    // Prevents forced-layout storms during scroll (perf fix 2026-07-03).
     let rafId = 0
     let pending = false
     const onScroll = (): void => {
@@ -54,13 +65,28 @@ const useActiveSection = (): SectionId => {
         setActive(detect())
       })
     }
+
+    const ro = new ResizeObserver(() => {
+      measure()
+      setActive(detect())
+    })
+    ro.observe(document.body)
+
+    measure()
     window.addEventListener('scroll', onScroll, { passive: true })
-    const t1 = setTimeout(() => setActive(detect()), 400)
-    const t2 = setTimeout(() => setActive(detect()), 1500)
+    const t1 = setTimeout(() => {
+      measure()
+      setActive(detect())
+    }, 400)
+    const t2 = setTimeout(() => {
+      measure()
+      setActive(detect())
+    }, 1500)
 
     return () => {
       window.removeEventListener('scroll', onScroll)
       cancelAnimationFrame(rafId)
+      ro.disconnect()
       clearTimeout(t1)
       clearTimeout(t2)
     }

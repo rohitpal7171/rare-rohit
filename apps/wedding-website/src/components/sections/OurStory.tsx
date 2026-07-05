@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next'
 import { AnimatedSection } from '@shared/ui'
 import { cn, fadeInLeft, fadeInRight, fadeInUp, glowPulse, hoverLift } from '@shared/utils'
 
+import { OrnamentDivider } from '@app/components/ornaments/OrnamentDivider'
+import { SectionEdge } from '@app/components/ornaments/SectionEdge'
+
 const TIMELINE_KEYS = ['met', 'friendship', 'love', 'proposal', 'wedding'] as const
 
 const TIMELINE_ICONS: Record<(typeof TIMELINE_KEYS)[number], string> = {
@@ -19,7 +22,8 @@ export const OurStory = () => {
   const { t } = useTranslation('story')
 
   return (
-    <section id="our-story" className="section-padding bg-ivory">
+    <section id="our-story" className="section-padding relative bg-ivory">
+      <SectionEdge />
       <div className="section-container">
         <AnimatedSection className="mb-16 text-center" stagger>
           <motion.p variants={fadeInUp} className="font-script text-2xl text-gold">
@@ -28,8 +32,8 @@ export const OurStory = () => {
           <motion.h2 variants={fadeInUp} className="section-title mt-2 text-maroon">
             {t('title')}
           </motion.h2>
-          <motion.div variants={fadeInUp} className="divider-floral mt-4" aria-hidden="true">
-            🌸
+          <motion.div variants={fadeInUp}>
+            <OrnamentDivider tone="maroon" className="mt-4" />
           </motion.div>
         </AnimatedSection>
 
@@ -61,12 +65,20 @@ export const OurStory = () => {
                   )}
                 >
                   <div className="flex-1">
-                    {/* Use card-light on ivory background */}
+                    {/* card-light on ivory bg; card-ornate corners + a faint
+                        alternating tilt — like photos pinned in an album */}
                     <motion.div
-                      className={cn('card-light max-w-md', isLeft ? 'md:ml-auto' : 'md:mr-auto')}
+                      className={cn(
+                        'card-light card-ornate max-w-md',
+                        isLeft ? 'md:ml-auto' : 'md:mr-auto'
+                      )}
+                      style={{ rotate: isLeft ? -0.4 : 0.4 }}
                       {...hoverLift}
                     >
-                      <div className="mb-3 text-3xl" aria-hidden="true">
+                      <div
+                        className="medallion-gold mb-4 h-12 w-12 text-2xl"
+                        aria-hidden="true"
+                      >
                         {TIMELINE_ICONS[key]}
                       </div>
                       <div className="mb-2 font-script text-3xl text-gold">

@@ -15,6 +15,8 @@ import {
   staggerContainer,
 } from '@shared/utils'
 
+import { OrnamentDivider } from '@app/components/ornaments/OrnamentDivider'
+import { CEREMONY_ACCENTS } from '@app/config/ceremonyAccents'
 import { weddingConfig } from '@app/config/wedding.config'
 
 export const CeremoniesGrid = () => {
@@ -32,7 +34,9 @@ export const CeremoniesGrid = () => {
           <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-ivory/60">
             {t('subtitle')}
           </motion.p>
-          <motion.div variants={fadeInUp} className="gold-divider mt-4" aria-hidden="true" />
+          <motion.div variants={fadeInUp}>
+            <OrnamentDivider tone="gold" className="mt-4" />
+          </motion.div>
         </AnimatedSection>
 
         <motion.div
@@ -45,14 +49,24 @@ export const CeremoniesGrid = () => {
         >
           {CEREMONY_SLUGS.map((slug) => {
             const ceremony = weddingConfig.ceremonies[slug]
+            const accent = CEREMONY_ACCENTS[slug]
             return (
               <motion.div key={slug} variants={cardReveal3D} {...hoverLift}>
                 <Link to={`/ceremony/${slug}`} className="group block h-full">
-                  <div className="card-ornate card-divine flex h-full flex-col items-center gap-3 text-center transition-all duration-300 hover:border-gold/50 hover:shadow-gold">
-                    {/* Ornamental medallion — icon floats gently inside */}
+                  <div className="card-divine card-ornate flex h-full flex-col items-center gap-3 text-center transition-all duration-300 hover:border-gold/50 hover:shadow-gold">
+                    {/* Ceremony-coloured top hairline */}
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-8 top-0 h-0.5 rounded-full"
+                      style={{
+                        background: `linear-gradient(90deg, transparent, ${accent.hairline}, transparent)`,
+                      }}
+                    />
+                    {/* Ornamental medallion — ring tinted per ceremony, icon floats gently */}
                     <motion.div
                       className="medallion-gold h-16 w-16 text-3xl"
                       aria-hidden="true"
+                      style={{ borderColor: accent.border }}
                       variants={floatLoopSlow}
                       initial="initial"
                       animate="animate"
@@ -65,11 +79,7 @@ export const CeremoniesGrid = () => {
                     <p className="font-script text-base text-ivory/50">{t(`${slug}.tagline`)}</p>
                     <div className="gold-divider my-1" aria-hidden="true" />
                     <div className="flex items-center gap-1.5 font-body text-xs text-ivory/45">
-                      <CalendarDays
-                        size={12}
-                        className="shrink-0 text-gold/40"
-                        aria-hidden="true"
-                      />
+                      <CalendarDays size={12} className="shrink-0 text-gold/40" aria-hidden="true" />
                       <span>
                         {formatDate(ceremony.date, locale, {
                           day: 'numeric',

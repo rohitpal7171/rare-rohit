@@ -575,6 +575,23 @@
   .vignette-radial {
     background: radial-gradient(ellipse at 50% 40%, transparent 48%, rgba(15, 8, 32, 0.55) 100%);
   }
+
+  /* ── Jharokha arch frame — for couple / gallery photos ─────────────
+     Mughal-arch silhouette with a double gold ring.
+     Usage: wrap an <img> — the frame clips it to the arch. */
+  .frame-jharokha {
+    overflow: hidden;
+    border-radius: 999px 999px 1rem 1rem;
+    border: 1px solid rgba(201, 168, 76, 0.55);
+    outline: 1px solid rgba(201, 168, 76, 0.25);
+    outline-offset: 5px;
+  }
+  .frame-jharokha > img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
 }
 
 /* ============================================================
@@ -636,4 +653,19 @@
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
   }
+}
+
+/* ============================================================
+   MICRO-CRAFT (2026-07-03) — details nobody names, everybody feels
+   ============================================================ */
+
+/* Gold text selection — readable over both ivory and mandala sections */
+::selection {
+  background: rgba(201, 168, 76, 0.35);
+}
+
+/* Gold focus ring for keyboard navigation */
+:focus-visible {
+  outline: 2px solid rgba(201, 168, 76, 0.7);
+  outline-offset: 2px;
 }

@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next'
 import { AnimatedSection } from '@shared/ui'
 import { cn, fadeInUp, formatDate, scaleIn, staggerContainer } from '@shared/utils'
 
+import { OrnamentDivider } from '@app/components/ornaments/OrnamentDivider'
+import { SectionEdge } from '@app/components/ornaments/SectionEdge'
+import { CEREMONY_ACCENTS } from '@app/config/ceremonyAccents'
 import { weddingConfig } from '@app/config/wedding.config'
 
 const SCHEDULE_DAYS = [
@@ -39,7 +42,8 @@ export const Schedule = () => {
   const locale = isHindi ? 'hi' : 'en'
 
   return (
-    <section id="schedule" className="section-padding bg-ivory">
+    <section id="schedule" className="section-padding relative bg-ivory">
+      <SectionEdge />
       <div className="section-container">
         <AnimatedSection className="mb-12 text-center" stagger>
           <motion.h2 variants={fadeInUp} className="section-title text-maroon">
@@ -48,8 +52,8 @@ export const Schedule = () => {
           <motion.p variants={fadeInUp} className="section-subtitle mt-2 text-maroon/60">
             {t('subtitle')}
           </motion.p>
-          <motion.div variants={fadeInUp} className="divider-floral mt-4" aria-hidden="true">
-            🌼
+          <motion.div variants={fadeInUp}>
+            <OrnamentDivider tone="maroon" className="mt-4" />
           </motion.div>
         </AnimatedSection>
 
@@ -98,7 +102,10 @@ export const Schedule = () => {
                 </div>
 
                 {'isLagun' in day ? (
-                  <div className="flex items-start gap-2">
+                  <div
+                    className="flex items-start gap-2 border-l-2 pl-2.5"
+                    style={{ borderColor: 'rgba(201, 168, 76, 0.55)' }}
+                  >
                     <span className="mt-0.5 text-xl" aria-hidden="true">
                       🪔
                     </span>
@@ -112,7 +119,11 @@ export const Schedule = () => {
                     {day.ceremonies.map((slug) => {
                       const ceremony = weddingConfig.ceremonies[slug]
                       return (
-                        <div key={slug} className="flex items-start gap-2">
+                        <div
+                          key={slug}
+                          className="flex items-start gap-2 border-l-2 pl-2.5"
+                          style={{ borderColor: CEREMONY_ACCENTS[slug].border }}
+                        >
                           <span className="mt-0.5 text-xl" aria-hidden="true">
                             {ceremony.icon}
                           </span>
