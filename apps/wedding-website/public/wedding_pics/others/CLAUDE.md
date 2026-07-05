@@ -1,4 +1,5 @@
 # CLAUDE.md — public/wedding_pics/others/
+
 # Last updated: 2026-06-14
 
 ## Purpose

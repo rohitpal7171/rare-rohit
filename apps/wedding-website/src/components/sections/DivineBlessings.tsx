@@ -24,7 +24,7 @@ import { fadeInUp } from '@shared/utils'
 // ─── Manifest loader ──────────────────────────────────────────────────────────
 
 const MANIFEST_URL = '/wedding_pics/deities/manifest.json'
-const BASE_PATH    = '/wedding_pics/deities/'
+const BASE_PATH = '/wedding_pics/deities/'
 
 type LoadState = 'loading' | 'ready' | 'error'
 
@@ -56,10 +56,10 @@ const useImgHeight = (): number => {
   useEffect(() => {
     const calc = (): void => {
       const w = window.innerWidth
-      if      (w < 480)  setH(130)
-      else if (w < 768)  setH(170)
+      if (w < 480) setH(130)
+      else if (w < 768) setH(170)
       else if (w < 1280) setH(220)
-      else               setH(280)
+      else setH(280)
     }
     calc()
     window.addEventListener('resize', calc)
@@ -79,7 +79,7 @@ interface DeityImageProps {
 
 const DeityImage = ({ file, index, height, onLoad }: DeityImageProps) => (
   <motion.div
-    className="relative shrink-0 flex items-end justify-center px-3"
+    className="relative flex shrink-0 items-end justify-center px-3"
     style={{ height: height + 24 }}
     animate={{ y: [0, -12, 0] }}
     transition={{
@@ -180,8 +180,8 @@ const Marquee = ({ files, height, paused }: MarqueeProps) => {
           willChange: 'transform',
         }}
       >
-        {track('a', true)}   {/* count loads only on first track */}
-        {track('b', false)}  {/* second track is a duplicate — no double counting */}
+        {track('a', true)} {/* count loads only on first track */}
+        {track('b', false)} {/* second track is a duplicate — no double counting */}
       </div>
     </motion.div>
   )
@@ -190,10 +190,10 @@ const Marquee = ({ files, height, paused }: MarqueeProps) => {
 // ─── Main section ─────────────────────────────────────────────────────────────
 
 export const DivineBlessings = () => {
-  const { t }              = useTranslation('common')
-  const { files, state }   = useDeities()
+  const { t } = useTranslation('common')
+  const { files, state } = useDeities()
   const [paused, setPaused] = useState(false)
-  const height             = useImgHeight()
+  const height = useImgHeight()
 
   return (
     <>
@@ -204,10 +204,7 @@ export const DivineBlessings = () => {
         }
       `}</style>
 
-      <section
-        id="divine-invites"
-        className="overflow-visible bg-white py-16 sm:py-20 lg:py-24"
-      >
+      <section id="divine-invites" className="overflow-visible bg-white py-16 sm:py-20 lg:py-24">
         {/* Header always renders immediately — no flash */}
         <div className="section-container mb-12 text-center">
           <AnimatedSection stagger>
@@ -217,7 +214,10 @@ export const DivineBlessings = () => {
             <motion.h2 variants={fadeInUp} className="section-title mt-2 text-maroon">
               {t('divineInvites.title')}
             </motion.h2>
-            <motion.p variants={fadeInUp} className="mt-3 font-body text-base text-maroon/60 sm:text-lg">
+            <motion.p
+              variants={fadeInUp}
+              className="mt-3 font-body text-base text-maroon/60 sm:text-lg"
+            >
               {t('divineInvites.subtitle')}
             </motion.p>
             <motion.div variants={fadeInUp} className="gold-divider mt-4" />
@@ -229,14 +229,14 @@ export const DivineBlessings = () => {
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           onTouchStart={() => setPaused(true)}
-          onTouchEnd={() => { setTimeout(() => setPaused(false), 2000) }}
+          onTouchEnd={() => {
+            setTimeout(() => setPaused(false), 2000)
+          }}
           className="cursor-grab active:cursor-grabbing"
           style={{ paddingTop: '20px', paddingBottom: '16px' }}
         >
           {state === 'loading' && <MarqueeSkeleton height={height} />}
-          {state === 'ready'   && (
-            <Marquee files={files} height={height} paused={paused} />
-          )}
+          {state === 'ready' && <Marquee files={files} height={height} paused={paused} />}
           {/* error state → renders nothing, section still shows header */}
         </div>
 

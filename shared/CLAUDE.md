@@ -1,4 +1,5 @@
 # CLAUDE.md — shared/
+
 # Last updated: 2026-05-24
 
 ## Purpose
@@ -26,6 +27,7 @@ shared/
 @shared/ui     → shared/ui/index.ts
 @shared/utils  → shared/utils/index.ts
 ```
+
 TypeScript paths in `tsconfig.base.json` provide full type safety + autocomplete.
 
 ## Rules
@@ -42,11 +44,13 @@ TypeScript paths in `tsconfig.base.json` provide full type safety + autocomplete
 ## When to Add Something to shared/
 
 ✅ Add to shared/ when:
+
 - Used by 2+ apps
 - Has zero app-specific business logic
 - Has a stable API unlikely to change frequently
 
 ❌ Keep in apps/ when:
+
 - References `weddingConfig` or any app-specific data
 - Only used in one app
 - Subject to frequent app-specific changes

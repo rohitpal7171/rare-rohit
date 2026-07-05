@@ -1,4 +1,5 @@
 # CLAUDE.md — apps/wedding-website/src/
+
 # Last updated: 2026-05-29
 
 ## Directory Map
@@ -43,10 +44,11 @@ src/
 ## styles/index.css
 
 Contains:
+
 1. Tailwind directives: `@tailwind base`, `@tailwind components`, `@tailwind utilities`
 2. CSS custom properties on `:root` — mirrors all Tailwind design tokens for JS/CSS use
 3. Font face declarations (Google Fonts are loaded via `<link>` in `index.html`)
-4. Global base styles (html, body, *, scrollbar)
+4. Global base styles (html, body, \*, scrollbar)
 5. Custom utility classes that can't be done in Tailwind plugin
 
 **Note:** CSS custom properties here and Tailwind tokens in `tailwind.config.ts` must stay in sync.

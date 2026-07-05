@@ -1,18 +1,19 @@
 # CLAUDE.md — shared/hooks/
+
 # Last updated: 2026-05-29
 
 ## Hooks in This Folder
 
-| File                   | Export              | Purpose                                        |
-|------------------------|---------------------|------------------------------------------------|
-| `useAudioPlayer.ts`    | `useAudioPlayer`    | Full-featured HTML5 audio controller           |
-| `useCountdown.ts`      | `useCountdown`      | Days/hours/minutes/seconds until target date   |
-| `useScrollAnimation.ts`| `useScrollAnimation`| IntersectionObserver-based inView detection    |
-| `useLocalStorage.ts`   | `useLocalStorage`   | Typed localStorage with SSR safety             |
-| `useMediaQuery.ts`     | `useMediaQuery`     | Reactive breakpoint detection                  |
-| `useTheme.ts`          | `useTheme`          | Dark/light toggle — INACTIVE (kept for future) |
-| `useWishes.ts`         | —                   | **REMOVED** — stub file only                  |
-| `index.ts`             | —                   | Barrel exports — import from here only         |
+| File                    | Export               | Purpose                                        |
+| ----------------------- | -------------------- | ---------------------------------------------- |
+| `useAudioPlayer.ts`     | `useAudioPlayer`     | Full-featured HTML5 audio controller           |
+| `useCountdown.ts`       | `useCountdown`       | Days/hours/minutes/seconds until target date   |
+| `useScrollAnimation.ts` | `useScrollAnimation` | IntersectionObserver-based inView detection    |
+| `useLocalStorage.ts`    | `useLocalStorage`    | Typed localStorage with SSR safety             |
+| `useMediaQuery.ts`      | `useMediaQuery`      | Reactive breakpoint detection                  |
+| `useTheme.ts`           | `useTheme`           | Dark/light toggle — INACTIVE (kept for future) |
+| `useWishes.ts`          | —                    | **REMOVED** — stub file only                   |
+| `index.ts`              | —                    | Barrel exports — import from here only         |
 
 ---
 
@@ -22,33 +23,37 @@
 **Used by:** `AmbientPlayer.tsx`, `CeremonyMusicPlayer.tsx`
 
 ### Audio Cache Architecture
+
 ```ts
 // Module-level cache — ONE Audio element per src, never created twice
 const audioCache = new Map<string, HTMLAudioElement>()
 ```
+
 - Cache persists for the browser session
 - On HMR in dev: cache survives, which is expected
 - On page refresh: cache is cleared
 - Prevents double-download when two components use same src
 
 ### Options
+
 ```ts
 interface UseAudioPlayerOptions {
-  startMuted?: boolean      // default: false
-  loop?: boolean            // default: true
-  initialVolume?: number    // default: 0.6
+  startMuted?: boolean // default: false
+  loop?: boolean // default: true
+  initialVolume?: number // default: 0.6
 }
 ```
 
 ### Return Value
+
 ```ts
 interface UseAudioPlayerReturn {
   isPlaying: boolean
   isMuted: boolean
   volume: number
-  isLoaded: boolean         // true when 'canplay' event fires
-  hasError: boolean         // true when audio fails — play() becomes a no-op
-  play: () => void          // muted fallback if browser blocks unmuted play
+  isLoaded: boolean // true when 'canplay' event fires
+  hasError: boolean // true when audio fails — play() becomes a no-op
+  play: () => void // muted fallback if browser blocks unmuted play
   pause: () => void
   toggle: () => void
   toggleMute: () => void
@@ -58,6 +63,7 @@ interface UseAudioPlayerReturn {
 ```
 
 ### play() Behaviour
+
 ```
 play() called
   → if hasError: return immediately (no-op)
@@ -68,16 +74,19 @@ play() called
         → success: setIsPlaying(true) [muted]
         → fails again: setHasError(true)
 ```
+
 **Critical:** Once `hasError` is true, the button is permanently disabled for this session.
 Only way to recover: page refresh (clears audio cache).
 
 ### Important: Why We Don't Call play() on Mount
+
 Browser autoplay policy requires a user gesture before unmuted play.
 Calling `play()` immediately on mount → browser blocks → retry muted → if muted also fails (some strict browsers) → `hasError = true` → button disabled forever.
 
 **Correct pattern:** Wait for `click` or `touchstart`, then call `play()` — see `AmbientPlayer.tsx`.
 
 ### Event Listeners Managed by Hook
+
 - `canplay` → setIsLoaded(true)
 - `error` → setHasError(true), setIsLoaded(false)
 - `ended` → setIsPlaying(false) (only when loop=false)

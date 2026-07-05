@@ -2,6 +2,8 @@ import { lazy, Suspense, useEffect } from 'react'
 
 import { useLocation } from 'react-router-dom'
 
+import { cn } from '@shared/utils'
+
 import { AmbientPlayer } from '@app/components/layout/AmbientPlayer'
 import { Footer } from '@app/components/layout/Footer'
 import { Navbar } from '@app/components/layout/Navbar'
@@ -38,11 +40,24 @@ const DivineBlessings = lazy(() =>
 // Reception → no reception
 // WeddingParty → replaced by DivineBlessings (2026-05-30)
 
-// Minimal section skeleton — just keeps layout stable while lazy chunks load
-const SectionSkeleton = () => (
-  <div className="section-padding mandala-bg" aria-hidden="true">
+// Minimal section skeleton — keeps layout stable while lazy chunks load.
+// tone matches the incoming section's background so there is no dark/light flash.
+interface SectionSkeletonProps {
+  tone?: 'dark' | 'light'
+}
+
+const SectionSkeleton = ({ tone = 'dark' }: SectionSkeletonProps) => (
+  <div
+    className={cn('section-padding', tone === 'dark' ? 'mandala-bg' : 'ivory-bg')}
+    aria-hidden="true"
+  >
     <div className="section-container">
-      <div className="mx-auto h-8 w-48 animate-pulse rounded-full bg-gold/10" />
+      <div
+        className={cn(
+          'mx-auto h-8 w-48 animate-pulse rounded-full',
+          tone === 'dark' ? 'bg-gold/10' : 'bg-maroon/10'
+        )}
+      />
     </div>
   </div>
 )
@@ -85,19 +100,19 @@ export const Home = () => {
         <Suspense fallback={<SectionSkeleton />}>
           <Blessings />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
+        <Suspense fallback={<SectionSkeleton tone="light" />}>
           <OurStory />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <CeremoniesGrid />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
+        <Suspense fallback={<SectionSkeleton tone="light" />}>
           <Schedule />
         </Suspense>
         <Suspense fallback={<SectionSkeleton />}>
           <Gallery />
         </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
+        <Suspense fallback={<SectionSkeleton tone="light" />}>
           <DivineBlessings />
         </Suspense>
       </main>

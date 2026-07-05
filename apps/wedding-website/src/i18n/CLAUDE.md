@@ -1,31 +1,32 @@
 # CLAUDE.md — apps/wedding-website/src/i18n/
+
 # Last updated: 2026-05-29
 
 ## Files
 
-| File                  | Purpose                                                          |
-|-----------------------|------------------------------------------------------------------|
-| `config.ts`           | i18next init — language detection, namespaces, fallback          |
-| `react-i18next.d.ts`  | Declaration merging — types `t()` based on EN JSON shapes        |
-| `locales/en/`         | English translations (9 JSON files)                              |
-| `locales/hi/`         | Hindi translations (9 JSON files — identical key structure)      |
+| File                 | Purpose                                                     |
+| -------------------- | ----------------------------------------------------------- |
+| `config.ts`          | i18next init — language detection, namespaces, fallback     |
+| `react-i18next.d.ts` | Declaration merging — types `t()` based on EN JSON shapes   |
+| `locales/en/`        | English translations (9 JSON files)                         |
+| `locales/hi/`        | Hindi translations (9 JSON files — identical key structure) |
 
 ---
 
 ## Namespaces & Files
 
-| Namespace    | en/ file           | hi/ file           | Status         |
-|--------------|--------------------|--------------------|----------------|
-| `common`     | common.json        | common.json        | Active         |
-| `home`       | home.json          | home.json          | Active         |
-| `story`      | story.json         | story.json         | Active         |
-| `ceremonies` | ceremonies.json    | ceremonies.json    | Active         |
-| `schedule`   | schedule.json      | schedule.json      | Placeholder    |
-| `gallery`    | gallery.json       | gallery.json       | Placeholder    |
-| `party`      | party.json         | party.json         | Placeholder    |
-| `travel`     | travel.json        | travel.json        | Section inactive|
-| `rsvp`       | rsvp.json          | rsvp.json          | Section inactive|
-| `faq`        | faq.json           | faq.json           | Active         |
+| Namespace    | en/ file        | hi/ file        | Status           |
+| ------------ | --------------- | --------------- | ---------------- |
+| `common`     | common.json     | common.json     | Active           |
+| `home`       | home.json       | home.json       | Active           |
+| `story`      | story.json      | story.json      | Active           |
+| `ceremonies` | ceremonies.json | ceremonies.json | Active           |
+| `schedule`   | schedule.json   | schedule.json   | Placeholder      |
+| `gallery`    | gallery.json    | gallery.json    | Placeholder      |
+| `party`      | party.json      | party.json      | Placeholder      |
+| `travel`     | travel.json     | travel.json     | Section inactive |
+| `rsvp`       | rsvp.json       | rsvp.json       | Section inactive |
+| `faq`        | faq.json        | faq.json        | Active           |
 
 **Removed namespaces:** `wishes` (removed 2026-05-29 with WishesWall feature)
 Locale files `en/wishes.json` and `hi/wishes.json` still exist on disk but are not loaded.
@@ -40,11 +41,13 @@ fallbackLng: 'en'   ← DEV default (change to 'hi' before production launch)
 ```
 
 ### Language Detection Order
+
 1. `localStorage` key: `i18nextLng`
 2. Browser `navigator.language`
 3. Fallback to `fallbackLng`
 
 ### Language Persistence
+
 User's choice saved automatically to `localStorage` key `i18nextLng`.
 
 ---
@@ -52,20 +55,23 @@ User's choice saved automatically to `localStorage` key `i18nextLng`.
 ## Typed t() — How It Works
 
 `react-i18next.d.ts` uses TypeScript declaration merging:
+
 ```ts
 declare module 'i18next' {
   interface CustomTypeOptions {
     resources: {
       common: typeof import('./locales/en/common.json')
-      home:   typeof import('./locales/en/home.json')
+      home: typeof import('./locales/en/home.json')
       // ... etc
     }
   }
 }
 ```
+
 This gives full autocomplete on `t('key.subkey')` and catches typos at compile time.
 
 **If `t()` loses autocomplete or shows TypeScript errors:**
+
 - Check that EN JSON files are valid JSON
 - Check that `react-i18next.d.ts` imports match actual file paths
 - Check both `en/` and `hi/` have identical key structures
@@ -92,6 +98,7 @@ This gives full autocomplete on `t('key.subkey')` and catches typos at compile t
 ```
 
 Example:
+
 ```json
 // en/common.json
 { "backToCeremonies": "Back to Ceremonies" }

@@ -48,12 +48,8 @@ const FlipCard = ({ slug, index }: FlipCardProps) => {
           <span className="text-3xl" aria-hidden="true">
             {icon}
           </span>
-          <p className="font-body text-sm font-medium text-maroon">
-            {question}
-          </p>
-          <p className="font-body text-xs text-maroon/60">
-            {tc('ceremony.flipReveal')}
-          </p>
+          <p className="font-body text-sm font-medium text-maroon">{question}</p>
+          <p className="font-body text-xs text-maroon/60">{tc('ceremony.flipReveal')}</p>
         </div>
 
         {/* Back — answer */}

@@ -1,48 +1,53 @@
 # CLAUDE.md — apps/wedding-website/src/components/sections/
+
 # Last updated: 2026-05-30
 
 ## Active Sections
 
-| File                 | Section ID       | Background   | i18n NS      | Lazy | Status  |
-|----------------------|------------------|--------------|--------------|------|---------|
-| `Hero.tsx`           | `#home`          | mandala-bg   | `home`       | No   | ACTIVE  |
-| `Blessings.tsx`      | `#blessings`     | mandala-bg   | `home`       | Yes  | ACTIVE  |
-| `OurStory.tsx`       | `#our-story`     | bg-ivory     | `story`      | Yes  | ACTIVE  |
-| `CeremoniesGrid.tsx` | `#ceremonies`    | mandala-bg   | `ceremonies` | Yes  | ACTIVE  |
-| `Schedule.tsx`       | `#schedule`      | bg-ivory     | `schedule`   | Yes  | ACTIVE  |
-| `Gallery.tsx`        | `#gallery`       | mandala-bg   | `gallery`    | Yes  | ACTIVE  |
-| `DivineBlessings.tsx`| `#divine-invites`| bg-white     | `common`     | Yes  | ACTIVE  |
+| File                  | Section ID        | Background | i18n NS      | Lazy | Status |
+| --------------------- | ----------------- | ---------- | ------------ | ---- | ------ |
+| `Hero.tsx`            | `#home`           | mandala-bg | `home`       | No   | ACTIVE |
+| `Blessings.tsx`       | `#blessings`      | mandala-bg | `home`       | Yes  | ACTIVE |
+| `OurStory.tsx`        | `#our-story`      | bg-ivory   | `story`      | Yes  | ACTIVE |
+| `CeremoniesGrid.tsx`  | `#ceremonies`     | mandala-bg | `ceremonies` | Yes  | ACTIVE |
+| `Schedule.tsx`        | `#schedule`       | bg-ivory   | `schedule`   | Yes  | ACTIVE |
+| `Gallery.tsx`         | `#gallery`        | mandala-bg | `gallery`    | Yes  | ACTIVE |
+| `DivineBlessings.tsx` | `#divine-invites` | bg-white   | `common`     | Yes  | ACTIVE |
 
 ### Background alternation rule
+
 Dark → Light → Dark → Light → Dark → Dark (DivineBlessings breaks the strict rule with white bg — acceptable as final section before Footer)
 
 ---
 
 ## Inactive Sections (files kept, not rendered)
 
-| File                 | Replaced by / Reason               |
-|----------------------|------------------------------------|
-| `WeddingParty.tsx`   | Replaced by `DivineBlessings.tsx`  |
-| `WishesWall.tsx`     | Feature removed (stub only)        |
-| `OurStoryV2.tsx`     | Dark bg variant, swap in if needed |
-| `RSVP.tsx`           | No RSVP on this wedding            |
-| `Travel.tsx`         | Travel info is private             |
-| `Reception.tsx`      | No reception ceremony              |
+| File               | Replaced by / Reason               |
+| ------------------ | ---------------------------------- |
+| `WeddingParty.tsx` | Replaced by `DivineBlessings.tsx`  |
+| `WishesWall.tsx`   | Feature removed (stub only)        |
+| `OurStoryV2.tsx`   | Dark bg variant, swap in if needed |
+| `RSVP.tsx`         | No RSVP on this wedding            |
+| `Travel.tsx`       | Travel info is private             |
+| `Reception.tsx`    | No reception ceremony              |
 
 ---
 
 ## DivineBlessings.tsx — Key Notes
 
 **Manifest:** `public/wedding_pics/deities/manifest.json`
+
 ```json
 { "deities": ["ganesha.png", "shiva.png", ...] }
 ```
+
 - Add/remove filenames from the array to control which images appear
 - Supports PNG, JPG, GIF, WebP
 - Section renders nothing if manifest is missing or empty
 - Uses `common` namespace keys: `divineInvites.eyebrow`, `divineInvites.title`, `divineInvites.subtitle`
 
 **Marquee:**
+
 - Two identical track divs side by side (`track-A` + `track-B`)
 - CSS `@keyframes divineMarquee` animates wrapper left by 50% (= one track width)
 - At -50%, `track-B` is exactly where `track-A` started → seamless infinite loop

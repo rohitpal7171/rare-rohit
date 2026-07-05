@@ -1,9 +1,11 @@
 # CLAUDE.md — apps/wedding-website/
+
 # Last updated: 2026-05-29
 
 ## App Identity
 
 Indian wedding website for **Rohit Singh Pal & Priti Pal**.
+
 - **Pheras (main event):** 26 November 2026, 9:00 AM — Kokapur, Udi Modh, Uttar Pradesh
 - **Baraat:** 25 November 2026, 4:00 PM — Kokapur, Udi Modh, Uttar Pradesh
 - **Lagun:** 24 November 2026 — Gwalior, Madhya Pradesh
@@ -17,25 +19,25 @@ Indian wedding website for **Rohit Singh Pal & Priti Pal**.
 
 ## Key Files — Single Sources of Truth
 
-| File                          | Purpose                                      |
-|-------------------------------|----------------------------------------------|
-| `src/config/wedding.config.ts`| ALL personal details (names, dates, venues)  |
-| `src/config/types.ts`         | TypeScript interfaces for wedding domain     |
-| `src/i18n/config.ts`          | i18next init (fallbackLng: 'en' → 'hi' prod) |
-| `src/i18n/react-i18next.d.ts` | Typed t() via declaration merging (EN basis) |
-| `src/router/index.tsx`        | All routes (createBrowserRouter)             |
-| `tailwind.config.ts`          | Design tokens + component classes            |
-| `src/styles/index.css`        | CSS custom properties mirroring Tailwind     |
+| File                           | Purpose                                      |
+| ------------------------------ | -------------------------------------------- |
+| `src/config/wedding.config.ts` | ALL personal details (names, dates, venues)  |
+| `src/config/types.ts`          | TypeScript interfaces for wedding domain     |
+| `src/i18n/config.ts`           | i18next init (fallbackLng: 'en' → 'hi' prod) |
+| `src/i18n/react-i18next.d.ts`  | Typed t() via declaration merging (EN basis) |
+| `src/router/index.tsx`         | All routes (createBrowserRouter)             |
+| `tailwind.config.ts`           | Design tokens + component classes            |
+| `src/styles/index.css`         | CSS custom properties mirroring Tailwind     |
 
 ---
 
 ## Routes
 
-| Path               | Component      | Notes                                     |
-|--------------------|----------------|-------------------------------------------|
-| `/`                | `Home`         | All sections stacked vertically           |
-| `/ceremony/:slug`  | `CeremonyPage` | Slug validated in component               |
-| `*`                | `NotFound`     | 404 fallback                              |
+| Path              | Component      | Notes                           |
+| ----------------- | -------------- | ------------------------------- |
+| `/`               | `Home`         | All sections stacked vertically |
+| `/ceremony/:slug` | `CeremonyPage` | Slug validated in component     |
+| `*`               | `NotFound`     | 404 fallback                    |
 
 Valid slugs: `haldi` | `mehendi` | `sangeet` | `baraat` | `pheras` | `vidaai` | `reception`
 Note: `reception` slug exists but Reception ceremony is not shown (no reception event).
@@ -55,18 +57,18 @@ Note: `reception` slug exists but Reception ceremony is not shown (no reception 
 
 ## i18n Namespaces
 
-| Namespace    | File              | Used in                               |
-|--------------|-------------------|---------------------------------------|
-| `common`     | common.json       | Navbar, Footer, shared buttons/labels |
-| `home`       | home.json         | Hero, Blessings sections              |
-| `story`      | story.json        | OurStory section                      |
-| `ceremonies` | ceremonies.json   | CeremoniesGrid + all ceremony pages   |
-| `schedule`   | schedule.json     | Schedule section                      |
-| `gallery`    | gallery.json      | Gallery section                       |
-| `party`      | party.json        | WeddingParty section                  |
-| `travel`     | travel.json       | Travel section (inactive)             |
-| `rsvp`       | rsvp.json         | RSVP section (inactive)               |
-| `faq`        | faq.json          | FAQ section                           |
+| Namespace    | File            | Used in                               |
+| ------------ | --------------- | ------------------------------------- |
+| `common`     | common.json     | Navbar, Footer, shared buttons/labels |
+| `home`       | home.json       | Hero, Blessings sections              |
+| `story`      | story.json      | OurStory section                      |
+| `ceremonies` | ceremonies.json | CeremoniesGrid + all ceremony pages   |
+| `schedule`   | schedule.json   | Schedule section                      |
+| `gallery`    | gallery.json    | Gallery section                       |
+| `party`      | party.json      | WeddingParty section                  |
+| `travel`     | travel.json     | Travel section (inactive)             |
+| `rsvp`       | rsvp.json       | RSVP section (inactive)               |
+| `faq`        | faq.json        | FAQ section                           |
 
 Both `en/` and `hi/` must have IDENTICAL key structure at all times.
 
@@ -80,6 +82,7 @@ Both `en/` and `hi/` must have IDENTICAL key structure at all times.
   command = "npm run build"
   publish = "dist"
 ```
+
 - Node version: 20
 - SPA routing: handled by `public/_redirects` (`/* /index.html 200`)
 - Environment vars: set in Netlify dashboard (never in committed code)

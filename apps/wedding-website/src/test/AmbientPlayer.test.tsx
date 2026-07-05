@@ -8,14 +8,22 @@ vi.mock('@shared/utils', () => ({
   cn: (...args: unknown[]) => args.filter(Boolean).join(' '),
 }))
 
-const mockPlay       = vi.fn()
-const mockToggle     = vi.fn()
+const mockPlay = vi.fn()
+const mockToggle = vi.fn()
 const mockToggleMute = vi.fn()
 
 const defaultState = {
-  isPlaying: false, isMuted: false, isLoaded: false, hasError: false, volume: 0.3,
-  play: mockPlay, pause: vi.fn(), toggle: mockToggle,
-  toggleMute: mockToggleMute, setVolume: vi.fn(), seek: vi.fn(),
+  isPlaying: false,
+  isMuted: false,
+  isLoaded: false,
+  hasError: false,
+  volume: 0.3,
+  play: mockPlay,
+  pause: vi.fn(),
+  toggle: mockToggle,
+  toggleMute: mockToggleMute,
+  setVolume: vi.fn(),
+  seek: vi.fn(),
 }
 
 let hookState = { ...defaultState }
@@ -86,7 +94,9 @@ describe('AmbientPlayer — rendering', () => {
 describe('AmbientPlayer — first interaction triggers play', () => {
   it('does NOT call play() without any user interaction', () => {
     render(React.createElement(AmbientPlayer))
-    act(() => { vi.advanceTimersByTime(10_000) })
+    act(() => {
+      vi.advanceTimersByTime(10_000)
+    })
     expect(mockPlay).not.toHaveBeenCalled()
   })
 
@@ -123,20 +133,26 @@ describe('AmbientPlayer — 300ms unmute after first interaction', () => {
   it('does NOT call toggleMute() before 300ms', () => {
     render(React.createElement(AmbientPlayer))
     fireEvent.click(document)
-    act(() => { vi.advanceTimersByTime(299) })
+    act(() => {
+      vi.advanceTimersByTime(299)
+    })
     expect(mockToggleMute).not.toHaveBeenCalled()
   })
 
   it('calls toggleMute() exactly at 300ms after first interaction', () => {
     render(React.createElement(AmbientPlayer))
     fireEvent.click(document)
-    act(() => { vi.advanceTimersByTime(300) })
+    act(() => {
+      vi.advanceTimersByTime(300)
+    })
     expect(mockToggleMute).toHaveBeenCalledTimes(1)
   })
 
   it('does NOT call toggleMute() without any interaction even after 300ms', () => {
     render(React.createElement(AmbientPlayer))
-    act(() => { vi.advanceTimersByTime(300) })
+    act(() => {
+      vi.advanceTimersByTime(300)
+    })
     expect(mockToggleMute).not.toHaveBeenCalled()
   })
 })

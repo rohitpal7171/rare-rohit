@@ -1,4 +1,5 @@
 # CLAUDE.md — apps/
+
 # Last updated: 2026-06-14
 
 ## Purpose
@@ -7,9 +8,9 @@ Workspace apps directory. Each subdirectory is one deployable application.
 
 ## Apps
 
-| Directory         | Description                           | Status   |
-|-------------------|---------------------------------------|----------|
-| `wedding-website/`| Rohit & Priti wedding website (React) | Active   |
+| Directory          | Description                           | Status |
+| ------------------ | ------------------------------------- | ------ |
+| `wedding-website/` | Rohit & Priti wedding website (React) | Active |
 
 This is a monorepo. Only one app exists today — `wedding-website`.
 Do not create sibling apps here without first updating the root `package.json` workspaces field.

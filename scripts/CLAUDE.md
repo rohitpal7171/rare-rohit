@@ -1,11 +1,12 @@
 # CLAUDE.md — scripts/
+
 # Last updated: 2026-06-14
 
 ## Files
 
-| File                      | Purpose                                                        |
-|---------------------------|----------------------------------------------------------------|
-| `pre-commit-check.mjs`    | Pre-push validation — must pass before every `git push`        |
+| File                   | Purpose                                                 |
+| ---------------------- | ------------------------------------------------------- |
+| `pre-commit-check.mjs` | Pre-push validation — must pass before every `git push` |
 
 ## pre-commit-check.mjs
 
@@ -29,6 +30,7 @@ npm run pre-push
 ## Extending the Script
 
 To add a new validation step:
+
 1. Open `scripts/pre-commit-check.mjs`
 2. Add a new async function following the existing pattern (returns `{ pass, message }`)
 3. Call it in the main `runChecks()` array

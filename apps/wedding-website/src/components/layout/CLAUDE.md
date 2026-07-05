@@ -1,17 +1,18 @@
 # CLAUDE.md — apps/wedding-website/src/components/layout/
+
 # Last updated: 2026-05-30
 
 ## Components in This Folder
 
-| File                  | Status   | Purpose                                          |
-|-----------------------|----------|--------------------------------------------------|
-| `AmbientPlayer.tsx`   | ACTIVE   | Floating ॐ button + ambient music player         |
-| `Navbar.tsx`          | ACTIVE   | Fixed top navigation bar                         |
-| `Footer.tsx`          | ACTIVE   | Footer with hashtag, share button, credits       |
-| `PageWrapper.tsx`     | ACTIVE   | Scroll-to-top + page transition + color flash    |
-| `ScrollProgress.tsx`  | ACTIVE   | Gold progress line at top of viewport            |
-| `ShareButton.tsx`     | ACTIVE   | Web Share API + clipboard fallback button        |
-| `ThemeToggle.tsx`     | INACTIVE | Light/dark toggle — kept, not rendered           |
+| File                 | Status   | Purpose                                       |
+| -------------------- | -------- | --------------------------------------------- |
+| `AmbientPlayer.tsx`  | ACTIVE   | Floating ॐ button + ambient music player      |
+| `Navbar.tsx`         | ACTIVE   | Fixed top navigation bar                      |
+| `Footer.tsx`         | ACTIVE   | Footer with hashtag, share button, credits    |
+| `PageWrapper.tsx`    | ACTIVE   | Scroll-to-top + page transition + color flash |
+| `ScrollProgress.tsx` | ACTIVE   | Gold progress line at top of viewport         |
+| `ShareButton.tsx`    | ACTIVE   | Web Share API + clipboard fallback button     |
+| `ThemeToggle.tsx`    | INACTIVE | Light/dark toggle — kept, not rendered        |
 
 ---
 
@@ -22,6 +23,7 @@
 **Position:** `fixed bottom-6 left-6 z-40`
 
 ### Current Autoplay Strategy (as of 2026-05-29)
+
 Browser autoplay policy blocks unmuted audio without user gesture.
 Solution: start muted, unmute on first real interaction.
 
@@ -39,36 +41,39 @@ Subsequent ॐ button clicks
 ```
 
 ### Critical Rules for AmbientPlayer
+
 - **DO NOT add `scroll` to triggers** — scroll fires on programmatic page scrolls, triggers audio before real user interaction
 - **DO NOT use `once: true`** on multiple event types — leads to orphaned listeners
 - **DO NOT call `play()` on mount** without a user gesture — sets `hasError: true`, permanently disables the button
 - **startedRef guard** in onClick is essential — prevents toggle() from pausing audio that handleFirstInteraction just started
 
 ### useAudioPlayer Hook API
+
 ```ts
 const {
-  isPlaying,    // boolean — is audio currently playing
-  isMuted,      // boolean — is audio muted
-  volume,       // number — 0 to 1
-  isLoaded,     // boolean — audio canplay event fired
-  hasError,     // boolean — audio failed entirely (disables button)
-  play,         // () => void — plays (muted fallback if browser blocks)
-  pause,        // () => void
-  toggle,       // () => void — play if paused, pause if playing
-  toggleMute,   // () => void
-  setVolume,    // (v: number) => void
-  seek,         // (seconds: number) => void
+  isPlaying, // boolean — is audio currently playing
+  isMuted, // boolean — is audio muted
+  volume, // number — 0 to 1
+  isLoaded, // boolean — audio canplay event fired
+  hasError, // boolean — audio failed entirely (disables button)
+  play, // () => void — plays (muted fallback if browser blocks)
+  pause, // () => void
+  toggle, // () => void — play if paused, pause if playing
+  toggleMute, // () => void
+  setVolume, // (v: number) => void
+  seek, // (seconds: number) => void
 } = useAudioPlayer(src, { startMuted, loop, initialVolume })
 ```
 
 ### Visual States
-| State          | Visual                                                             |
-|----------------|--------------------------------------------------------------------|
-| Loading        | Spinning gold border ring around button                            |
-| Active+unmuted | Gold glow border + pulsing ring + ॐ glows gold                    |
-| Muted/paused   | Dim gold ॐ, no glow                                               |
-| Error          | `cursor-not-allowed opacity-40`                                    |
-| Pill           | Shows "Tap to unmute" or "Ambient Music" + mute button             |
+
+| State          | Visual                                                 |
+| -------------- | ------------------------------------------------------ |
+| Loading        | Spinning gold border ring around button                |
+| Active+unmuted | Gold glow border + pulsing ring + ॐ glows gold         |
+| Muted/paused   | Dim gold ॐ, no glow                                    |
+| Error          | `cursor-not-allowed opacity-40`                        |
+| Pill           | Shows "Tap to unmute" or "Ambient Music" + mute button |
 
 ---
 
@@ -119,6 +124,7 @@ const {
 - **ThemeToggle removed** — do not add back without explicit instruction
 
 ### Z-index Hierarchy (full stack)
+
 ```
 z-[24] — WeddingCharacters (fixed bottom-right)
 z-30   — Navbar

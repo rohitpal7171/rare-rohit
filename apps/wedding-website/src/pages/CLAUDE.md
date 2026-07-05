@@ -1,19 +1,21 @@
 # CLAUDE.md — apps/wedding-website/src/pages/
+
 # Last updated: 2026-05-30
 
 ## Pages
 
-| File               | Route              | Purpose                                     |
-|--------------------|--------------------|---------------------------------------------|
-| `Home.tsx`         | `/`                | Composes all active sections                |
-| `CeremonyPage.tsx` | `/ceremony/:slug`  | Dynamic ceremony detail page                |
-| `NotFound.tsx`     | `*`                | 404 fallback                                |
+| File               | Route             | Purpose                      |
+| ------------------ | ----------------- | ---------------------------- |
+| `Home.tsx`         | `/`               | Composes all active sections |
+| `CeremonyPage.tsx` | `/ceremony/:slug` | Dynamic ceremony detail page |
+| `NotFound.tsx`     | `*`               | 404 fallback                 |
 
 ---
 
 ## Home.tsx
 
 ### Current Section Order
+
 ```tsx
 <Navbar />
 <main>
@@ -33,6 +35,7 @@
 NOT rendered: Travel, RSVP, Reception, WishesWall, WeddingParty, FAQ (stubs kept, not imported).
 
 ### Lazy Loading Strategy
+
 Hero is eager (above fold). All other sections are `React.lazy()` + `<Suspense>`.
 Each section has its own `<Suspense fallback={<SectionSkeleton />}>`.
 `SectionSkeleton` uses `mandala-bg` to prevent flash of white during load.
@@ -44,6 +47,7 @@ const OurStory = lazy(() =>
 ```
 
 ### Hash Navigation (e.g. /#ceremonies from ceremony pages)
+
 `useEffect` watches `useLocation().hash`. Retries up to 10× at 100ms intervals
 to wait for lazy sections to mount before scrolling.
 All timers stored in array and cleared on cleanup.
@@ -51,7 +55,10 @@ All timers stored in array and cleared on cleanup.
 ```ts
 const tryScroll = (): void => {
   const el = document.getElementById(id)
-  if (el !== null) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return }
+  if (el !== null) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    return
+  }
   attempts += 1
   if (attempts < MAX_ATTEMPTS) timers.push(setTimeout(tryScroll, 100))
 }
@@ -60,6 +67,7 @@ return () => timers.forEach(clearTimeout)
 ```
 
 ### Section ID Anchors
+
 Nav links use `<a href="/#section-id">` — section IDs must match exactly.
 IDs: `home`, `blessings`, `our-story`, `ceremonies`, `schedule`, `gallery`, `divine-invites`
 
@@ -70,20 +78,28 @@ IDs: `home`, `blessings`, `our-story`, `ceremonies`, `schedule`, `gallery`, `div
 Handles `/ceremony/:slug` dynamic route.
 
 ### Slug Validation
+
 ```ts
 const VALID_SLUGS = new Set(Object.keys(ceremonyMap))
 // If slug not in set → navigate('/', { replace: true })
 ```
 
 ### ceremonyMap
+
 ```ts
 const ceremonyMap: Record<CeremonySlug, FC> = {
-  haldi, mehendi, sangeet, baraat, pheras, vidaai
+  haldi,
+  mehendi,
+  sangeet,
+  baraat,
+  pheras,
+  vidaai,
   // reception: exists but not linked from site
 }
 ```
 
 ### Structure
+
 ```tsx
 <Navbar />
 <PageWrapper accentColor={weddingConfig.ceremonies[slug]?.color}>
@@ -93,6 +109,7 @@ const ceremonyMap: Record<CeremonySlug, FC> = {
 ```
 
 ### `accentColor` prop
+
 Passed from `weddingConfig.ceremonies[slug].color` — drives ceremony color flash in PageWrapper.
 `undefined` → no flash (safe fallback).
 

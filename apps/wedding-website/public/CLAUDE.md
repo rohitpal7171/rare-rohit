@@ -1,4 +1,5 @@
 # CLAUDE.md — apps/wedding-website/public/
+
 # Last updated: 2026-06-14
 
 ## Purpose

@@ -1,4 +1,5 @@
 # CLAUDE.md — src/i18n/locales/
+
 # Last updated: 2026-06-14
 
 ## Structure
@@ -16,19 +17,19 @@ The pre-push check (`npm run pre-push`) enforces this — it will fail if key co
 
 ## Active Namespaces
 
-| Namespace    | en/ file          | hi/ file          | Status           |
-|--------------|-------------------|-------------------|------------------|
-| `common`     | common.json       | common.json       | Active           |
-| `home`       | home.json         | home.json         | Active           |
-| `story`      | story.json        | story.json        | Active           |
-| `ceremonies` | ceremonies.json   | ceremonies.json   | Active           |
-| `schedule`   | schedule.json     | schedule.json     | Placeholder      |
-| `gallery`    | gallery.json      | gallery.json      | Placeholder      |
-| `faq`        | faq.json          | faq.json          | Active           |
-| `travel`     | travel.json       | travel.json       | Section inactive |
-| `rsvp`       | rsvp.json         | rsvp.json         | Section inactive |
-| `party`      | party.json        | party.json        | Section replaced |
-| `wishes`     | wishes.json       | wishes.json       | Feature removed  |
+| Namespace    | en/ file        | hi/ file        | Status           |
+| ------------ | --------------- | --------------- | ---------------- |
+| `common`     | common.json     | common.json     | Active           |
+| `home`       | home.json       | home.json       | Active           |
+| `story`      | story.json      | story.json      | Active           |
+| `ceremonies` | ceremonies.json | ceremonies.json | Active           |
+| `schedule`   | schedule.json   | schedule.json   | Placeholder      |
+| `gallery`    | gallery.json    | gallery.json    | Placeholder      |
+| `faq`        | faq.json        | faq.json        | Active           |
+| `travel`     | travel.json     | travel.json     | Section inactive |
+| `rsvp`       | rsvp.json       | rsvp.json       | Section inactive |
+| `party`      | party.json      | party.json      | Section replaced |
+| `wishes`     | wishes.json     | wishes.json     | Feature removed  |
 
 ## How Keys Are Typed
 

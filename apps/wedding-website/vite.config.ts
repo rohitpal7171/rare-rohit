@@ -38,11 +38,18 @@ export default defineConfig({
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
         manualChunks: (id: string) => {
-          if (id.includes('react-dom') || id.includes('react-router') || id.includes('node_modules/react/')) return 'vendor-react'
+          if (
+            id.includes('react-dom') ||
+            id.includes('react-router') ||
+            id.includes('node_modules/react/')
+          )
+            return 'vendor-react'
           if (id.includes('framer-motion')) return 'vendor-motion'
           if (id.includes('i18next')) return 'vendor-i18n'
-          if (id.includes('react-hook-form') || id.includes('zod') || id.includes('@hookform')) return 'vendor-form'
-          if (id.includes('lucide-react') || id.includes('clsx') || id.includes('tailwind-merge')) return 'vendor-ui'
+          if (id.includes('react-hook-form') || id.includes('zod') || id.includes('@hookform'))
+            return 'vendor-form'
+          if (id.includes('lucide-react') || id.includes('clsx') || id.includes('tailwind-merge'))
+            return 'vendor-ui'
           return undefined
         },
       },

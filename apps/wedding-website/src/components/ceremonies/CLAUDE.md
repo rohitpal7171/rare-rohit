@@ -1,21 +1,22 @@
 # CLAUDE.md — apps/wedding-website/src/components/ceremonies/
+
 # Last updated: 2026-05-24
 
 ## Ceremony Components
 
 Each file = one ceremony route at `/ceremony/:slug`
 
-| File                    | Slug        | Emoji | Status  | Notes                                  |
-|-------------------------|-------------|-------|---------|----------------------------------------|
-| `Haldi.tsx`             | `haldi`     | 🌼    | ACTIVE  | Time TBD                               |
-| `Mehendi.tsx`           | `mehendi`   | 🌿    | ACTIVE  | Time TBD                               |
-| `Sangeet.tsx`           | `sangeet`   | 🎶    | ACTIVE  | Time TBD, venue TBD                    |
-| `Baraat.tsx`            | `baraat`    | 🐎    | ACTIVE  | ✅ 25 Nov, 4:00 PM, Kokapur            |
-| `Pheras.tsx`            | `pheras`    | 🔥    | ACTIVE  | ✅ 26 Nov, 9:00 AM, Kokapur            |
-| `Vidaai.tsx`            | `vidaai`    | 🌸    | ACTIVE  | ✅ 26 Nov, time TBD, Kokapur           |
-| `Reception.tsx`         | `reception` | 🥂    | INACTIVE| Route exists but NO reception event    |
-| `CeremonyMusicPlayer.tsx`| —          | —     | ACTIVE  | Per-ceremony ambient audio player      |
-| `RitualFacts.tsx`       | —           | —     | ACTIVE  | Flip-card cultural facts per ceremony  |
+| File                      | Slug        | Emoji | Status   | Notes                                 |
+| ------------------------- | ----------- | ----- | -------- | ------------------------------------- |
+| `Haldi.tsx`               | `haldi`     | 🌼    | ACTIVE   | Time TBD                              |
+| `Mehendi.tsx`             | `mehendi`   | 🌿    | ACTIVE   | Time TBD                              |
+| `Sangeet.tsx`             | `sangeet`   | 🎶    | ACTIVE   | Time TBD, venue TBD                   |
+| `Baraat.tsx`              | `baraat`    | 🐎    | ACTIVE   | ✅ 25 Nov, 4:00 PM, Kokapur           |
+| `Pheras.tsx`              | `pheras`    | 🔥    | ACTIVE   | ✅ 26 Nov, 9:00 AM, Kokapur           |
+| `Vidaai.tsx`              | `vidaai`    | 🌸    | ACTIVE   | ✅ 26 Nov, time TBD, Kokapur          |
+| `Reception.tsx`           | `reception` | 🥂    | INACTIVE | Route exists but NO reception event   |
+| `CeremonyMusicPlayer.tsx` | —           | —     | ACTIVE   | Per-ceremony ambient audio player     |
+| `RitualFacts.tsx`         | —           | —     | ACTIVE   | Flip-card cultural facts per ceremony |
 
 ---
 
@@ -43,6 +44,7 @@ Each file = one ceremony route at `/ceremony/:slug`
 ## CeremonyMusicPlayer.tsx
 
 Plays per-ceremony ambient audio. Requires MP3 files in `public/audio/`:
+
 ```
 public/audio/
 ├── sangeet.mp3   ← EXISTS ✅ (used by AmbientPlayer globally too)
@@ -52,6 +54,7 @@ public/audio/
 ├── pheras.mp3    ← MISSING ❌
 └── vidaai.mp3    ← MISSING ❌
 ```
+
 Until MP3s are added, CeremonyMusicPlayer renders nothing / error state gracefully.
 
 ---
@@ -81,6 +84,7 @@ Until MP3s are added, CeremonyMusicPlayer renders nothing / error state graceful
   "vidaai": { ... }
 }
 ```
+
 Both `en/ceremonies.json` and `hi/ceremonies.json` must have all these keys.
 
 ---
@@ -88,6 +92,7 @@ Both `en/ceremonies.json` and `hi/ceremonies.json` must have all these keys.
 ## Hardcoded Strings TODO
 
 These strings are still hardcoded EN — add to `common.json` when Hindi translations are ready:
+
 - "Back to Ceremonies"
 - "About this Ceremony"
 - "Significance"

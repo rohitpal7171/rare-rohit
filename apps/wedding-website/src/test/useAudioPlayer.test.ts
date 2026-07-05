@@ -26,10 +26,14 @@ class AudioMock {
     if (arr) _listeners[event] = arr.filter((l) => l !== cb)
   })
   _trigger(event: string) {
-    _listeners[event]?.forEach((cb) => { cb() })
+    _listeners[event]?.forEach((cb) => {
+      cb()
+    })
   }
   constructor() {
-    Object.keys(_listeners).forEach((k) => { delete _listeners[k] })
+    Object.keys(_listeners).forEach((k) => {
+      delete _listeners[k]
+    })
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     _instance = this
   }
@@ -72,13 +76,17 @@ describe('useAudioPlayer — initial state', () => {
 
   it('sets isLoaded=true after canplay fires', () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { _instance._trigger('canplay') })
+    act(() => {
+      _instance._trigger('canplay')
+    })
     expect(result.current.isLoaded).toBe(true)
   })
 
   it('sets hasError=true after error fires', () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { _instance._trigger('error') })
+    act(() => {
+      _instance._trigger('error')
+    })
     expect(result.current.hasError).toBe(true)
   })
 
@@ -93,8 +101,12 @@ describe('useAudioPlayer — play()', () => {
   it('calls audio.play() and sets isPlaying=true', async () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
     _instance.play.mockResolvedValueOnce(undefined)
-    act(() => { _instance._trigger('canplay') })
-    await act(async () => { result.current.play() })
+    act(() => {
+      _instance._trigger('canplay')
+    })
+    await act(async () => {
+      result.current.play()
+    })
     expect(_instance.play).toHaveBeenCalledTimes(1)
     expect(result.current.isPlaying).toBe(true)
   })
@@ -104,16 +116,24 @@ describe('useAudioPlayer — play()', () => {
     _instance.play
       .mockRejectedValueOnce(new DOMException('NotAllowedError'))
       .mockResolvedValueOnce(undefined)
-    act(() => { _instance._trigger('canplay') })
-    await act(async () => { result.current.play() })
+    act(() => {
+      _instance._trigger('canplay')
+    })
+    await act(async () => {
+      result.current.play()
+    })
     expect(_instance.play).toHaveBeenCalledTimes(2)
     expect(result.current.isPlaying).toBe(true)
   })
 
   it('does not call play() when hasError=true', async () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { _instance._trigger('error') })
-    await act(async () => { result.current.play() })
+    act(() => {
+      _instance._trigger('error')
+    })
+    await act(async () => {
+      result.current.play()
+    })
     expect(_instance.play).not.toHaveBeenCalled()
   })
 })
@@ -122,9 +142,15 @@ describe('useAudioPlayer — pause/toggle/mute/volume/cleanup', () => {
   it('pause() stops playback', async () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
     _instance.play.mockResolvedValueOnce(undefined)
-    act(() => { _instance._trigger('canplay') })
-    await act(async () => { result.current.play() })
-    act(() => { result.current.pause() })
+    act(() => {
+      _instance._trigger('canplay')
+    })
+    await act(async () => {
+      result.current.play()
+    })
+    act(() => {
+      result.current.pause()
+    })
     expect(_instance.pause).toHaveBeenCalled()
     expect(result.current.isPlaying).toBe(false)
   })
@@ -132,41 +158,63 @@ describe('useAudioPlayer — pause/toggle/mute/volume/cleanup', () => {
   it('toggle() plays when not playing', async () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
     _instance.play.mockResolvedValueOnce(undefined)
-    act(() => { _instance._trigger('canplay') })
-    await act(async () => { result.current.toggle() })
+    act(() => {
+      _instance._trigger('canplay')
+    })
+    await act(async () => {
+      result.current.toggle()
+    })
     expect(result.current.isPlaying).toBe(true)
   })
 
   it('toggle() pauses when playing', async () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
     _instance.play.mockResolvedValueOnce(undefined)
-    act(() => { _instance._trigger('canplay') })
-    await act(async () => { result.current.play() })
-    act(() => { result.current.toggle() })
+    act(() => {
+      _instance._trigger('canplay')
+    })
+    await act(async () => {
+      result.current.play()
+    })
+    act(() => {
+      result.current.toggle()
+    })
     expect(result.current.isPlaying).toBe(false)
   })
 
   it('toggleMute() flips state', () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3', { startMuted: false }))
-    act(() => { result.current.toggleMute() })
+    act(() => {
+      result.current.toggleMute()
+    })
     expect(result.current.isMuted).toBe(true)
-    act(() => { result.current.toggleMute() })
+    act(() => {
+      result.current.toggleMute()
+    })
     expect(result.current.isMuted).toBe(false)
   })
 
   it('setVolume() clamps to 0-1', () => {
     const { result } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { result.current.setVolume(2.5) })
+    act(() => {
+      result.current.setVolume(2.5)
+    })
     expect(result.current.volume).toBe(1)
-    act(() => { result.current.setVolume(-1) })
+    act(() => {
+      result.current.setVolume(-1)
+    })
     expect(result.current.volume).toBe(0)
-    act(() => { result.current.setVolume(0.6) })
+    act(() => {
+      result.current.setVolume(0.6)
+    })
     expect(result.current.volume).toBe(0.6)
   })
 
   it('cleans up on unmount', () => {
     const { unmount } = renderHook(() => useAudioPlayer('/audio/test.mp3'))
-    act(() => { _instance._trigger('canplay') })
+    act(() => {
+      _instance._trigger('canplay')
+    })
     unmount()
     // hook removes event listeners but does NOT pause — audio persists across navigation
     expect(_instance.removeEventListener).toHaveBeenCalled()

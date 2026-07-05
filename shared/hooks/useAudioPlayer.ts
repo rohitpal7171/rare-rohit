@@ -26,7 +26,9 @@ export interface UseAudioPlayerReturn {
 const audioCache = new Map<string, HTMLAudioElement>()
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const _clearAudioCacheForTesting = (): void => { audioCache.clear() }
+export const _clearAudioCacheForTesting = (): void => {
+  audioCache.clear()
+}
 
 const getOrCreateAudio = (src: string): HTMLAudioElement => {
   const existing = audioCache.get(src)
@@ -46,18 +48,18 @@ export const useAudioPlayer = (
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const [isPlaying, setIsPlaying] = useState(false)
-  const [isMuted, setIsMuted]     = useState(startMuted)
-  const [volume, setVolumeState]  = useState(initialVolume)
-  const [isLoaded, setIsLoaded]   = useState(false)
-  const [hasError, setHasError]   = useState(false)
+  const [isMuted, setIsMuted] = useState(startMuted)
+  const [volume, setVolumeState] = useState(initialVolume)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [hasError, setHasError] = useState(false)
 
   useEffect(() => {
     if (src === null) return undefined
 
     const audio = getOrCreateAudio(src)
-    audio.loop   = loop
+    audio.loop = loop
     audio.volume = initialVolume
-    audio.muted  = startMuted
+    audio.muted = startMuted
     audioRef.current = audio
 
     // If already loaded (cached), set state immediately
@@ -72,11 +74,22 @@ export const useAudioPlayer = (
     setIsPlaying(!audio.paused)
     setIsMuted(audio.muted)
 
-    const onCanPlay = (): void => { setIsLoaded(true) }
-    const onError   = (): void => { setHasError(true); setIsLoaded(false) }
-    const onEnded   = (): void => { if (!loop) setIsPlaying(false) }
-    const onPlay    = (): void => { setIsPlaying(true) }
-    const onPause   = (): void => { setIsPlaying(false) }
+    const onCanPlay = (): void => {
+      setIsLoaded(true)
+    }
+    const onError = (): void => {
+      setHasError(true)
+      setIsLoaded(false)
+    }
+    const onEnded = (): void => {
+      if (!loop) setIsPlaying(false)
+    }
+    const onPlay = (): void => {
+      setIsPlaying(true)
+    }
+    const onPause = (): void => {
+      setIsPlaying(false)
+    }
 
     audio.addEventListener('canplay', onCanPlay)
     audio.addEventListener('error', onError)
@@ -99,15 +112,21 @@ export const useAudioPlayer = (
     if (audioRef.current === null || hasError) return
     void audioRef.current
       .play()
-      .then(() => { setIsPlaying(true) })
+      .then(() => {
+        setIsPlaying(true)
+      })
       .catch(() => {
         if (audioRef.current !== null) {
           audioRef.current.muted = true
           setIsMuted(true)
           void audioRef.current
             .play()
-            .then(() => { setIsPlaying(true) })
-            .catch(() => { setHasError(true) })
+            .then(() => {
+              setIsPlaying(true)
+            })
+            .catch(() => {
+              setHasError(true)
+            })
         }
       })
   }, [hasError])
@@ -140,5 +159,17 @@ export const useAudioPlayer = (
     audioRef.current.currentTime = seconds
   }, [])
 
-  return { isPlaying, isMuted, volume, isLoaded, hasError, play, pause, toggle, toggleMute, setVolume, seek }
+  return {
+    isPlaying,
+    isMuted,
+    volume,
+    isLoaded,
+    hasError,
+    play,
+    pause,
+    toggle,
+    toggleMute,
+    setVolume,
+    seek,
+  }
 }

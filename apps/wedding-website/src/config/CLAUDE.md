@@ -1,12 +1,13 @@
 # CLAUDE.md — apps/wedding-website/src/config/
+
 # Last updated: 2026-05-24
 
 ## Files
 
-| File                | Purpose                                                      |
-|---------------------|--------------------------------------------------------------|
-| `types.ts`          | All TypeScript interfaces for wedding domain                 |
-| `wedding.config.ts` | All personal wedding details — single source of truth        |
+| File                | Purpose                                               |
+| ------------------- | ----------------------------------------------------- |
+| `types.ts`          | All TypeScript interfaces for wedding domain          |
+| `wedding.config.ts` | All personal wedding details — single source of truth |
 
 ---
 
@@ -57,6 +58,7 @@ WeddingConfig {
 ## wedding.config.ts — Current State (2026-05-24)
 
 ### Confirmed ✅
+
 - Groom: Rohit Singh Pal / रोहित सिंह पाल
 - Bride: Priti Pal / प्रीति पाल
 - Baraat: 25 Nov 2026, 4:00 PM, Kokapur, Udi Modh, UP
@@ -66,12 +68,14 @@ WeddingConfig {
 - `wedding.date`: '2026-11-26T09:00:00+05:30' (Pheras — countdown target)
 
 ### Still TODO ❌
+
 - Haldi/Mehendi/Sangeet exact times (currently placeholders)
 - Full addresses + real Google Maps pins for all venues
 - Sangeet venue name
 - Real Instagram / Facebook URLs (currently placeholder URLs)
 
 ### Placeholder Values to Replace Before Launch
+
 ```ts
 socialLinks.instagram: 'https://instagram.com'    // → real profile URL
 socialLinks.facebook: 'https://facebook.com'      // → real profile URL
@@ -98,4 +102,5 @@ ceremonies.vidaai.time: '2:00 PM'                 // → confirm
 ```ts
 type CeremonySlug = 'haldi' | 'mehendi' | 'sangeet' | 'baraat' | 'pheras' | 'vidaai' | 'reception'
 ```
+
 `reception` exists in the type but there is no reception event — keep for routing completeness.

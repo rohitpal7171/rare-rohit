@@ -43,7 +43,9 @@ export const AmbientPlayer = () => {
       })
       playRef.current()
       // Unmute after play() has had time to resolve
-      setTimeout(() => { toggleMuteRef.current() }, 300)
+      setTimeout(() => {
+        toggleMuteRef.current()
+      }, 300)
     }
 
     triggers.forEach((evt) => {

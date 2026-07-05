@@ -7,12 +7,12 @@ import { cn, fadeInLeft, fadeInRight, fadeInUp, glowPulse, hoverLift } from '@sh
 
 const TIMELINE_KEYS = ['met', 'friendship', 'love', 'proposal', 'wedding'] as const
 
-const TIMELINE_ICONS: Record<typeof TIMELINE_KEYS[number], string> = {
-  met:        '💕',
+const TIMELINE_ICONS: Record<(typeof TIMELINE_KEYS)[number], string> = {
+  met: '💕',
   friendship: '🌸',
-  love:       '🌼',
-  proposal:   '🪔',
-  wedding:    '💒',
+  love: '🌼',
+  proposal: '🪔',
+  wedding: '💒',
 }
 
 export const OurStory = () => {

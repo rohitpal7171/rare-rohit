@@ -1,11 +1,12 @@
 # CLAUDE.md — apps/wedding-website/src/styles/
+
 # Last updated: 2026-06-14
 
 ## File
 
-| File         | Purpose                                                             |
-|--------------|---------------------------------------------------------------------|
-| `index.css`  | Global styles: Tailwind directives, CSS variables, base resets, animations |
+| File        | Purpose                                                                    |
+| ----------- | -------------------------------------------------------------------------- |
+| `index.css` | Global styles: Tailwind directives, CSS variables, base resets, animations |
 
 ## index.css Structure
 
@@ -41,18 +42,18 @@ When you change a color/spacing/font in `tailwind.config.ts`, update the matchin
 
 The following classes are declared in `@layer components` and used across the app:
 
-| Class               | Description                                    |
-|---------------------|------------------------------------------------|
-| `.section-padding`  | Responsive `py`/`px` for full-width sections   |
-| `.section-container`| `max-w-6xl mx-auto px-*` container             |
-| `.card-divine`      | Glassmorphism card for dark (mandala-bg) sections |
-| `.card-light`       | Ivory card for light sections                  |
-| `.input-divine`     | Styled form input                              |
-| `.gold-divider`     | Thin gold `<hr>` divider                       |
-| `.gold-divider-wide`| Wider shimmer gold divider                     |
-| `.mandala-bg`       | Dark purple-maroon radial gradient background  |
-| `.text-gradient-gold`| Animated shimmer gold text effect             |
-| `.glow-gold`        | Gold drop-shadow filter                        |
+| Class                 | Description                                       |
+| --------------------- | ------------------------------------------------- |
+| `.section-padding`    | Responsive `py`/`px` for full-width sections      |
+| `.section-container`  | `max-w-6xl mx-auto px-*` container                |
+| `.card-divine`        | Glassmorphism card for dark (mandala-bg) sections |
+| `.card-light`         | Ivory card for light sections                     |
+| `.input-divine`       | Styled form input                                 |
+| `.gold-divider`       | Thin gold `<hr>` divider                          |
+| `.gold-divider-wide`  | Wider shimmer gold divider                        |
+| `.mandala-bg`         | Dark purple-maroon radial gradient background     |
+| `.text-gradient-gold` | Animated shimmer gold text effect                 |
+| `.glow-gold`          | Gold drop-shadow filter                           |
 
 ## Rules
 

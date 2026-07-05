@@ -11,7 +11,9 @@ const ThrowError = ({ shouldThrow }: { shouldThrow: boolean }) => {
 
 // React dev mode re-dispatches caught errors to window — prevent jsdom from
 // treating them as unhandled and failing the test runner.
-const suppressWindowError = (e: ErrorEvent) => { e.preventDefault() }
+const suppressWindowError = (e: ErrorEvent) => {
+  e.preventDefault()
+}
 
 beforeEach(() => {
   vi.spyOn(console, 'error').mockImplementation(() => {})

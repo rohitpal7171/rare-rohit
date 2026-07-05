@@ -1,4 +1,5 @@
 # CLAUDE.md — apps/wedding-website/src/components/
+
 # Last updated: 2026-05-24
 
 ## Folder Structure

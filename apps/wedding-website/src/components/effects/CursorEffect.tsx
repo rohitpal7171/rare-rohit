@@ -27,33 +27,76 @@ function randomFrom<T>(arr: readonly T[]): T {
 /**
  * CursorEffect
  * Canvas-based floating petals + diya flame trail.
- * Mouse move → petal trail | Click → diya burst | Touch → finger trail
- * Fully disabled when prefers-reduced-motion: reduce
- * pointer-events: none — never blocks any interaction
+ * Mouse move → petal trail | Click → diya burst
+ *
+ * Performance rules (2026-07-03):
+ * - Demand-driven rAF — the loop STOPS when no particles are alive and
+ *   restarts on spawn. Never burns frames while idle.
+ * - Disabled entirely on touch devices (pointer: coarse) — phones have no
+ *   cursor, and spawning particles on touchmove caused jank during scroll.
+ * - Fully disabled when prefers-reduced-motion: reduce
+ * - pointer-events: none — never blocks any interaction
  */
 export const CursorEffect = () => {
   const prefersReduced = useMediaQuery('(prefers-reduced-motion: reduce)')
+  const isCoarsePointer = useMediaQuery('(pointer: coarse)')
+  const disabled = prefersReduced || isCoarsePointer
+
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<Particle[]>([])
   const rafRef = useRef<number>(0)
+  const runningRef = useRef(false)
   const lastPosRef = useRef<{ x: number; y: number } | null>(null)
 
   useEffect(() => {
-    if (prefersReduced) return
+    if (disabled) return undefined
 
     const canvas = canvasRef.current
-    if (canvas === null) return
+    if (canvas === null) return undefined
     const ctx = canvas.getContext('2d')
-    if (ctx === null) return
+    if (ctx === null) return undefined
 
-    const resize = () => {
+    const resize = (): void => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }
     resize()
     window.addEventListener('resize', resize)
 
-    const spawnParticles = (x: number, y: number, count: number, forClick: boolean) => {
+    const animate = (): void => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      particlesRef.current = particlesRef.current.filter((p) => p.life > 0)
+      for (const p of particlesRef.current) {
+        p.x += p.vx
+        p.y += p.vy
+        p.vy += 0.06
+        p.vx *= 0.98
+        p.life -= 1 / p.maxLife
+        p.rotation += p.rotationSpeed
+        ctx.save()
+        ctx.globalAlpha = Math.max(0, p.life)
+        ctx.font = `${p.size}px serif`
+        ctx.translate(p.x, p.y)
+        ctx.rotate((p.rotation * Math.PI) / 180)
+        ctx.fillText(p.emoji, -p.size / 2, p.size / 2)
+        ctx.restore()
+      }
+      // Demand-driven loop — stop when nothing is alive.
+      // (Canvas was cleared at the top of this frame, so it ends clean.)
+      if (particlesRef.current.length > 0) {
+        rafRef.current = requestAnimationFrame(animate)
+      } else {
+        runningRef.current = false
+      }
+    }
+
+    const ensureRunning = (): void => {
+      if (runningRef.current) return
+      runningRef.current = true
+      rafRef.current = requestAnimationFrame(animate)
+    }
+
+    const spawnParticles = (x: number, y: number, count: number, forClick: boolean): void => {
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2
         const speed = forClick ? 1.5 + Math.random() * 3 : 0.3 + Math.random() * 1.2
@@ -75,31 +118,10 @@ export const CursorEffect = () => {
       if (particlesRef.current.length > MAX_PARTICLES) {
         particlesRef.current = particlesRef.current.slice(-MAX_PARTICLES)
       }
+      ensureRunning()
     }
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      particlesRef.current = particlesRef.current.filter((p) => p.life > 0)
-      for (const p of particlesRef.current) {
-        p.x += p.vx
-        p.y += p.vy
-        p.vy += 0.06
-        p.vx *= 0.98
-        p.life -= 1 / p.maxLife
-        p.rotation += p.rotationSpeed
-        ctx.save()
-        ctx.globalAlpha = Math.max(0, p.life)
-        ctx.font = `${p.size}px serif`
-        ctx.translate(p.x, p.y)
-        ctx.rotate((p.rotation * Math.PI) / 180)
-        ctx.fillText(p.emoji, -p.size / 2, p.size / 2)
-        ctx.restore()
-      }
-      rafRef.current = requestAnimationFrame(animate)
-    }
-    rafRef.current = requestAnimationFrame(animate)
-
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e: MouseEvent): void => {
       const last = lastPosRef.current
       if (last !== null) {
         const dx = e.clientX - last.x
@@ -109,29 +131,24 @@ export const CursorEffect = () => {
       lastPosRef.current = { x: e.clientX, y: e.clientY }
       spawnParticles(e.clientX, e.clientY, 2, false)
     }
-    const handleClick = (e: MouseEvent) => {
+    const handleClick = (e: MouseEvent): void => {
       spawnParticles(e.clientX, e.clientY, 8, true)
-    }
-    const handleTouchMove = (e: TouchEvent) => {
-      const t = e.touches[0]
-      if (t === undefined) return
-      spawnParticles(t.clientX, t.clientY, 1, false)
     }
 
     window.addEventListener('mousemove', handleMouseMove)
     window.addEventListener('click', handleClick)
-    window.addEventListener('touchmove', handleTouchMove, { passive: true })
 
     return () => {
       cancelAnimationFrame(rafRef.current)
+      runningRef.current = false
+      particlesRef.current = []
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('click', handleClick)
-      window.removeEventListener('touchmove', handleTouchMove)
     }
-  }, [prefersReduced])
+  }, [disabled])
 
-  if (prefersReduced) return null
+  if (disabled) return null
 
   return (
     <canvas ref={canvasRef} aria-hidden="true" className="pointer-events-none fixed inset-0 z-50" />

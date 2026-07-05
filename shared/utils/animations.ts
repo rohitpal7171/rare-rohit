@@ -277,3 +277,15 @@ export const cardReveal3D: Variants = {
     transition: { ...transitions.smooth, duration: 0.7 },
   },
 }
+
+// ─── Clock tick — digit change in countdowns ─────────────────────────
+
+export const tickIn: Variants = {
+  hidden: { opacity: 0, y: -10, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+  },
+}

@@ -41,13 +41,26 @@ const useActiveSection = (): SectionId => {
       return best
     }
 
-    const onScroll = (): void => setActive(detect())
+    // rAF-throttled: at most one detect() (5× getBoundingClientRect) per frame,
+    // batched to the frame boundary instead of firing on every scroll event.
+    // Prevents forced-layout storms during scroll (perf fix 2026-07-03).
+    let rafId = 0
+    let pending = false
+    const onScroll = (): void => {
+      if (pending) return
+      pending = true
+      rafId = requestAnimationFrame(() => {
+        pending = false
+        setActive(detect())
+      })
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
     const t1 = setTimeout(() => setActive(detect()), 400)
     const t2 = setTimeout(() => setActive(detect()), 1500)
 
     return () => {
       window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(rafId)
       clearTimeout(t1)
       clearTimeout(t2)
     }
@@ -61,11 +74,11 @@ const useActiveSection = (): SectionId => {
 type Reaction = { scale: number[]; duration: number }
 
 const REACTIONS: Record<SectionId, Reaction> = {
-  'home':       { scale: [1, 1.04, 1],       duration: 1.0 },
-  'our-story':  { scale: [1, 1.03, 1],       duration: 1.2 },
-  'ceremonies': { scale: [1, 1.06, 1.02, 1], duration: 1.6 },
-  'schedule':   { scale: [1, 1.03, 1],       duration: 0.9 },
-  'gallery':    { scale: [1, 1.04, 1],       duration: 1.1 },
+  home: { scale: [1, 1.04, 1], duration: 1.0 },
+  'our-story': { scale: [1, 1.03, 1], duration: 1.2 },
+  ceremonies: { scale: [1, 1.06, 1.02, 1], duration: 1.6 },
+  schedule: { scale: [1, 1.03, 1], duration: 0.9 },
+  gallery: { scale: [1, 1.04, 1], duration: 1.1 },
 }
 
 // Base height — responsive across all screen sizes
@@ -77,9 +90,9 @@ const DRAG_CLICK_THRESHOLD = 5
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export const WeddingCharacters = () => {
-  const section      = useActiveSection()
-  const reactionRef  = useRef<HTMLDivElement>(null)
-  const prevSection  = useRef<SectionId | null>(null)
+  const section = useActiveSection()
+  const reactionRef = useRef<HTMLDivElement>(null)
+  const prevSection = useRef<SectionId | null>(null)
   const dragControls = useDragControls()
 
   // Size cycle: 0=1×, 1=2×, 2=4× — click at 2 resets to 0
@@ -95,10 +108,14 @@ export const WeddingCharacters = () => {
     prevSection.current = section
 
     const r = REACTIONS[section]
-    void animate(reactionRef.current, { scale: r.scale }, {
-      duration: r.duration,
-      ease: [0.22, 1, 0.36, 1],
-    })
+    void animate(
+      reactionRef.current,
+      { scale: r.scale },
+      {
+        duration: r.duration,
+        ease: [0.22, 1, 0.36, 1],
+      }
+    )
   }, [section])
 
   const sizeScale = Math.pow(2, clickCount)
@@ -107,7 +124,7 @@ export const WeddingCharacters = () => {
   // BASE_HEIGHT resolves to clamp(90px, calc(10vw + 8vh), 320px)
   // We approximate the actual rendered height to compute max allowed scale
   const getMaxScale = (): number => {
-    const baseH = Math.min(320, Math.max(90, 0.10 * window.innerWidth + 0.08 * window.innerHeight))
+    const baseH = Math.min(320, Math.max(90, 0.1 * window.innerWidth + 0.08 * window.innerHeight))
     return window.innerHeight / baseH
   }
   const cappedScale = Math.min(sizeScale, getMaxScale())
@@ -139,9 +156,9 @@ export const WeddingCharacters = () => {
       dragElastic={0.1}
       // Constrain drag within viewport — image never causes overflow
       dragConstraints={{
-        top:    -(window.innerHeight * 0.85),
-        left:   -(window.innerWidth  * 0.85),
-        right:  0,
+        top: -(window.innerHeight * 0.85),
+        left: -(window.innerWidth * 0.85),
+        right: 0,
         bottom: 0,
       }}
       className="fixed bottom-0 right-0 z-[24] touch-none"

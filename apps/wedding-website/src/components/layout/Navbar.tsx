@@ -11,10 +11,10 @@ import { cn } from '@shared/utils'
 import { weddingConfig } from '@app/config/wedding.config'
 
 const NAV_LINKS = [
-  { href: '/#our-story',      key: 'ourStory'      },
-  { href: '/#ceremonies',     key: 'ceremonies'    },
-  { href: '/#schedule',       key: 'schedule'      },
-  { href: '/#gallery',        key: 'gallery'       },
+  { href: '/#our-story', key: 'ourStory' },
+  { href: '/#ceremonies', key: 'ceremonies' },
+  { href: '/#schedule', key: 'schedule' },
+  { href: '/#gallery', key: 'gallery' },
   { href: '/#divine-invites', key: 'divineInvites' },
 ] as const
 

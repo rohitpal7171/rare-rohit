@@ -8,14 +8,22 @@ vi.mock('@shared/utils', () => ({
   cn: (...args: unknown[]) => args.filter(Boolean).join(' '),
 }))
 
-const mockToggle     = vi.fn()
+const mockToggle = vi.fn()
 const mockToggleMute = vi.fn()
-const mockSetVolume  = vi.fn()
+const mockSetVolume = vi.fn()
 
 const defaultState = {
-  isPlaying: false, isMuted: true, isLoaded: false, hasError: false, volume: 0.35,
-  play: vi.fn(), pause: vi.fn(), toggle: mockToggle,
-  toggleMute: mockToggleMute, setVolume: mockSetVolume, seek: vi.fn(),
+  isPlaying: false,
+  isMuted: true,
+  isLoaded: false,
+  hasError: false,
+  volume: 0.35,
+  play: vi.fn(),
+  pause: vi.fn(),
+  toggle: mockToggle,
+  toggleMute: mockToggleMute,
+  setVolume: mockSetVolume,
+  seek: vi.fn(),
 }
 
 let hookState = { ...defaultState }
@@ -25,7 +33,12 @@ vi.mock('@shared/hooks', () => ({
 }))
 
 beforeEach(() => {
-  hookState = { ...defaultState, toggle: mockToggle, toggleMute: mockToggleMute, setVolume: mockSetVolume }
+  hookState = {
+    ...defaultState,
+    toggle: mockToggle,
+    toggleMute: mockToggleMute,
+    setVolume: mockSetVolume,
+  }
   mockToggle.mockReset()
   mockToggleMute.mockReset()
   mockSetVolume.mockReset()
@@ -48,10 +61,7 @@ describe('CeremonyMusicPlayer — rendering', () => {
     hookState = { ...hookState, isLoaded: true }
     render(React.createElement(CeremonyMusicPlayer, { slug: 'haldi' }))
     // mock t() returns key — so mood becomes 'haldi.mood'
-    expect(screen.getByRole('region')).toHaveAttribute(
-      'aria-label',
-      'Ceremony music: haldi.mood'
-    )
+    expect(screen.getByRole('region')).toHaveAttribute('aria-label', 'Ceremony music: haldi.mood')
   })
 
   it('shows mood key when loaded', () => {

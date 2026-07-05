@@ -1,13 +1,14 @@
 # CLAUDE.md — public/wedding_pics/
+
 # Last updated: 2026-06-14
 
 ## Subfolders
 
-| Folder      | Contents                                    | Status          |
-|-------------|---------------------------------------------|-----------------|
-| `deities/`  | Hindu deity images for DivineBlessings      | Complete ✅      |
-| `namaste/`  | Bride & groom intro image                   | 1 image ✅       |
-| `others/`   | Gallery photos (engagement, family, etc.)   | Empty — needed  |
+| Folder     | Contents                                  | Status         |
+| ---------- | ----------------------------------------- | -------------- |
+| `deities/` | Hindu deity images for DivineBlessings    | Complete ✅    |
+| `namaste/` | Bride & groom intro image                 | 1 image ✅     |
+| `others/`  | Gallery photos (engagement, family, etc.) | Empty — needed |
 
 ## File Naming Convention
 

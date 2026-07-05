@@ -1,4 +1,5 @@
 # CLAUDE.md — src/i18n/locales/hi/
+
 # Last updated: 2026-06-14
 
 ## Purpose

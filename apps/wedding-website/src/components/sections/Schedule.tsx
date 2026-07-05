@@ -69,7 +69,11 @@ export const Schedule = () => {
 
             const dayNum = day.labelKey.replace('day', '')
             return (
-              <motion.div key={day.labelKey} variants={scaleIn} className="card-light relative overflow-hidden space-y-4">
+              <motion.div
+                key={day.labelKey}
+                variants={scaleIn}
+                className="card-light relative space-y-4 overflow-hidden"
+              >
                 {/* Ghost day number */}
                 <span
                   className="pointer-events-none absolute -right-3 -top-5 select-none font-display text-9xl font-black text-maroon/5"

@@ -8,12 +8,12 @@ import { useAudioPlayer } from '@shared/hooks'
 import { cn, type CeremonySlug } from '@shared/utils'
 
 const CEREMONY_AUDIO: Record<CeremonySlug, string> = {
-  haldi:   '/audio/haldi.mp3',
+  haldi: '/audio/haldi.mp3',
   mehendi: '/audio/mehendi.mp3',
   sangeet: '/audio/sangeet.mp3',
-  baraat:  '/audio/baraat.mp3',
-  pheras:  '/audio/pheras.mp3',
-  vidaai:  '/audio/vidaai.mp3',
+  baraat: '/audio/baraat.mp3',
+  pheras: '/audio/pheras.mp3',
+  vidaai: '/audio/vidaai.mp3',
 }
 
 export interface CeremonyMusicPlayerProps {
@@ -24,14 +24,12 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
   const { t } = useTranslation('ceremonies')
   const { t: tc } = useTranslation('common')
   const src: string = CEREMONY_AUDIO[slug]
-  const {
-    isPlaying, isMuted, isLoaded, hasError,
-    toggle, toggleMute, setVolume, volume,
-  } = useAudioPlayer(src, {
-    startMuted: true,
-    loop: true,
-    initialVolume: 0.35,
-  })
+  const { isPlaying, isMuted, isLoaded, hasError, toggle, toggleMute, setVolume, volume } =
+    useAudioPlayer(src, {
+      startMuted: true,
+      loop: true,
+      initialVolume: 0.35,
+    })
 
   const [dismissed, setDismissed] = useState(false)
   const [showVolume, setShowVolume] = useState(false)
@@ -62,7 +60,7 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="font-body text-xs text-gold/70 mt-0.5"
+              className="mt-0.5 font-body text-xs text-gold/70"
             >
               {tc('audio.tapToUnmute')}
             </motion.span>
@@ -80,7 +78,9 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
               max={1}
               step={0.05}
               value={volume}
-              onChange={(e) => { setVolume(Number(e.target.value)) }}
+              onChange={(e) => {
+                setVolume(Number(e.target.value))
+              }}
               aria-label="Volume"
               className="h-1 cursor-pointer accent-gold"
             />
@@ -88,11 +88,14 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
         </AnimatePresence>
 
         <button
-          onClick={() => { toggleMute(); setShowVolume((v) => !v) }}
+          onClick={() => {
+            toggleMute()
+            setShowVolume((v) => !v)
+          }}
           aria-label={isMuted ? 'Unmute' : 'Mute'}
           className={cn(
             'transition-colors',
-            isMuted && isPlaying ? 'text-gold animate-pulse' : 'text-ivory/60 hover:text-gold'
+            isMuted && isPlaying ? 'animate-pulse text-gold' : 'text-ivory/60 hover:text-gold'
           )}
         >
           {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
@@ -108,14 +111,17 @@ export const CeremonyMusicPlayer = ({ slug }: CeremonyMusicPlayerProps) => {
             !isLoaded ? 'cursor-wait opacity-50' : ''
           )}
         >
-          {isPlaying
-            ? <Pause size={14} className="text-gold" />
-            : <Play size={14} className="text-gold" />
-          }
+          {isPlaying ? (
+            <Pause size={14} className="text-gold" />
+          ) : (
+            <Play size={14} className="text-gold" />
+          )}
         </button>
 
         <button
-          onClick={() => { setDismissed(true) }}
+          onClick={() => {
+            setDismissed(true)
+          }}
           aria-label="Close music player"
           className="text-ivory/30 transition-colors hover:text-ivory/70"
         >

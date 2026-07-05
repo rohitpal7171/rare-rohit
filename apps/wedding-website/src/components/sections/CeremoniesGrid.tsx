@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, CalendarDays, Clock } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -47,10 +47,11 @@ export const CeremoniesGrid = () => {
             const ceremony = weddingConfig.ceremonies[slug]
             return (
               <motion.div key={slug} variants={cardReveal3D} {...hoverLift}>
-                <Link to={`/ceremony/${slug}`} className="group block">
-                  <div className="card-divine h-full space-y-3 transition-all duration-300 hover:border-gold/50 hover:shadow-gold">
+                <Link to={`/ceremony/${slug}`} className="group block h-full">
+                  <div className="card-ornate card-divine flex h-full flex-col items-center gap-3 text-center transition-all duration-300 hover:border-gold/50 hover:shadow-gold">
+                    {/* Ornamental medallion — icon floats gently inside */}
                     <motion.div
-                      className="text-4xl"
+                      className="medallion-gold h-16 w-16 text-3xl"
                       aria-hidden="true"
                       variants={floatLoopSlow}
                       initial="initial"
@@ -61,21 +62,33 @@ export const CeremoniesGrid = () => {
                     <h3 className="font-display text-xl font-bold text-gold">
                       {t(`${slug}.name`)}
                     </h3>
-                    <p className="font-script text-sm text-ivory/50">{t(`${slug}.tagline`)}</p>
-                    <div className="gold-divider my-2" aria-hidden="true" />
-                    <p className="font-body text-xs text-ivory/40">
-                      {formatDate(ceremony.date, locale, {
-                        day: 'numeric',
-                        month: 'short',
-                        year: 'numeric',
-                      })}
-                    </p>
-                    <p className="font-body text-xs text-ivory/40">
-                      {locale === 'hi' ? ceremony.timeHindi : ceremony.time}
-                    </p>
-                    <div className="flex items-center gap-1 pt-1 text-gold/60 transition-colors group-hover:text-gold">
+                    <p className="font-script text-base text-ivory/50">{t(`${slug}.tagline`)}</p>
+                    <div className="gold-divider my-1" aria-hidden="true" />
+                    <div className="flex items-center gap-1.5 font-body text-xs text-ivory/45">
+                      <CalendarDays
+                        size={12}
+                        className="shrink-0 text-gold/40"
+                        aria-hidden="true"
+                      />
+                      <span>
+                        {formatDate(ceremony.date, locale, {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric',
+                        })}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 font-body text-xs text-ivory/45">
+                      <Clock size={12} className="shrink-0 text-gold/40" aria-hidden="true" />
+                      <span>{locale === 'hi' ? ceremony.timeHindi : ceremony.time}</span>
+                    </div>
+                    <div className="mt-auto flex items-center gap-1 pt-2 text-gold/60 transition-colors group-hover:text-gold">
                       <span className="font-body text-xs">{tCommon('buttons.viewDetails')}</span>
-                      <ArrowRight size={12} aria-hidden="true" />
+                      <ArrowRight
+                        size={12}
+                        className="transition-transform duration-300 group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
                     </div>
                   </div>
                 </Link>

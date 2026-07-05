@@ -1,4 +1,5 @@
 # CLAUDE.md — public/wedding_pics/deities/
+
 # Last updated: 2026-06-14
 
 ## Purpose
@@ -17,6 +18,7 @@ Loaded dynamically via `manifest.json`.
 ```
 
 Every image added here **must** have a corresponding entry in `manifest.json` with:
+
 - `file` — exact filename including extension
 - `name` — English name displayed under deity image
 - `nameHindi` — Hindi/Devanagari name
@@ -31,7 +33,7 @@ Every image added here **must** have a corresponding entry in `manifest.json` wi
 
 1. Remove the `manifest.json` entry first
 2. Then delete the image file
-Do it in this order to prevent a broken image flash during hot reload.
+   Do it in this order to prevent a broken image flash during hot reload.
 
 ## Image Requirements
 

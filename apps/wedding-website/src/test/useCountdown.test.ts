@@ -54,7 +54,9 @@ describe('useCountdown — tick behaviour', () => {
     const { result } = renderHook(() => useCountdown('2026-01-01T00:00:10.000Z'))
 
     expect(result.current.seconds).toBe(10)
-    act(() => { vi.advanceTimersByTime(1000) })
+    act(() => {
+      vi.advanceTimersByTime(1000)
+    })
     expect(result.current.seconds).toBe(9)
   })
 
@@ -66,11 +68,15 @@ describe('useCountdown — tick behaviour', () => {
     expect(result.current.minutes).toBe(1)
     expect(result.current.seconds).toBe(1)
 
-    act(() => { vi.advanceTimersByTime(1000) })
+    act(() => {
+      vi.advanceTimersByTime(1000)
+    })
     expect(result.current.minutes).toBe(1)
     expect(result.current.seconds).toBe(0)
 
-    act(() => { vi.advanceTimersByTime(1000) })
+    act(() => {
+      vi.advanceTimersByTime(1000)
+    })
     expect(result.current.minutes).toBe(0)
     expect(result.current.seconds).toBe(59)
   })
@@ -80,7 +86,9 @@ describe('useCountdown — tick behaviour', () => {
     const { result } = renderHook(() => useCountdown('2026-01-01T00:00:01.000Z'))
 
     expect(result.current.isExpired).toBe(false)
-    act(() => { vi.advanceTimersByTime(1000) })
+    act(() => {
+      vi.advanceTimersByTime(1000)
+    })
     expect(result.current.isExpired).toBe(true)
   })
 })

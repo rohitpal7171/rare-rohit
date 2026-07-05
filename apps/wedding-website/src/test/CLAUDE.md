@@ -1,14 +1,15 @@
 # CLAUDE.md — apps/wedding-website/src/test/
+
 # Last updated: 2026-06-14
 
 ## Files
 
-| File                       | Purpose                                               |
-|----------------------------|-------------------------------------------------------|
-| `setup.ts`                 | Vitest setup: mock framer-motion, i18next, lucide-react |
-| `setup.tsx`                | Alternative setup with JSX — used when setup needs JSX  |
-| `useAudioPlayer.test.ts`   | Unit tests for `useAudioPlayer` hook                  |
-| `AmbientPlayer.test.tsx`   | Component tests for `AmbientPlayer`                   |
+| File                     | Purpose                                                 |
+| ------------------------ | ------------------------------------------------------- |
+| `setup.ts`               | Vitest setup: mock framer-motion, i18next, lucide-react |
+| `setup.tsx`              | Alternative setup with JSX — used when setup needs JSX  |
+| `useAudioPlayer.test.ts` | Unit tests for `useAudioPlayer` hook                    |
+| `AmbientPlayer.test.tsx` | Component tests for `AmbientPlayer`                     |
 
 ## Test Stack
 
@@ -19,11 +20,11 @@
 
 ## Global Mocks (set up in setup.ts)
 
-| Mocked Module     | Reason                                                    |
-|-------------------|-----------------------------------------------------------|
-| `framer-motion`   | Animations use timers that conflict with test environment |
-| `i18next`         | Returns key as-is — no real translation in tests          |
-| `lucide-react`    | SVG icons cause jsdom warnings — mocked to `<span>`       |
+| Mocked Module   | Reason                                                    |
+| --------------- | --------------------------------------------------------- |
+| `framer-motion` | Animations use timers that conflict with test environment |
+| `i18next`       | Returns key as-is — no real translation in tests          |
+| `lucide-react`  | SVG icons cause jsdom warnings — mocked to `<span>`       |
 
 ## Writing New Tests
 

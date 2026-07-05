@@ -1,42 +1,45 @@
 # CLAUDE.md — rare-rohit Monorepo Root
+
 # Last updated: 2026-05-30
 
 ## ⚠️ BEFORE EVERY GIT PUSH — NON-NEGOTIABLE
+
 ```bash
 npm run pre-push
 ```
+
 If it fails → fix errors → run again → only push when PASS.
 
 ---
 
 ## Project Identity
 
-| Field     | Value                                           |
-|-----------|-------------------------------------------------|
-| Project   | rare-rohit                                      |
-| Type      | Indian wedding website (static SPA)             |
-| Live URL  | rohitwedspriti.netlify.app (auto-deploy → main) |
-| Repo      | github.com/rohitpal7171/rare-rohit              |
-| Local     | C:\Dev_Zone\Projects\rare-rohit                 |
+| Field    | Value                                           |
+| -------- | ----------------------------------------------- |
+| Project  | rare-rohit                                      |
+| Type     | Indian wedding website (static SPA)             |
+| Live URL | rohitwedspriti.netlify.app (auto-deploy → main) |
+| Repo     | github.com/rohitpal7171/rare-rohit              |
+| Local    | C:\Dev_Zone\Projects\rare-rohit                 |
 
 ---
 
 ## Real Wedding Details (Single Source of Truth)
 
-| Role  | Name            | Hindi               |
-|-------|-----------------|---------------------|
-| Groom | Rohit Singh Pal | रोहित सिंह पाल      |
-| Bride | Priti Pal       | प्रीति पाल           |
+| Role  | Name            | Hindi          |
+| ----- | --------------- | -------------- |
+| Groom | Rohit Singh Pal | रोहित सिंह पाल |
+| Bride | Priti Pal       | प्रीति पाल     |
 
-| Event   | Date         | Time    | Location                            |
-|---------|--------------|---------|-------------------------------------|
-| Haldi   | 23 Nov 2026  | TBD     | Bride's Residence, Gwalior, MP      |
-| Mehendi | 23 Nov 2026  | TBD     | Bride's Residence, Gwalior, MP      |
-| Sangeet | 23 Nov 2026  | TBD     | Venue TBD, Gwalior, MP              |
-| Lagun   | 24 Nov 2026  | —       | Gwalior, Madhya Pradesh             |
-| Baraat  | 25 Nov 2026  | 4:00 PM | Kokapur, Udi Modh, Uttar Pradesh ✅ |
-| Pheras  | 26 Nov 2026  | 9:00 AM | Kokapur, Udi Modh, Uttar Pradesh ✅ |
-| Vidaai  | 26 Nov 2026  | TBD     | Kokapur, Udi Modh, Uttar Pradesh ✅ |
+| Event   | Date        | Time    | Location                            |
+| ------- | ----------- | ------- | ----------------------------------- |
+| Haldi   | 23 Nov 2026 | TBD     | Bride's Residence, Gwalior, MP      |
+| Mehendi | 23 Nov 2026 | TBD     | Bride's Residence, Gwalior, MP      |
+| Sangeet | 23 Nov 2026 | TBD     | Venue TBD, Gwalior, MP              |
+| Lagun   | 24 Nov 2026 | —       | Gwalior, Madhya Pradesh             |
+| Baraat  | 25 Nov 2026 | 4:00 PM | Kokapur, Udi Modh, Uttar Pradesh ✅ |
+| Pheras  | 26 Nov 2026 | 9:00 AM | Kokapur, Udi Modh, Uttar Pradesh ✅ |
+| Vidaai  | 26 Nov 2026 | TBD     | Kokapur, Udi Modh, Uttar Pradesh ✅ |
 
 - **Marriage type:** Arranged marriage — story content must ALWAYS reflect this
 - **No reception** | **No RSVP** | **Veg food only** | **No Travel section**
@@ -101,19 +104,19 @@ rare-rohit/
 
 ## Tech Stack
 
-| Layer      | Technology                              |
-|------------|-----------------------------------------|
-| Language   | TypeScript 5 strict                     |
-| Framework  | React 18                                |
-| Build      | Vite 8 + @vitejs/plugin-react (Oxc/Rolldown native) |
-| Styling    | Tailwind CSS v3 + custom plugin         |
-| Animation  | Framer Motion v11                       |
-| i18n       | i18next + react-i18next                 |
-| Routing    | React Router v6 (createBrowserRouter)   |
-| Icons      | Lucide React (tree-shakeable)           |
-| Testing    | Vitest + React Testing Library          |
-| Deploy     | Netlify (auto-deploy on push to main)   |
-| Node       | 20                                      |
+| Layer     | Technology                                          |
+| --------- | --------------------------------------------------- |
+| Language  | TypeScript 5 strict                                 |
+| Framework | React 18                                            |
+| Build     | Vite 8 + @vitejs/plugin-react (Oxc/Rolldown native) |
+| Styling   | Tailwind CSS v3 + custom plugin                     |
+| Animation | Framer Motion v11                                   |
+| i18n      | i18next + react-i18next                             |
+| Routing   | React Router v6 (createBrowserRouter)               |
+| Icons     | Lucide React (tree-shakeable)                       |
+| Testing   | Vitest + React Testing Library                      |
+| Deploy    | Netlify (auto-deploy on push to main)               |
+| Node      | 20                                                  |
 
 ---
 
@@ -136,29 +139,30 @@ npm run pre-push         # MUST pass before every git push
 @shared/utils  → shared/utils/index.ts
 @app/*         → apps/wedding-website/src/*
 ```
+
 Never use relative `../` paths crossing the app/shared boundary.
 
 ---
 
 ## TypeScript Strict Rules — Know These Cold
 
-| Flag                         | Impact                                                             |
-|------------------------------|--------------------------------------------------------------------|
-| `verbatimModuleSyntax`       | Always `import type` for type-only imports. No exceptions.         |
-| `exactOptionalPropertyTypes` | Never pass `prop={value | undefined}` to optional props            |
-| `noUncheckedIndexedAccess`   | Array/Record index access returns `T | undefined`                  |
-| `noUnusedLocals`             | Unused vars = TS6133 = build error. Remove or prefix with `_`      |
+| Flag                         | Impact                                                               |
+| ---------------------------- | -------------------------------------------------------------------- | ----------------------------- |
+| `verbatimModuleSyntax`       | Always `import type` for type-only imports. No exceptions.           |
+| `exactOptionalPropertyTypes` | Never pass `prop={value                                              | undefined}` to optional props |
+| `noUncheckedIndexedAccess`   | Array/Record index access returns `T                                 | undefined`                    |
+| `noUnusedLocals`             | Unused vars = TS6133 = build error. Remove or prefix with `_`        |
 | `noUnusedParameters`         | Unused params = build error. Prefix with `_` if intentionally unused |
 
 ### Common TS Errors & Fixes
 
-| Code   | Cause                                             | Fix                                             |
-|--------|---------------------------------------------------|-------------------------------------------------|
-| TS2375 | `exactOptionalPropertyTypes` + `prop={x|undefined}` | `{...(cond ? { prop: x } : {})}`              |
-| TS6133 | Declared but never read                           | Remove or prefix with `_`                       |
-| TS7030 | useEffect not all paths return undefined          | Add explicit `return undefined`                 |
-| TS2339 | Property doesn't exist on type                   | Check types.ts matches config shape             |
-| TS7053 | Element implicitly has 'any' type (index access)  | Use `CeremonySlug` union for slug keys          |
+| Code   | Cause                                            | Fix                                    |
+| ------ | ------------------------------------------------ | -------------------------------------- | -------------------------------- |
+| TS2375 | `exactOptionalPropertyTypes` + `prop={x          | undefined}`                            | `{...(cond ? { prop: x } : {})}` |
+| TS6133 | Declared but never read                          | Remove or prefix with `_`              |
+| TS7030 | useEffect not all paths return undefined         | Add explicit `return undefined`        |
+| TS2339 | Property doesn't exist on type                   | Check types.ts matches config shape    |
+| TS7053 | Element implicitly has 'any' type (index access) | Use `CeremonySlug` union for slug keys |
 
 ---
 
@@ -166,39 +170,43 @@ Never use relative `../` paths crossing the app/shared boundary.
 
 ### Color Tokens
 
-| Token      | Hex       | Usage                              |
-|------------|-----------|------------------------------------|
-| `saffron`  | #FF6B00   | CTAs, active states                |
-| `maroon`   | #800020   | Headers, primary text on light bg  |
-| `gold`     | #C9A84C   | Borders, dividers, gold accents    |
-| `ivory`    | #FDF6EC   | Light section backgrounds          |
-| `divine`   | #2D1B4E   | Dark section backgrounds           |
-| `marigold` | #FFBE00   | Haldi/ceremony accent              |
+| Token      | Hex     | Usage                             |
+| ---------- | ------- | --------------------------------- |
+| `saffron`  | #FF6B00 | CTAs, active states               |
+| `maroon`   | #800020 | Headers, primary text on light bg |
+| `gold`     | #C9A84C | Borders, dividers, gold accents   |
+| `ivory`    | #FDF6EC | Light section backgrounds         |
+| `divine`   | #2D1B4E | Dark section backgrounds          |
+| `marigold` | #FFBE00 | Haldi/ceremony accent             |
 
 ### Section Background Alternation — NEVER break this rule
+
 ```
 Dark (mandala-bg): Hero, Blessings, CeremoniesGrid, Gallery, Travel, FAQ
 Light (bg-ivory):  OurStory, Schedule, WeddingParty, RSVP
 ```
+
 Never two dark or two light sections in a row.
 
 ### Typography
+
 - `font-display` — Playfair Display (section headings)
-- `font-body`    — Poppins (body, UI)
-- `font-hindi`   — Noto Sans Devanagari (Hindi text)
-- `font-script`  — Dancing Script (decorative/romantic text)
+- `font-body` — Poppins (body, UI)
+- `font-hindi` — Noto Sans Devanagari (Hindi text)
+- `font-script` — Dancing Script (decorative/romantic text)
 
 ### Tailwind Component Classes
-- `.section-padding`    — responsive py/px for sections
-- `.section-container`  — max-w-6xl auto-centered container
-- `.card-divine`        — glassmorphism card for dark sections
-- `.card-light`         — ivory card for light sections
-- `.input-divine`       — styled form input
-- `.gold-divider`       — thin gold horizontal rule
-- `.gold-divider-wide`  — wider shimmer gold rule
-- `.mandala-bg`         — dark purple-maroon radial bg
+
+- `.section-padding` — responsive py/px for sections
+- `.section-container` — max-w-6xl auto-centered container
+- `.card-divine` — glassmorphism card for dark sections
+- `.card-light` — ivory card for light sections
+- `.input-divine` — styled form input
+- `.gold-divider` — thin gold horizontal rule
+- `.gold-divider-wide` — wider shimmer gold rule
+- `.mandala-bg` — dark purple-maroon radial bg
 - `.text-gradient-gold` — animated shimmer gold text
-- `.glow-gold`          — gold drop-shadow filter
+- `.glow-gold` — gold drop-shadow filter
 
 ---
 
@@ -225,17 +233,18 @@ import { fadeInUp, staggerContainer, scaleInBounce } from '@shared/utils'
 - **Language persistence:** stored in `localStorage` key `i18nextLng`
 
 ### Active namespace → section mapping
-| Namespace  | Used by section        |
-|------------|------------------------|
-| `common`   | Navbar, Footer, DivineBlessings, all shared UI |
-| `home`     | Hero, Blessings        |
-| `story`    | OurStory               |
-| `ceremonies` | CeremoniesGrid + all ceremony pages |
-| `schedule` | Schedule               |
-| `gallery`  | Gallery                |
-| `faq`      | FAQ (inactive section) |
-| `travel`   | Travel (inactive)      |
-| `rsvp`     | RSVP (inactive)        |
+
+| Namespace    | Used by section                                |
+| ------------ | ---------------------------------------------- |
+| `common`     | Navbar, Footer, DivineBlessings, all shared UI |
+| `home`       | Hero, Blessings                                |
+| `story`      | OurStory                                       |
+| `ceremonies` | CeremoniesGrid + all ceremony pages            |
+| `schedule`   | Schedule                                       |
+| `gallery`    | Gallery                                        |
+| `faq`        | FAQ (inactive section)                         |
+| `travel`     | Travel (inactive)                              |
+| `rsvp`       | RSVP (inactive)                                |
 
 ---
 
@@ -246,6 +255,7 @@ import { fadeInUp, staggerContainer, scaleInBounce } from '@shared/utils'
 **Hook:** `shared/hooks/useAudioPlayer.ts`
 
 ### Behaviour
+
 - Audio starts **muted** on load (browser always allows muted autoplay)
 - First `click` or `touchstart` anywhere → `play()` then 300ms → `toggleMute()` (unmutes)
 - ॐ button: first click triggers audio start (via document listener, not toggle)
@@ -254,12 +264,13 @@ import { fadeInUp, staggerContainer, scaleInBounce } from '@shared/utils'
 - `isLoading` → spinner ring around button, `whileHover` not applied
 
 ### Critical Implementation Notes
+
 ```ts
 // DO NOT add 'scroll' to triggers — scroll fires on page load, breaks click
 const triggers = ['click', 'touchstart'] as const
 
 // startedRef prevents double-fire: document listener + button onClick same click
-if (!startedRef.current) return  // in onClick — lets document listener handle first click
+if (!startedRef.current) return // in onClick — lets document listener handle first click
 
 // playRef/toggleMuteRef avoid stale closures in effects
 const playRef = useRef(play)
@@ -267,6 +278,7 @@ const toggleMuteRef = useRef(toggleMute)
 ```
 
 ### Audio Cache
+
 `useAudioPlayer` uses a module-level `Map<string, HTMLAudioElement>` — one Audio element per src.
 On page refresh the cache is cleared. On HMR it persists (expected behavior in dev).
 
@@ -274,19 +286,19 @@ On page refresh the cache is cleared. On HMR it persists (expected behavior in d
 
 ## Inactive Files (keep, do not delete)
 
-| File                                  | Why kept                                        |
-|---------------------------------------|-------------------------------------------------|
-| `sections/RSVP.tsx`                   | No RSVP on this wedding                         |
-| `sections/Travel.tsx`                 | Travel info is private                          |
-| `sections/Reception.tsx`              | No reception ceremony                           |
-| `sections/WeddingParty.tsx`           | Replaced by DivineBlessings (2026-05-30)        |
-| `sections/WishesWall.tsx`             | Feature removed — stub file only                |
-| `sections/OurStoryV2.tsx`             | Dark bg variant — swap in if needed             |
-| `layout/ThemeToggle.tsx`              | Light-theme-only decision                       |
-| `shared/hooks/useTheme.ts`            | Light-theme-only decision                       |
-| `shared/hooks/useWishes.ts`           | Feature removed — stub file only                |
-| `i18n/locales/en/party.json`          | WeddingParty replaced — keep file, removed from bundle |
-| `i18n/locales/hi/party.json`          | WeddingParty replaced — keep file, removed from bundle |
+| File                         | Why kept                                               |
+| ---------------------------- | ------------------------------------------------------ |
+| `sections/RSVP.tsx`          | No RSVP on this wedding                                |
+| `sections/Travel.tsx`        | Travel info is private                                 |
+| `sections/Reception.tsx`     | No reception ceremony                                  |
+| `sections/WeddingParty.tsx`  | Replaced by DivineBlessings (2026-05-30)               |
+| `sections/WishesWall.tsx`    | Feature removed — stub file only                       |
+| `sections/OurStoryV2.tsx`    | Dark bg variant — swap in if needed                    |
+| `layout/ThemeToggle.tsx`     | Light-theme-only decision                              |
+| `shared/hooks/useTheme.ts`   | Light-theme-only decision                              |
+| `shared/hooks/useWishes.ts`  | Feature removed — stub file only                       |
+| `i18n/locales/en/party.json` | WeddingParty replaced — keep file, removed from bundle |
+| `i18n/locales/hi/party.json` | WeddingParty replaced — keep file, removed from bundle |
 
 ---
 
@@ -332,12 +344,12 @@ On page refresh the cache is cleared. On HMR it persists (expected behavior in d
 
 ## Claude Skills — Read Before Working
 
-| Domain                    | File                                   |
-|---------------------------|----------------------------------------|
-| Components / hooks / logic| `claude-skills/frontend-developer.md`  |
-| Visual / CSS / animation  | `claude-skills/frontend-designer.md`   |
-| Architecture decisions    | `claude-skills/frontend-architect.md`  |
-| Testing / accessibility   | `claude-skills/frontend-tester.md`     |
+| Domain                     | File                                  |
+| -------------------------- | ------------------------------------- |
+| Components / hooks / logic | `claude-skills/frontend-developer.md` |
+| Visual / CSS / animation   | `claude-skills/frontend-designer.md`  |
+| Architecture decisions     | `claude-skills/frontend-architect.md` |
+| Testing / accessibility    | `claude-skills/frontend-tester.md`    |
 
 ---
 

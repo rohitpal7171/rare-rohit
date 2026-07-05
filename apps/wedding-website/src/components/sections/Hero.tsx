@@ -10,7 +10,7 @@ import { cn, fadeInUp, orbitReverse, orbitSlow, staggerContainer } from '@shared
 import { weddingConfig } from '@app/config/wedding.config'
 
 const PETAL_POSITIONS = [
-  { x: '8%',  delay: 0,   emoji: '🌸' },
+  { x: '8%', delay: 0, emoji: '🌸' },
   { x: '22%', delay: 1.5, emoji: '🌺' },
   { x: '38%', delay: 0.8, emoji: '🌼' },
   { x: '55%', delay: 2.2, emoji: '🌸' },
@@ -19,12 +19,12 @@ const PETAL_POSITIONS = [
 ] as const
 
 const SPARKLES = [
-  { x: '12%', y: '22%', delay: 0,   dur: 3.5 },
-  { x: '82%', y: '18%', delay: 0.9, dur: 4   },
+  { x: '12%', y: '22%', delay: 0, dur: 3.5 },
+  { x: '82%', y: '18%', delay: 0.9, dur: 4 },
   { x: '35%', y: '75%', delay: 1.6, dur: 3.2 },
   { x: '68%', y: '58%', delay: 0.3, dur: 4.2 },
-  { x: '8%',  y: '52%', delay: 2.1, dur: 3.8 },
-  { x: '92%', y: '40%', delay: 0.7, dur: 3   },
+  { x: '8%', y: '52%', delay: 2.1, dur: 3.8 },
+  { x: '92%', y: '40%', delay: 0.7, dur: 3 },
   { x: '55%', y: '88%', delay: 1.3, dur: 4.5 },
   { x: '23%', y: '10%', delay: 1.8, dur: 3.7 },
 ] as const
@@ -144,22 +144,34 @@ export const Hero = () => {
       >
         <svg width="700" height="700" viewBox="0 0 700 700" className="overflow-visible">
           <motion.circle
-            cx="350" cy="350" r="330"
-            stroke="rgba(201,168,76,0.14)" strokeWidth="1" fill="none"
+            cx="350"
+            cy="350"
+            r="330"
+            stroke="rgba(201,168,76,0.14)"
+            strokeWidth="1"
+            fill="none"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 3, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
           />
           <motion.circle
-            cx="350" cy="350" r="265"
-            stroke="rgba(201,168,76,0.09)" strokeWidth="0.6" fill="none"
+            cx="350"
+            cy="350"
+            r="265"
+            stroke="rgba(201,168,76,0.09)"
+            strokeWidth="0.6"
+            fill="none"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 3, ease: [0.22, 1, 0.36, 1], delay: 0.9 }}
           />
           <motion.circle
-            cx="350" cy="350" r="185"
-            stroke="rgba(255,107,0,0.07)" strokeWidth="0.5" fill="none"
+            cx="350"
+            cy="350"
+            r="185"
+            stroke="rgba(255,107,0,0.07)"
+            strokeWidth="0.5"
+            fill="none"
             strokeDasharray="3 7"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
@@ -186,9 +198,12 @@ export const Hero = () => {
         animate="animate"
       />
 
+      {/* Cinematic vignette — darkens edges, pulls the eye to the names.
+          Painted after all decorative layers, below z-10 content */}
+      <div aria-hidden="true" className="vignette-radial pointer-events-none absolute inset-0" />
+
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center gap-6 px-4 text-center">
-
         {/* Save the Date badge */}
         <motion.div
           initial={{ opacity: 0, y: -10, scale: 0.9 }}
@@ -214,7 +229,12 @@ export const Hero = () => {
           <motion.div variants={fadeInUp} className="space-y-2">
             <h1 className="font-display text-5xl font-bold text-ivory sm:text-6xl lg:text-7xl">
               <span className="text-gold-shimmer">{groom.name}</span>
-              <span className="mx-3 text-2xl" aria-hidden="true">💕</span>
+              <span
+                className="mx-2 align-middle font-script text-3xl font-medium text-gold/80 sm:mx-3 sm:text-4xl"
+                aria-hidden="true"
+              >
+                &
+              </span>
               <span className="sr-only"> and </span>
               <span className="text-gold-shimmer">{bride.name}</span>
             </h1>
@@ -235,17 +255,26 @@ export const Hero = () => {
             <Countdown targetDate={wedding.date} />
           </motion.div>
 
-          <motion.div variants={fadeInUp} className="space-y-2 text-center">
-            <p className="font-body text-sm uppercase tracking-widest text-gold/60">
+          <motion.div
+            variants={fadeInUp}
+            className="inline-flex flex-col items-center gap-2 rounded-2xl border border-gold/20 bg-divine-dark/50 px-6 py-3 sm:flex-row sm:gap-4 sm:rounded-full sm:px-8"
+          >
+            <p className="font-body text-xs uppercase tracking-[0.25em] text-gold/70 sm:text-sm">
               {new Date(wedding.date).toLocaleDateString('en-IN', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric',
               })}
             </p>
-            <div className="flex items-center justify-center gap-2">
+            <span className="hidden h-4 w-px bg-gold/25 sm:block" aria-hidden="true" />
+            <div className="flex items-center justify-center gap-1.5">
               <MapPin size={14} className="shrink-0 text-gold/50" aria-hidden="true" />
-              <p className={cn('text-sm text-ivory/60', isHindi ? 'font-hindi' : 'font-body')}>
+              <p
+                className={cn(
+                  'text-xs text-ivory/70 sm:text-sm',
+                  isHindi ? 'font-hindi' : 'font-body'
+                )}
+              >
                 {isHindi ? wedding.venue.nameHindi : wedding.venue.name}
               </p>
             </div>
