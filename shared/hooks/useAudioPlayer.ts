@@ -124,7 +124,11 @@ export const useAudioPlayer = (
             .then(() => {
               setIsPlaying(true)
             })
-            .catch(() => {
+            .catch((err: unknown) => {
+              // Autoplay-policy rejection is not a real error — the audio just
+              // needs a user gesture. Keep the player enabled so the first
+              // interaction can still start it.
+              if (err instanceof DOMException && err.name === 'NotAllowedError') return
               setHasError(true)
             })
         }

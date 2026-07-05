@@ -51,13 +51,20 @@ void i18n
   .use(initReactI18next)
   .init({
     resources,
-    // DEV default: 'en' | PROD: change to 'hi'
-    fallbackLng: 'en',
+    // Default language is HINDI (2026-07-04). Note: 'navigator' is deliberately
+    // NOT in the detection order — browsers report en-US/en-IN for most Indian
+    // guests, which would override the Hindi default. Only an explicit toggle
+    // choice (cached in localStorage) can switch the language.
+    fallbackLng: 'hi',
     defaultNS: 'common',
     detection: {
-      order: ['localStorage', 'navigator'],
+      order: ['localStorage'],
       caches: ['localStorage'],
-      lookupLocalStorage: 'i18nextLng',
+      // Key renamed from the default 'i18nextLng' (2026-07-04): every browser
+      // that previewed the site pre-launch has 'en' cached under the old key.
+      // A new key invalidates all stale caches at once — everyone lands on
+      // Hindi; only a fresh explicit toggle re-caches a preference.
+      lookupLocalStorage: 'rr-lang',
     },
     interpolation: { escapeValue: false },
   })

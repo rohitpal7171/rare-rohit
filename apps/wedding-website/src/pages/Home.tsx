@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom'
 import { cn } from '@shared/utils'
 
 import { AmbientPlayer } from '@app/components/layout/AmbientPlayer'
+import { EntryOverlay } from '@app/components/layout/EntryOverlay'
 import { Footer } from '@app/components/layout/Footer'
 import { Navbar } from '@app/components/layout/Navbar'
 import { WeddingCharacters } from '@app/components/effects/WeddingCharacters'
@@ -91,6 +92,7 @@ export const Home = () => {
   }, [hash])
   return (
     <>
+      <EntryOverlay />
       <Navbar />
       <main>
         {/* Hero is always eager — above the fold */}

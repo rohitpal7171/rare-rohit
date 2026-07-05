@@ -48,7 +48,7 @@ export const weddingConfig: WeddingConfig = {
       slug: 'haldi',
       date: '2026-11-23T10:00:00+05:30', // TODO: confirm date & time
       time: '10:00 AM',
-      timeHindi: 'प्रातः १० बजे',
+      timeHindi: 'प्रातः 10 बजे',
       venue: {
         name: "Bride's Residence, Gwalior",
         nameHindi: 'वधू का निवास, ग्वालियर',
@@ -65,7 +65,7 @@ export const weddingConfig: WeddingConfig = {
       slug: 'mehendi',
       date: '2026-11-23T18:00:00+05:30', // TODO: confirm date & time
       time: '6:00 PM',
-      timeHindi: 'सायं ६ बजे',
+      timeHindi: 'सायं 6 बजे',
       venue: {
         name: "Bride's Residence, Gwalior",
         nameHindi: 'वधू का निवास, ग्वालियर',
@@ -82,7 +82,7 @@ export const weddingConfig: WeddingConfig = {
       slug: 'sangeet',
       date: '2026-11-23T19:00:00+05:30', // TODO: confirm date & time
       time: '7:00 PM',
-      timeHindi: 'सायं ७ बजे',
+      timeHindi: 'सायं 7 बजे',
       venue: {
         name: 'Venue, Gwalior', // TODO: venue name
         nameHindi: 'स्थान, ग्वालियर',
@@ -99,7 +99,7 @@ export const weddingConfig: WeddingConfig = {
       slug: 'baraat',
       date: '2026-11-25T16:00:00+05:30', // ✅ Confirmed: 25 Nov, 4:00 PM
       time: '4:00 PM',
-      timeHindi: 'सायं ४ बजे',
+      timeHindi: 'सायं 4 बजे',
       venue: {
         name: 'Kokapur, Udi Modh, Uttar Pradesh',
         nameHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',
@@ -116,7 +116,7 @@ export const weddingConfig: WeddingConfig = {
       slug: 'pheras',
       date: '2026-11-26T09:00:00+05:30', // ✅ Confirmed: 26 Nov, 9:00 AM
       time: '9:00 AM',
-      timeHindi: 'प्रातः ९ बजे',
+      timeHindi: 'प्रातः 9 बजे',
       venue: {
         name: 'Kokapur, Udi Modh, Uttar Pradesh',
         nameHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',
@@ -133,7 +133,7 @@ export const weddingConfig: WeddingConfig = {
       slug: 'vidaai',
       date: '2026-11-26T14:00:00+05:30', // ✅ Confirmed: 26 Nov (time TODO)
       time: '2:00 PM', // TODO: confirm exact time
-      timeHindi: 'अपराह्न २ बजे',
+      timeHindi: 'अपराह्न 2 बजे',
       venue: {
         name: 'Kokapur, Udi Modh, Uttar Pradesh',
         nameHindi: 'कोकापुर, उड़ी मोड़, उत्तर प्रदेश',

@@ -83,7 +83,7 @@ export const CeremoniesGrid = () => {
                       <span>
                         {formatDate(ceremony.date, locale, {
                           day: 'numeric',
-                          month: 'short',
+                          month: 'long',
                           year: 'numeric',
                         })}
                       </span>

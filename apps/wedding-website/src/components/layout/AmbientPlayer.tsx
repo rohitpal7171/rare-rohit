@@ -28,11 +28,30 @@ export const AmbientPlayer = () => {
     toggleMuteRef.current = toggleMute
   }, [toggleMute])
 
-  // On first user interaction: start audio muted then unmute
+  const isMutedRef = useRef(isMuted)
+  useEffect(() => {
+    isMutedRef.current = isMuted
+  }, [isMuted])
+
+  // Start MUTED playback as soon as the file is playable — browsers allow
+  // muted autoplay. The first user interaction then only unmutes, so sound
+  // is instant instead of waiting for play() + buffering at tap time.
+  const autoStartedRef = useRef(false)
+  useEffect(() => {
+    if (!isLoaded || autoStartedRef.current) return
+    autoStartedRef.current = true
+    playRef.current()
+  }, [isLoaded])
+
+  // First user interaction → unmute + play, synchronously inside the gesture
   useEffect(() => {
     if (startedRef.current) return undefined
 
-    const triggers = ['click', 'touchstart'] as const
+    // pointerdown/keydown/click grant real browser user-activation (touchstart
+    // does NOT count as activation). pointerdown also catches desktop
+    // mouse-wheel users' first press and mobile scroll-touches at the
+    // earliest possible moment.
+    const triggers = ['pointerdown', 'keydown', 'click', 'touchstart'] as const
 
     const handleFirstInteraction = (): void => {
       if (startedRef.current) return
@@ -41,11 +60,13 @@ export const AmbientPlayer = () => {
       triggers.forEach((evt) => {
         document.removeEventListener(evt, handleFirstInteraction)
       })
+      // We are inside a real user gesture — audible playback is allowed NOW.
+      // Unmute synchronously (no setTimeout: browser activation is only
+      // guaranteed inside this handler), then play. If the muted auto-start
+      // already has the track rolling → instant sound; if playback never
+      // started → it starts audibly.
+      if (isMutedRef.current) toggleMuteRef.current()
       playRef.current()
-      // Unmute after play() has had time to resolve
-      setTimeout(() => {
-        toggleMuteRef.current()
-      }, 300)
     }
 
     triggers.forEach((evt) => {

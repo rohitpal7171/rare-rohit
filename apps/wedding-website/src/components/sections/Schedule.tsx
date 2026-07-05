@@ -68,7 +68,7 @@ export const Schedule = () => {
             const formattedDate = formatDate(`${day.date}T00:00:00+05:30`, locale, {
               weekday: 'short',
               day: 'numeric',
-              month: 'short',
+              month: 'long',
             })
 
             const dayNum = day.labelKey.replace('day', '')

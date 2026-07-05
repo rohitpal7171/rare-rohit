@@ -38,6 +38,10 @@
     "ambientMusic": "Ambient Music",
     "loading": "Loading..."
   },
+  "entry": {
+    "welcome": "We welcome you with all our hearts",
+    "button": "Open Invitation"
+  },
   "errors": {
     "notFound": "Page not found",
     "notFoundDesc": "The page you are looking for does not exist."
