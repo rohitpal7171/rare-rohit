@@ -12,3 +12,11 @@
   from   = "/*"
   to     = "/index.html"
   status = 200
+
+# index.html must never be served from cache — browsers must always revalidate it.
+# Without this, a cached old HTML referencing stale chunk hashes causes
+# "Failed to fetch dynamically imported module" after every new deploy.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"

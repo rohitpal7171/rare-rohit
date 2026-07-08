@@ -9,6 +9,16 @@ interface ErrorBoundaryState {
   hasError: boolean
 }
 
+// Detects Vite chunk-load failures caused by stale HTML referencing old content-hash chunk URLs.
+// This happens when Netlify deploys a new build but the browser served a cached index.html.
+const isChunkLoadError = (error: Error): boolean =>
+  error.message.includes('Failed to fetch dynamically imported module') ||
+  error.message.includes('Importing a module script failed') ||
+  error.name === 'ChunkLoadError'
+
+// Prevent reload loops: only auto-reload once per tab session.
+const CHUNK_RELOAD_KEY = 'chunk-reload-attempted'
+
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props)
@@ -19,8 +29,15 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     return { hasError: true }
   }
 
-  override componentDidCatch(_error: Error, _info: ErrorInfo): void {
-    // No external error reporting configured — errors surface via getDerivedStateFromError
+  override componentDidCatch(error: Error, _info: ErrorInfo): void {
+    if (isChunkLoadError(error)) {
+      const alreadyReloaded = sessionStorage.getItem(CHUNK_RELOAD_KEY) === '1'
+      if (!alreadyReloaded) {
+        sessionStorage.setItem(CHUNK_RELOAD_KEY, '1')
+        window.location.reload()
+        return
+      }
+    }
   }
 
   override render(): ReactNode {
